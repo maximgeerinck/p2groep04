@@ -28,9 +28,9 @@ public class Presentation
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private DateTime beginTime;
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private DateTime endTime;
     
     @ManyToOne

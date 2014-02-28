@@ -28,9 +28,9 @@ public class Planning
     @Id
     private int id;
     private int visable;
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private DateTime startTime;
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private DateTime endTime;
     private String allowedToView;
     private int createdBy;
