@@ -6,10 +6,13 @@
 
 package gui;
 
-import TableModel.PresentationTableModel;
+import tableModel.PresentationTableModel;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -19,40 +22,32 @@ import javax.swing.JTable;
  */
 public class GraphicApplication 
 {
-    
-    static final String DATABASE_URL = "jdbc:mysql://localhost/project2";
-    static final String USERNAME = "root";
-    static final String PASSWORD = "PASSWORD";
-    static final String DEFAULT_QUERY = "SELECT * FROM presentations";
-    
     private JFrame mainFrame;
-    private JTable timeTable;
-    private PresentationTableModel presentationModel;
+    private JPanel pnlTest;
     
     public GraphicApplication() 
     {
-        try
-        {
-            mainFrame = new JFrame();
-            mainFrame.setSize(new Dimension(500, 500));
-            mainFrame.setVisible(true);
-
-            //Table
-            presentationModel = new PresentationTableModel(DATABASE_URL, USERNAME, PASSWORD, DEFAULT_QUERY);
-            timeTable = new JTable(presentationModel);
-            JScrollPane scrollPane = new JScrollPane(timeTable);
-            JTable rowTable = new RowNumberTable(timeTable);
-            scrollPane.setRowHeaderView(rowTable);
-            scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, rowTable.getTableHeader());
-            
-        
-        }
-        catch(SQLException ex)
-        {
-            ex.printStackTrace();
-        }
         
     }
     
-    
+    public void initGUI() 
+    {
+        mainFrame = new JFrame();
+        mainFrame.setSize(new Dimension(500, 500));        
+        mainFrame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        //PNL
+        pnlTest = new PresentationOverviewPanel();
+        pnlTest.setOpaque(true);
+        mainFrame.setContentPane(pnlTest);
+        
+        
+        //display the window
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+    }
 }
