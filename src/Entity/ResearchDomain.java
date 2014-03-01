@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 
-package domein;
+package Entity;
 
-import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import org.apache.derby.client.am.DateTime;
 import org.hibernate.annotations.Entity;
 
 /**
@@ -22,22 +19,12 @@ import org.hibernate.annotations.Entity;
  * @author Bram
  */
 @Entity
-public class Planning 
+public class ResearchDomain 
 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
-    private int visable;
+    private String name;
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime startTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    private DateTime endTime;
-    private String allowedToView;
-    private int createdBy;
-    
-    @ManyToMany
-    private List<Presentation> presentations;
-    
-    @OneToOne
-    private User user;
+    private DateTime createdOn;
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package domein;
+package Entity;
 
 import java.util.List;
 import javax.persistence.GeneratedValue;
@@ -22,30 +22,22 @@ import org.hibernate.annotations.Entity;
  * @author Bram
  */
 @Entity
-public class User 
+public class Planning 
 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
-    private String email;
-    private String fistName;
-    private String lastName;
-    private String password;
-    private String salt;
+    private int visable;
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime lastLogin;
-    private String lastIp;
+    private DateTime startTime;
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime createdOn;
-    @Temporal(TemporalType.TIMESTAMP)
-    private DateTime updatedOn;
-    private int enabled;
-    private int amountStudents;
-    private String roles;
+    private DateTime endTime;
+    private String allowedToView;
+    private int createdBy;
     
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
     private List<Presentation> presentations;
     
-    @OneToOne(mappedBy = "user")
-    private Planning planning;
+    @OneToOne
+    private User user;
 }

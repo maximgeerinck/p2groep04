@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 
-package domein;
+package Entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Entity;
 
@@ -17,16 +14,14 @@ import org.hibernate.annotations.Entity;
  * @author Bram
  */
 @Entity
-public class Location 
-{   
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private int id;
+public class UserPresentation 
+{
+    @ManyToOne
+    private int presentationId;
     
     @ManyToOne
-    private Campus campus;
-    private int campusId;
+    private int userId;
     
-    private String classroom;
-    
+    @ManyToOne
+    private int planningId;
 }

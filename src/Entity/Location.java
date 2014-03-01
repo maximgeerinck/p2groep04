@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 
-package domein;
+package Entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.apache.derby.client.am.DateTime;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Entity;
 
 /**
@@ -19,12 +17,16 @@ import org.hibernate.annotations.Entity;
  * @author Bram
  */
 @Entity
-public class ResearchDomain 
-{
+public class Location 
+{   
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
-    private String name;
-    @Temporal(TemporalType.TIMESTAMP)
-    private DateTime createdOn;
+    
+    @ManyToOne
+    private Campus campus;
+    private int campusId;
+    
+    private String classroom;
+    
 }

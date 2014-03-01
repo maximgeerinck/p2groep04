@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package domein;
+package Entity;
 
-import javax.persistence.ManyToOne;
+import Model.AbstractUser;
 import org.hibernate.annotations.Entity;
 
 /**
@@ -14,14 +14,10 @@ import org.hibernate.annotations.Entity;
  * @author Bram
  */
 @Entity
-public class UserPresentation 
+public class User extends AbstractUser
 {
-    @ManyToOne
-    private int presentationId;
-    
-    @ManyToOne
-    private int userId;
-    
-    @ManyToOne
-    private int planningId;
+    public User() 
+    {
+        super();
+    }
 }

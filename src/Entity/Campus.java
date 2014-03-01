@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package domein;
+package Entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
