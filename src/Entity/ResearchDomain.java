@@ -6,12 +6,12 @@
 
 package Entity;
 
+import java.sql.Timestamp;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.apache.derby.client.am.DateTime;
 import org.hibernate.annotations.Entity;
 
 /**
@@ -21,10 +21,11 @@ import org.hibernate.annotations.Entity;
 @Entity
 public class ResearchDomain 
 {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime createdOn;
+    private Timestamp createdOn;
 }
