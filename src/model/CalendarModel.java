@@ -47,9 +47,7 @@ public class CalendarModel extends DefaultTimeBarModel {
      * @param year year
      */
     private void createMonthInternal(int month, int year) {
-        if (_rows.size() == 0
-                || ((Day) _rows.get(_rows.size() - 1)).getDayDate().compareDateTo(
-                        new JaretDate(1, month, year, 0, 0, 0)) < 0) {
+        if (_rows.size() == 0 || ((Day) _rows.get(_rows.size() - 1)).getDayDate().compareDateTo(new JaretDate(1, month, year, 0, 0, 0)) < 0) {
             // simply attach to the end
             JaretDate date = new JaretDate(1, month, year, 0, 0, 0);
             while (date.getMonth() == month) {

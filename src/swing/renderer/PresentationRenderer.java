@@ -118,8 +118,9 @@ public class PresentationRenderer implements TimeBarRenderer {
 
         }
 
-        private String getTimeString(Presentation interval) {
-            return interval.getStartTime().toString() + " - " + interval.getEndTime().toString();
+        private String getTimeString(Presentation p) {
+            
+            return p.toDisplayString();
         }
 
         public Rectangle getContainingRectangle(TimeBarViewerDelegate delegate, Interval interval, Rectangle drawingArea, boolean overlapping) 

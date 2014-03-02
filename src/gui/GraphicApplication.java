@@ -11,6 +11,7 @@ import de.jaret.util.ui.timebars.mod.DefaultIntervalModificator;
 import de.jaret.util.ui.timebars.model.TimeBarModel;
 import de.jaret.util.ui.timebars.swing.TimeBarViewer;
 import de.jaret.util.ui.timebars.swing.renderer.OldDefaultTimeScaleRenderer;
+import entity.Presentation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -89,7 +90,7 @@ public class GraphicApplication
         
         _tbv.setGridRenderer(new CalendarGridRenderer());
         
-        _tbv.registerTimeBarRenderer(Appointment.class, new PresentationRenderer());
+        _tbv.registerTimeBarRenderer(Presentation.class, new PresentationRenderer());
         _tbv.setAutoScaleRows(5);
         _tbv.setOptimizeScrolling(true);
          

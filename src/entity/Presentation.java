@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import model.CalendarModel;
+import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "Presentation") 
@@ -101,15 +102,13 @@ public class Presentation extends IntervalImpl implements Serializable
         this.startTime = startTime;
     }
     
-    public String toDisplayString() {
-        StringBuilder buf = new StringBuilder();
-        //buf.append(getText());
-       /* buf.append("|");
-        buf.append(getStartTime().toDisplayString());
-        buf.append("--");
-        buf.append(getEndTime().toDisplayString());*/
-
-        return getStartTime().toString() + getEndTime().toString();
+    public String toDisplayString() 
+    {
+        // convert to datetime 
+        DateTime start = new DateTime(getStartTime());
+        DateTime end = new DateTime(getEndTime());
+        
+        return start.toString("HH:mm") + " - " + end.toString("HH:mm");
     }
 
     public boolean isEditable() {
