@@ -25,10 +25,18 @@ import javax.swing.table.TableColumn;
  * @author Maxim JTable that allows the use of row headers
  * @source: http://tips4java.wordpress.com/2008/11/18/row-number-table/
  */
-public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener {
+public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener 
+{
 
     private JTable main;
-
+    private String[] rowHeaders = {
+       "10u - 10u30",
+       "11u - 11u30",
+       "12u - 12u30",
+       "13u - 13u30",
+       "14u - 14u30"
+    };
+        
     public RowNumberTable(JTable table) {
         main = table;
         main.addPropertyChangeListener(this);
@@ -42,7 +50,7 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         addColumn(column);
         column.setCellRenderer(new RowNumberRenderer());
 
-        getColumnModel().getColumn(0).setPreferredWidth(50);
+        getColumnModel().getColumn(0).setPreferredWidth(100);
         setPreferredScrollableViewportSize(getPreferredSize());
     }
 
@@ -84,7 +92,7 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
      */
     @Override
     public Object getValueAt(int row, int column) {
-        return Integer.toString(row + 1);
+        return this.rowHeaders[row];
     }
 
     /*

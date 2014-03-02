@@ -6,15 +6,24 @@
 
 package gui;
 
-import tableModel.PresentationTableModel;
+import de.jaret.util.ui.timebars.TimeBarViewerInterface;
+import de.jaret.util.ui.timebars.mod.DefaultIntervalModificator;
+import de.jaret.util.ui.timebars.model.TimeBarModel;
+import de.jaret.util.ui.timebars.swing.TimeBarViewer;
+import de.jaret.util.ui.timebars.swing.renderer.OldDefaultTimeScaleRenderer;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import model.Appointment;
+import model.CalendarModel;
+import model.ModelCreator;
+import model.PresentationModificator;
+import swing.CalendarControlPanel;
+import swing.renderer.CalendarGridRenderer;
+import swing.renderer.PresentationRenderer;
 
 /**
  *
@@ -23,7 +32,7 @@ import javax.swing.JTable;
 public class GraphicApplication 
 {
     private JFrame mainFrame;
-    private JPanel pnlTest;
+    private TimeBarViewer _tbv;
     
     public GraphicApplication() 
     {
@@ -32,22 +41,63 @@ public class GraphicApplication
     
     public void initGUI() 
     {
-        mainFrame = new JFrame();
-        mainFrame.setSize(new Dimension(500, 500));        
-        mainFrame.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        //PNL
-        pnlTest = new PresentationOverviewPanel();
-        pnlTest.setOpaque(true);
-        mainFrame.setContentPane(pnlTest);
+        mainFrame = new JFrame("Presentation overview");
+        mainFrame.setSize(1500, 1500);
+        mainFrame.getContentPane().setLayout(new BorderLayout());
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
-        
+        //presentatie overview pannel aanmaken
+        initTimeTable();
+ 
         //display the window
         mainFrame.pack();
         mainFrame.setVisible(true);
+    }
+    
+    private void initTimeTable() 
+    {        
+        TimeBarModel model = ModelCreator.createCalendarModel();;
+        _tbv = new TimeBarViewer(model);
+
+        _tbv.addIntervalModificator(new DefaultIntervalModificator());
+
+        _tbv.setPixelPerSecond(0.018);
+        _tbv.setDrawRowGrid(true);
+
+        _tbv.setSelectionDelta(6);
+        // this is the col width!
+        _tbv.setRowHeight(150);
+        
+        _tbv.setTBOrientation(TimeBarViewerInterface.Orientation.VERTICAL);
+        // vertical: the y axiswidth is the height of the row headers!
+        _tbv.setYAxisWidth(50);
+        
+        // do not adjust the displayed time according to the model 
+        // use the basedate day!
+        _tbv.setAdjustMinMaxDatesByModel(false);
+        _tbv.setMinDate(CalendarModel.BASEDATE.copy());
+        _tbv.setMaxDate(CalendarModel.BASEDATE.copy().advanceDays(1));
+
+        _tbv.setDrawOverlapping(true);
+        _tbv.setSelectionDelta(6);
+        _tbv.setTimeScalePosition(TimeBarViewerInterface.TIMESCALE_POSITION_TOP);
+
+        // modifications are restricted
+        _tbv.addIntervalModificator(new PresentationModificator());
+
+        _tbv.setTimeScaleRenderer(new OldDefaultTimeScaleRenderer());
+        
+        _tbv.setGridRenderer(new CalendarGridRenderer());
+        
+        _tbv.registerTimeBarRenderer(Appointment.class, new PresentationRenderer());
+        _tbv.setAutoScaleRows(5);
+        _tbv.setOptimizeScrolling(true);
+         
+        mainFrame.getContentPane().add(_tbv, BorderLayout.CENTER);
+
+        //mainFrame.getContentPane().add(new CalendarControlPanel(_tbv), BorderLayout.SOUTH);
+        
+        mainFrame.setVisible(true);
+
     }
 }
