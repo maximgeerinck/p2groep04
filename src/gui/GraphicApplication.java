@@ -14,8 +14,11 @@ import de.jaret.util.ui.timebars.swing.renderer.OldDefaultTimeScaleRenderer;
 import entity.Presentation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.Appointment;
@@ -33,6 +36,7 @@ import swing.renderer.PresentationRenderer;
 public class GraphicApplication 
 {
     private JFrame mainFrame;
+    private JFrame ptFrame;
     private TimeBarViewer _tbv;
     
     public GraphicApplication() 
@@ -42,10 +46,19 @@ public class GraphicApplication
     
     public void initGUI() 
     {
+        //FRAME: PRESENTATIE TONEN
         mainFrame = new JFrame("Presentation overview");
         mainFrame.setSize(1500, 1500);
         mainFrame.getContentPane().setLayout(new BorderLayout());
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        //FRAME: PRESENTATIE TOEVOEGEN
+        ptFrame = new JFrame("Presentatie toevoegen");
+        ptFrame.setSize(500, 500);
+        ptFrame.getContentPane().setLayout(new BorderLayout());
+        ptFrame.getContentPane().add(new PanelPresentatieToevoegen(), BorderLayout.CENTER);
+        ptFrame.pack();
+        ptFrame.setVisible(false);       
         
         //presentatie overview pannel aanmaken
         initTimeTable();
@@ -97,6 +110,15 @@ public class GraphicApplication
         mainFrame.getContentPane().add(_tbv, BorderLayout.CENTER);
 
         mainFrame.getContentPane().add(new CalendarSortPanel(), BorderLayout.EAST);
+        
+        JButton voegPresentatieToe = new JButton("Voeg presentatie toe");
+        voegPresentatieToe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ptFrame.setVisible(true);
+            }
+        });
+        mainFrame.getContentPane().add(voegPresentatieToe, BorderLayout.SOUTH);
         
         //mainFrame.getContentPane().add(new CalendarControlPanel(_tbv), BorderLayout.SOUTH);
         

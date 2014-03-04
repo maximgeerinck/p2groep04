@@ -8,6 +8,7 @@ package listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -21,10 +22,19 @@ public class PresentationSortListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        JComboBox cb = (JComboBox)e.getSource();
-        String option = (String)cb.getSelectedItem();
+        if(e.getSource() instanceof JComboBox)
+        {
+            JComboBox cb = (JComboBox)e.getSource();
+            String option = (String)cb.getSelectedItem();
+
+            JOptionPane.showMessageDialog(null, option);
+        } 
+        else if(e.getSource() instanceof JButton)
+        {
+            JButton btnSRC = (JButton)e.getSource();
+            
+        }
         
-        JOptionPane.showMessageDialog(null, option);
     }
     
 }

@@ -9,6 +9,7 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import listener.PresentationSortListener;
