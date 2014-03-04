@@ -9,9 +9,10 @@ import de.jaret.util.ui.timebars.model.DefaultTimeBarModel;
 import de.jaret.util.ui.timebars.model.TimeBarRow;
 import entity.Presentation;
 
-public class CalendarModel extends DefaultTimeBarModel {
+public class CalendarModel extends DefaultTimeBarModel 
+{
     /** date used as a base date for all intervals. */
-    public static final JaretDate BASEDATE = new JaretDate(2, 3, 2014, 0, 0, 0);
+    public static final JaretDate BASEDATE = new JaretDate(4, 3, 2014, 0, 0, 0);
     /**
      * Update or create the model for the given month. If the month is not already created, day entries will be created.
      * 

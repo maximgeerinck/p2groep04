@@ -96,6 +96,8 @@ public class GraphicApplication
          
         mainFrame.getContentPane().add(_tbv, BorderLayout.CENTER);
 
+        mainFrame.getContentPane().add(new CalendarSortPanel(), BorderLayout.EAST);
+        
         //mainFrame.getContentPane().add(new CalendarControlPanel(_tbv), BorderLayout.SOUTH);
         
         mainFrame.setVisible(true);
