@@ -6,6 +6,8 @@
 
 package gui;
 
+import controller.PlanningController;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -23,6 +25,7 @@ import jfxtras.scene.control.agenda.Agenda;
 public class GraphicApplication implements Observer
 {
     final Agenda agenda;
+    private PlanningController planningController = new PlanningController();
      
     public GraphicApplication() {
         agenda = new Agenda();
@@ -30,6 +33,7 @@ public class GraphicApplication implements Observer
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
         
+        //APOINTMENT GROUPS ZIJN DE KLEUREN VAN DE KALENDER ITEM
         lAppointmentGroupMap.put("group00", new Agenda.AppointmentGroupImpl().withStyleClass("group0"));
         lAppointmentGroupMap.put("group01", new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
         lAppointmentGroupMap.put("group02", new Agenda.AppointmentGroupImpl().withStyleClass("group2"));
@@ -63,7 +67,7 @@ public class GraphicApplication implements Observer
         }
 
         // accept new appointments
-        agenda.createAppointmentCallbackProperty().set(new Callback<Agenda.CalendarRange, Agenda.Appointment>()
+        /*agenda.createAppointmentCallbackProperty().set(new Callback<Agenda.CalendarRange, Agenda.Appointment>()
         {
             @Override
             public Agenda.Appointment call(Agenda.CalendarRange calendarRange)
@@ -75,124 +79,10 @@ public class GraphicApplication implements Observer
                         .withDescription("new")
                         .withAppointmentGroup(lAppointmentGroupMap.get("group01"));
             }
-        });
+        });*/
 
-        // initial set
-        Calendar lFirstDayOfWeekCalendar = getFirstDayOfWeekCalendar(agenda.getLocale(), agenda.getDisplayedCalendar());
-        int lFirstDayOfWeekYear = lFirstDayOfWeekCalendar.get(Calendar.YEAR);
-        int lFirstDayOfWeekMonth = lFirstDayOfWeekCalendar.get(Calendar.MONTH);
-        int FirstDayOfWeek = lFirstDayOfWeekCalendar.get(Calendar.DATE);
-        Calendar lToday = agenda.getDisplayedCalendar();
-        int lTodayYear = lToday.get(Calendar.YEAR);
-        int lTodayMonth = lToday.get(Calendar.MONTH);
-        int lTodayDay = lToday.get(Calendar.DATE);
-        
-        agenda.appointments().addAll(
-        new Agenda.AppointmentImpl()
-                .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 00))
-                .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 30))
-                .withSummary("A")
-                .withDescription("A much longer test description")
-                .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 10, 00))
-            .withSummary("B")
-            .withDescription("A description 2")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group08"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
-            .withSummary("C")
-            .withDescription("A description 3")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group09"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 00))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 30))
-            .withSummary("D")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 10, 30))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 00))
-            .withSummary("E")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 12, 30))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 30))
-            .withSummary("F")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 00))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 30))
-            .withSummary("H")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 14, 00))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 14, 45))
-            .withSummary("G")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 10))
-            .withEndTime(null)
-            .withSummary("K asfsfd dsfsdfs fsfds sdgsds dsdfsd ")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 19, 00))
-            .withEndTime(null)
-            .withSummary("L asfsfd dsfsdfs fsfds sdgsds dsdfsd ")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 15, 00))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 16, 00))
-            .withSummary("I")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 15, 30))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 16, 00))
-            .withSummary("J")
-            .withDescription("A description 4")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-            // -----
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 20, 30))
-            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 20, 31))
-            .withSummary("S")
-            .withDescription("Too short")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-            // -----
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay))
-            .withSummary("all day1")
-            .withDescription("A description")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
-            .withWholeDay(true)
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay))
-            .withSummary("all day2")
-            .withDescription("A description")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group08"))
-            .withWholeDay(true)
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay))
-            .withSummary("all day3")
-            .withDescription("A description3")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group09"))
-            .withWholeDay(true)
-        , 	new Agenda.AppointmentImpl()
-            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay + 1))
-            .withSummary("all day")
-            .withDescription("A description3")
-            .withAppointmentGroup(lAppointmentGroupMap.get("group03"))
-            .withWholeDay(true)
-        );
+        // set the presentations on the calendar
+        agenda.appointments().addAll(planningController.retrievePresentations()); 
     }
     /**
      * get the calendar for the first day of the week

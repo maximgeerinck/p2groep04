@@ -1,8 +1,6 @@
 package controller;
 import jfxtras.scene.control.agenda.Agenda;
 import entity.*;
-import java.sql.Array;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -19,34 +17,38 @@ public class PlanningController {
 	 * @param coPromotor
 	 */
          
-        public Agenda.AppointmentImpl[] retrievePresentations() {
+        public Agenda.AppointmentImpl[] retrievePresentations() 
+        {
             
            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
            List<Agenda.AppointmentImpl> presentaties = new ArrayList();
-           Agenda.AppointmentImpl[] presentations = new Agenda.AppointmentImpl[0];
            Calendar cal = GregorianCalendar.getInstance();
            Calendar cal2 = GregorianCalendar.getInstance();
-           cal.setTime(new Timestamp(1211503));
-           
+
            session.beginTransaction();
         
-        Query q = session.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC");
-        for(Presentation p : (List<Presentation>)q.list())
-        {
-            cal.setTime(p.getStartTime());
-            cal2.setTime(p.getEndTime());
-            presentaties.add(new Agenda.AppointmentImpl()
-            .withStartTime(cal)
-            .withEndTime(cal2)
-            .withSummary("")
-            .withDescription("")
-            );
-        }
-        
-        session.close();
-        
-        presentations = presentaties.toArray(presentations);
-        return presentations;
+            Query q = session.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC");
+            
+            for(Presentation p : (List<Presentation>)q.list())
+            {
+                cal = ((Calendar) cal.clone());
+                cal.setTime(p.getStartTime());
+                
+                cal2 = ((Calendar) cal2.clone());
+                cal2.setTime(p.getEndTime());
+                
+                presentaties.add(new Agenda.AppointmentImpl()
+                    .withStartTime(cal)
+                    .withEndTime(cal2)
+                    .withSummary("")
+                    .withDescription("")
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))        
+                );
+            }
+
+            session.close();
+
+            return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
         }
         
         public void addPresentation(Presentation presentation){

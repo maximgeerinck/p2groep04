@@ -45,6 +45,9 @@ public class Presentation implements Serializable
     
     private transient boolean editable;
 
+    public Presentation() {
+    }
+
     public Presentation(Timestamp startTime, Timestamp endTime, Location location) 
     {
         setStartTime(startTime);
