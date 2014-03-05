@@ -27,6 +27,7 @@ public class GraphicApplication
 
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
+        
         lAppointmentGroupMap.put("group00", new Agenda.AppointmentGroupImpl().withStyleClass("group0"));
         lAppointmentGroupMap.put("group01", new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
         lAppointmentGroupMap.put("group02", new Agenda.AppointmentGroupImpl().withStyleClass("group2"));
@@ -51,6 +52,7 @@ public class GraphicApplication
         lAppointmentGroupMap.put("group21", new Agenda.AppointmentGroupImpl().withStyleClass("group21"));
         lAppointmentGroupMap.put("group22", new Agenda.AppointmentGroupImpl().withStyleClass("group22"));
         lAppointmentGroupMap.put("group23", new Agenda.AppointmentGroupImpl().withStyleClass("group23"));
+        
         for (String lId : lAppointmentGroupMap.keySet())
         {
             Agenda.AppointmentGroup lAppointmentGroup = lAppointmentGroupMap.get(lId);
@@ -82,26 +84,8 @@ public class GraphicApplication
         int lTodayYear = lToday.get(Calendar.YEAR);
         int lTodayMonth = lToday.get(Calendar.MONTH);
         int lTodayDay = lToday.get(Calendar.DATE);
+        
         agenda.appointments().addAll(
-		/*
-		 *  . . . .
-		 *  . . . . 
-		 *  A . . .  8:00
-		 *  A B C .  8:30
-		 *  A B C D  9:00
-		 *  A B . D  9:30
-		 *  A . . D 10:00
-		 *  A E . D 10:30
-		 *  A . . D 11:00
-		 *  . . . D 11:30
-		 *  . . . D 12:00
-		 *  F . . D 12:30
-		 *  F H . D 13:00
-		 *  . . . . 13:30
-		 *  G . . . 14:00
-		 *  . . . . 14:30
-		 * 
-		 */
         new Agenda.AppointmentImpl()
                 .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 00))
                 .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 30))
