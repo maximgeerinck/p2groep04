@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 
+
 @Entity
 public class Planning 
 {
@@ -42,4 +43,6 @@ public class Planning
     
     @OneToOne
     private User user;
+    
+        
 }
