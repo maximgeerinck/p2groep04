@@ -113,7 +113,8 @@ public class GraphicApplication implements Observer
     @Override
     public void update(Observable o, Object arg) {
         //Redraw
-        System.out.println("TEST");
-        
+        agenda.appointments().clear();
+        agenda.appointments().addAll(planningController.retrievePresentations()); 
+        System.out.println("Redraw calendar");        
     }
 }
