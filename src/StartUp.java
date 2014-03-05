@@ -1,7 +1,14 @@
 
 import gui.GraphicApplication;
+import gui.PanelPresentatieToevoegen;
+import java.math.BigDecimal;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -29,9 +36,27 @@ public class StartUp extends Application
     {                
         primaryStage.setTitle("Planning overzicht");
         
-        StackPane root = new StackPane();
-        root.getChildren().add(application.getAgenda());
-        primaryStage.setScene(new Scene(root, 600, 600));
+        SplitPane root = new SplitPane();
+        StackPane sp1 = new StackPane();
+        sp1.getChildren().add(application.getAgenda());
+        
+        StackPane sp2 = new StackPane();
+        Button button = new Button("Nieuwe presentatie");       
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent arg0) {
+               Stage stage = new Stage();
+               
+               stage.setScene(new PanelPresentatieToevoegen().showScreen());
+               stage.show();
+            }
+        });
+        sp2.getChildren().add(button);
+        //root.getChildren().add(11, new Label(), button);
+        
+        root.getItems().addAll(sp1, sp2);
+        root.setDividerPositions(0.9f, 0.6f, 0.9f);
+        primaryStage.setScene(new Scene(root, 1500, 900));
         primaryStage.show();
     }
 }

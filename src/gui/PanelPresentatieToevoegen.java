@@ -6,83 +6,128 @@
 
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBuilder;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import jfxtras.scene.control.CalendarTextField;
 
 /**
  *
  * @author Maxim
  */
-public class PanelPresentatieToevoegen extends JPanel implements ActionListener
+public class PanelPresentatieToevoegen 
 {
-    Map<String, JComponent> components;
-    
-    public PanelPresentatieToevoegen()
+    public PanelPresentatieToevoegen() 
     {
-        super();
-        components = new HashMap<>();
-        setBorder(BorderFactory.createTitledBorder("Toevoegen"));        
-        setLayout(new GridLayout(8, 2));
-        
-        initForm();
-    }
-    
-    /**
-     * lokaal
-     * aanwezigen
-     * presentator (user)
-     * onderwerp
-     * Tijdstip
-     * Campus
-     */
-    public void initForm()
-    {                              
-        components.put("lblFilterLokalen", new JLabel("Lokaal"));
-        components.put("txtFilterLokalen", new JTextField());
-        components.put("lblPromotor", new JLabel("Promotor"));
-        components.put("txtPromotor", new JTextField());
-        components.put("lblCoPromotor", new JLabel("Co-promotor"));
-        components.put("txtCoPromotor", new JTextField());
-        components.put("lblPresentator", new JLabel("Presentator"));
-        components.put("txtPresentator", new JTextField());
-        components.put("lblOnderwerp", new JLabel("Onderwerp"));
-        components.put("txtOnderwerp", new JTextField());
-        components.put("lblTijdstip", new JLabel("Tijdstip"));
-        components.put("txtTijdstip", new JTextField());
-        components.put("lblCampus", new JLabel("Campus"));
-        components.put("cbCampus", new JComboBox(new String[]{"Aalst", "Gent"}));
-        
-        JButton btnSubmit = new JButton("Voeg toe");
-        btnSubmit.addActionListener(this);
-        components.put("btnSubmit", new JButton());
         
         
-        for(Entry e : components.entrySet()) 
-        {            
-            add((JComponent)e.getValue());            
-        }
-    }
+        
+        
+       /*
+        COMBOX EXAMPLE
+        ---------------
+        root.addRow(9, new Label("ComboBox"), ComboBoxBuilder
+                .create()
+                .editable(true)
+                .build()
+        );*/
 
-    @Override
-    public void actionPerformed(ActionEvent e) 
+        /*
+        TEXT CHANGE LISTENER EXAMPLE
+        -----------------------------
+        promptText.numberProperty().addListener(new ChangeListener<BigDecimal>() {
+            @Override
+            public void changed(ObservableValue<? extends BigDecimal> observableValue, BigDecimal o, BigDecimal o1) {
+                System.out.println(o1);
+            }
+        });*/
+
+        /*
+        BUTTON EXAMPLE
+        --------------
+        Button button = new Button("Reset fields");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                defaultSpinner.setNumber(new BigDecimal(Math.random() * 1000));
+                decimalFormat.setNumber(new BigDecimal(Math.random() * 1000));
+                percent.setNumber(new BigDecimal(Math.random()));
+                localizedCurrency.setNumber(new BigDecimal(Math.random() * 1000));
+                disabledField.setNumber(new BigDecimal(Math.random() * 1000));
+                promptText.setNumber(null);
+            }
+        });
+        root.addRow(11, new Label(), button);
+        */
+    }
+    
+    public Scene showScreen() 
     {
-        if(e.getSource().equals(components.get("btnSubmit"))) 
-        {
-            JOptionPane.showMessageDialog(null, "voeg form toe");
-            
-        }
+
+        javafx.scene.layout.GridPane root = new javafx.scene.layout.GridPane();
+        root.setHgap(10);
+        root.setVgap(10);
+        root.setPadding(new Insets(25, 25 ,25 ,25));
+
+        root.addRow(0, new Label("Start tijd"), new CalendarTextField());
+        root.addRow(1, new Label("Eind tijd"), new CalendarTextField());
+        
+        ObservableList<String> options = 
+        FXCollections.observableArrayList(
+            "Campus Schoonmeersen",
+            "Campus Aalst"           
+        );
+        final ComboBox cbCampus = new ComboBox(options);
+        root.addRow(2, new Label("Campus"), cbCampus);
+        
+        ObservableList<String> optLokalen = 
+        FXCollections.observableArrayList(
+            "B4001",
+            "B4002",           
+            "B4003"
+        );
+        final ComboBox cbLokalen = new ComboBox(optLokalen);
+        root.addRow(3, new Label("Lokaal"), cbLokalen);
+        
+        ObservableList<String> optPromotoren = 
+        FXCollections.observableArrayList(
+            "Ikke",
+            "Iemand anders",           
+            "..."
+        );
+        final ComboBox cnPromotoren = new ComboBox(optPromotoren);
+        root.addRow(4, new Label("Promotor"), cnPromotoren);
+        
+        ObservableList<String> optCoPromotoren = 
+        FXCollections.observableArrayList(
+            "Ikke",
+            "Iemand anders",           
+            "..."          
+        );
+        final ComboBox cbCoPromotoren = new ComboBox(optCoPromotoren);
+        root.addRow(5, new Label("Co-Promotor"), cbCoPromotoren);
+        
+        ObservableList<String> optPresentatoren = 
+        FXCollections.observableArrayList(
+            "Ikke",
+            "Iemand anders",           
+            "..."          
+        );
+        final ComboBox cbPresentatoren = new ComboBox(optPresentatoren);
+        root.addRow(6, new Label("Presentator"), cbPresentatoren);
+        root.addRow(7, new Label("Onderwerp"), new TextField());
+        root.addRow(8, new Label("Tijdstip"), new TextField());
+        
+        Button btnAdd = new Button("Toevoegen");
+        root.addRow(9, btnAdd);
+
+        return new Scene(root, 600, 600);
     }
 }
