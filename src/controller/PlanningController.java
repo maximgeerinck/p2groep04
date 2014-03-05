@@ -49,9 +49,13 @@ public class PlanningController {
         return presentations;
         }
         
-        public void addPresentation(Presentation presentation){
+        public void addPresentation(Timestamp startTime, Timestamp endTime, Location location, List<User> users){
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
+            
+            Presentation presentation = new Presentation(startTime,endTime,location);
+            presentation.setUsers(users);
+            
             Query q = session.createQuery("INSERT INTO Presentation(begin_time, end_time, location) VALUES ("+ 
                     presentation.getStartTime() +"," + presentation.getEndTime()
                     +"," +presentation.getLocation()+")");
