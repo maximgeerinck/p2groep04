@@ -26,7 +26,7 @@ public class PlanningController {
            Agenda.AppointmentImpl[] presentations = new Agenda.AppointmentImpl[0];
            Calendar cal = GregorianCalendar.getInstance();
            Calendar cal2 = GregorianCalendar.getInstance();
-           cal.setTime(new Timestamp(1211503));
+           
            
            session.beginTransaction();
         
