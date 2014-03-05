@@ -6,123 +6,231 @@
 
 package gui;
 
-import de.jaret.util.ui.timebars.TimeBarViewerInterface;
-import de.jaret.util.ui.timebars.mod.DefaultIntervalModificator;
-import de.jaret.util.ui.timebars.model.TimeBarModel;
-import de.jaret.util.ui.timebars.swing.TimeBarViewer;
-import de.jaret.util.ui.timebars.swing.renderer.OldDefaultTimeScaleRenderer;
-import entity.Presentation;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import model.Appointment;
-import model.CalendarModel;
-import model.ModelCreator;
-import model.PresentationModificator;
-import swing.CalendarControlPanel;
-import swing.renderer.CalendarGridRenderer;
-import swing.renderer.PresentationRenderer;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+import javafx.util.Callback;
+import jfxtras.scene.control.agenda.Agenda;
 
 /**
  *
  * @author Maxim
  */
-public class GraphicApplication 
+public class GraphicApplication
 {
-    private JFrame mainFrame;
-    private JFrame ptFrame;
-    private TimeBarViewer _tbv;
-    
-    public GraphicApplication() 
-    {
-        
-    }
-    
-    public void initGUI() 
-    {
-        //FRAME: PRESENTATIE TONEN
-        mainFrame = new JFrame("Presentation overview");
-        mainFrame.setSize(1500, 1500);
-        mainFrame.getContentPane().setLayout(new BorderLayout());
-        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        //FRAME: PRESENTATIE TOEVOEGEN
-        ptFrame = new JFrame("Presentatie toevoegen");
-        ptFrame.setSize(500, 500);
-        ptFrame.getContentPane().setLayout(new BorderLayout());
-        ptFrame.getContentPane().add(new PanelPresentatieToevoegen(), BorderLayout.CENTER);
-        ptFrame.pack();
-        ptFrame.setVisible(false);       
-        
-        //presentatie overview pannel aanmaken
-        initTimeTable();
- 
-        //display the window
-        mainFrame.pack();
-        mainFrame.setVisible(true);
-    }
-    
-    private void initTimeTable() 
-    {        
-        TimeBarModel model = ModelCreator.createCalendarModel();;
-        _tbv = new TimeBarViewer(model);
+    final Agenda agenda;
+     
+    public GraphicApplication() {
+        agenda = new Agenda();
 
-        _tbv.addIntervalModificator(new DefaultIntervalModificator());
+        // setup appointment groups
+        final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
+        lAppointmentGroupMap.put("group00", new Agenda.AppointmentGroupImpl().withStyleClass("group0"));
+        lAppointmentGroupMap.put("group01", new Agenda.AppointmentGroupImpl().withStyleClass("group1"));
+        lAppointmentGroupMap.put("group02", new Agenda.AppointmentGroupImpl().withStyleClass("group2"));
+        lAppointmentGroupMap.put("group03", new Agenda.AppointmentGroupImpl().withStyleClass("group3"));
+        lAppointmentGroupMap.put("group04", new Agenda.AppointmentGroupImpl().withStyleClass("group4"));
+        lAppointmentGroupMap.put("group05", new Agenda.AppointmentGroupImpl().withStyleClass("group5"));
+        lAppointmentGroupMap.put("group06", new Agenda.AppointmentGroupImpl().withStyleClass("group6"));
+        lAppointmentGroupMap.put("group07", new Agenda.AppointmentGroupImpl().withStyleClass("group7"));
+        lAppointmentGroupMap.put("group08", new Agenda.AppointmentGroupImpl().withStyleClass("group8"));
+        lAppointmentGroupMap.put("group09", new Agenda.AppointmentGroupImpl().withStyleClass("group9"));
+        lAppointmentGroupMap.put("group10", new Agenda.AppointmentGroupImpl().withStyleClass("group10"));
+        lAppointmentGroupMap.put("group11", new Agenda.AppointmentGroupImpl().withStyleClass("group11"));
+        lAppointmentGroupMap.put("group12", new Agenda.AppointmentGroupImpl().withStyleClass("group12"));
+        lAppointmentGroupMap.put("group13", new Agenda.AppointmentGroupImpl().withStyleClass("group13"));
+        lAppointmentGroupMap.put("group14", new Agenda.AppointmentGroupImpl().withStyleClass("group14"));
+        lAppointmentGroupMap.put("group15", new Agenda.AppointmentGroupImpl().withStyleClass("group15"));
+        lAppointmentGroupMap.put("group16", new Agenda.AppointmentGroupImpl().withStyleClass("group16"));
+        lAppointmentGroupMap.put("group17", new Agenda.AppointmentGroupImpl().withStyleClass("group17"));
+        lAppointmentGroupMap.put("group18", new Agenda.AppointmentGroupImpl().withStyleClass("group18"));
+        lAppointmentGroupMap.put("group19", new Agenda.AppointmentGroupImpl().withStyleClass("group19"));
+        lAppointmentGroupMap.put("group20", new Agenda.AppointmentGroupImpl().withStyleClass("group20"));
+        lAppointmentGroupMap.put("group21", new Agenda.AppointmentGroupImpl().withStyleClass("group21"));
+        lAppointmentGroupMap.put("group22", new Agenda.AppointmentGroupImpl().withStyleClass("group22"));
+        lAppointmentGroupMap.put("group23", new Agenda.AppointmentGroupImpl().withStyleClass("group23"));
+        for (String lId : lAppointmentGroupMap.keySet())
+        {
+            Agenda.AppointmentGroup lAppointmentGroup = lAppointmentGroupMap.get(lId);
+            lAppointmentGroup.setDescription(lId);
+            agenda.appointmentGroups().add(lAppointmentGroup);
+        }
 
-        _tbv.setPixelPerSecond(0.018);
-        _tbv.setDrawRowGrid(true);
-
-        _tbv.setSelectionDelta(6);
-        // this is the col width!
-        _tbv.setRowHeight(150);
-        
-        _tbv.setTBOrientation(TimeBarViewerInterface.Orientation.VERTICAL);
-        // vertical: the y axiswidth is the height of the row headers!
-        _tbv.setYAxisWidth(50);
-        
-        // do not adjust the displayed time according to the model 
-        // use the basedate day!
-        _tbv.setAdjustMinMaxDatesByModel(false);
-        _tbv.setMinDate(CalendarModel.BASEDATE.copy());
-        _tbv.setMaxDate(CalendarModel.BASEDATE.copy().advanceDays(1));
-
-        _tbv.setDrawOverlapping(true);
-        _tbv.setSelectionDelta(6);
-        _tbv.setTimeScalePosition(TimeBarViewerInterface.TIMESCALE_POSITION_TOP);
-
-        // modifications are restricted
-        _tbv.addIntervalModificator(new PresentationModificator());
-
-        _tbv.setTimeScaleRenderer(new OldDefaultTimeScaleRenderer());
-        
-        _tbv.setGridRenderer(new CalendarGridRenderer());
-        
-        _tbv.registerTimeBarRenderer(Presentation.class, new PresentationRenderer());
-        _tbv.setAutoScaleRows(5);
-        _tbv.setOptimizeScrolling(true);
-         
-        mainFrame.getContentPane().add(_tbv, BorderLayout.CENTER);
-
-        mainFrame.getContentPane().add(new CalendarSortPanel(), BorderLayout.EAST);
-        
-        JButton voegPresentatieToe = new JButton("Voeg presentatie toe");
-        voegPresentatieToe.addActionListener(new ActionListener() {
+        // accept new appointments
+        agenda.createAppointmentCallbackProperty().set(new Callback<Agenda.CalendarRange, Agenda.Appointment>()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                ptFrame.setVisible(true);
+            public Agenda.Appointment call(Agenda.CalendarRange calendarRange)
+            {
+                return new Agenda.AppointmentImpl()
+                        .withStartTime(calendarRange.getStartCalendar())
+                        .withEndTime(calendarRange.getEndCalendar())
+                        .withSummary("new")
+                        .withDescription("new")
+                        .withAppointmentGroup(lAppointmentGroupMap.get("group01"));
             }
         });
-        mainFrame.getContentPane().add(voegPresentatieToe, BorderLayout.SOUTH);
-        
-        //mainFrame.getContentPane().add(new CalendarControlPanel(_tbv), BorderLayout.SOUTH);
-        
-        mainFrame.setVisible(true);
 
+        // initial set
+        Calendar lFirstDayOfWeekCalendar = getFirstDayOfWeekCalendar(agenda.getLocale(), agenda.getDisplayedCalendar());
+        int lFirstDayOfWeekYear = lFirstDayOfWeekCalendar.get(Calendar.YEAR);
+        int lFirstDayOfWeekMonth = lFirstDayOfWeekCalendar.get(Calendar.MONTH);
+        int FirstDayOfWeek = lFirstDayOfWeekCalendar.get(Calendar.DATE);
+        Calendar lToday = agenda.getDisplayedCalendar();
+        int lTodayYear = lToday.get(Calendar.YEAR);
+        int lTodayMonth = lToday.get(Calendar.MONTH);
+        int lTodayDay = lToday.get(Calendar.DATE);
+        agenda.appointments().addAll(
+		/*
+		 *  . . . .
+		 *  . . . . 
+		 *  A . . .  8:00
+		 *  A B C .  8:30
+		 *  A B C D  9:00
+		 *  A B . D  9:30
+		 *  A . . D 10:00
+		 *  A E . D 10:30
+		 *  A . . D 11:00
+		 *  . . . D 11:30
+		 *  . . . D 12:00
+		 *  F . . D 12:30
+		 *  F H . D 13:00
+		 *  . . . . 13:30
+		 *  G . . . 14:00
+		 *  . . . . 14:30
+		 * 
+		 */
+        new Agenda.AppointmentImpl()
+                .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 00))
+                .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 30))
+                .withSummary("A")
+                .withDescription("A much longer test description")
+                .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 10, 00))
+            .withSummary("B")
+            .withDescription("A description 2")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group08"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 30))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 30))
+            .withSummary("C")
+            .withDescription("A description 3")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group09"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 9, 00))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 30))
+            .withSummary("D")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 10, 30))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 11, 00))
+            .withSummary("E")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 12, 30))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 30))
+            .withSummary("F")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 00))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 13, 30))
+            .withSummary("H")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 14, 00))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 14, 45))
+            .withSummary("G")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 8, 10))
+            .withEndTime(null)
+            .withSummary("K asfsfd dsfsdfs fsfds sdgsds dsdfsd ")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 19, 00))
+            .withEndTime(null)
+            .withSummary("L asfsfd dsfsdfs fsfds sdgsds dsdfsd ")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 15, 00))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 16, 00))
+            .withSummary("I")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 15, 30))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 16, 00))
+            .withSummary("J")
+            .withDescription("A description 4")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+            // -----
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 20, 30))
+            .withEndTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay, 20, 31))
+            .withSummary("S")
+            .withDescription("Too short")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+            // -----
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay))
+            .withSummary("all day1")
+            .withDescription("A description")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group07"))
+            .withWholeDay(true)
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay))
+            .withSummary("all day2")
+            .withDescription("A description")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group08"))
+            .withWholeDay(true)
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay))
+            .withSummary("all day3")
+            .withDescription("A description3")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group09"))
+            .withWholeDay(true)
+        , 	new Agenda.AppointmentImpl()
+            .withStartTime(new GregorianCalendar(lTodayYear, lTodayMonth, lTodayDay + 1))
+            .withSummary("all day")
+            .withDescription("A description3")
+            .withAppointmentGroup(lAppointmentGroupMap.get("group03"))
+            .withWholeDay(true)
+        );
     }
+    /**
+     * get the calendar for the first day of the week
+     */
+    static private Calendar getFirstDayOfWeekCalendar(Locale locale, Calendar c)
+    {
+        // result
+        int lFirstDayOfWeek = Calendar.getInstance(locale).getFirstDayOfWeek();
+        int lCurrentDayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        int lDelta = 0;
+        if (lFirstDayOfWeek <= lCurrentDayOfWeek)
+        {
+            lDelta = -lCurrentDayOfWeek + lFirstDayOfWeek;
+        }
+        else
+        {
+            lDelta = -lCurrentDayOfWeek - (7-lFirstDayOfWeek);
+        }
+        c = ((Calendar)c.clone());
+        c.add(Calendar.DATE, lDelta);
+        return c;
+    }
+
+    public Agenda getAgenda() {
+        return agenda;
+    }       
 }

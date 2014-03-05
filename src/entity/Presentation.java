@@ -6,8 +6,6 @@
 
 package entity;
 
-import de.jaret.util.date.IntervalImpl;
-import de.jaret.util.date.JaretDate;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,12 +18,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import model.CalendarModel;
 import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "Presentation") 
-public class Presentation extends IntervalImpl implements Serializable
+public class Presentation implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -118,32 +115,4 @@ public class Presentation extends IntervalImpl implements Serializable
     public void setEditable(boolean editable) {
         this.editable = editable;
     }   
-    
-    private JaretDate correct(JaretDate realBegin) {
-        return CalendarModel.BASEDATE.copy().setTime(realBegin.getHours(), realBegin.getMinutes(), realBegin.getSeconds());
-    }
-    
-    protected void changed() {
-        // set the last changed date to now
-        // if the last change date is already in the future (that may happen when synchronizing with
-        // external systems) set is to be after that date in the future
-        /*JaretDate d = new JaretDate();
-        if (_lastChangeDate == null || d.compareTo(_lastChangeDate) > 0) {
-            _lastChangeDate = d;
-        } else {
-            _lastChangeDate.advanceMinutes(1);
-        }*/
-
-    }
-    
-    @Override
-    public JaretDate getBegin() {
-        return new JaretDate(this.startTime);
-    }
-    
-    @Override
-    public JaretDate getEnd() {
-        return new JaretDate(this.endTime);
-    }
-    
 }

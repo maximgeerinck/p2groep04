@@ -1,5 +1,9 @@
 
-import runnable.ApplicationRunnable;
+import gui.GraphicApplication;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,10 +15,23 @@ import runnable.ApplicationRunnable;
  *
  * @author Maxim
  */
-public class StartUp 
+public class StartUp extends Application 
 {
+    private GraphicApplication application = new GraphicApplication();
+    
     public static void main(String[] args) 
     {
-        javax.swing.SwingUtilities.invokeLater(new ApplicationRunnable());
+         launch(args);
+    }
+    
+    @Override
+    public void start(Stage primaryStage) 
+    {                
+        primaryStage.setTitle("Planning overzicht");
+        
+        StackPane root = new StackPane();
+        root.getChildren().add(application.getAgenda());
+        primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.show();
     }
 }
