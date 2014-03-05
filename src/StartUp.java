@@ -1,6 +1,6 @@
 
 import gui.GraphicApplication;
-import gui.PanelPresentatieToevoegen;
+import gui.screens.PresentatieToevoegenScreen;
 import java.math.BigDecimal;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.ScreenFactory;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,6 +35,7 @@ public class StartUp extends Application
     @Override
     public void start(Stage primaryStage) 
     {                
+        
         primaryStage.setTitle("Planning overzicht");
         
         SplitPane root = new SplitPane();
@@ -46,8 +48,8 @@ public class StartUp extends Application
             @Override
             public void handle(ActionEvent arg0) {
                Stage stage = new Stage();
-               
-               stage.setScene(new PanelPresentatieToevoegen().showScreen());
+               stage.setTitle("Presentatie toevoegen");
+               stage.setScene(ScreenFactory.createScreen(ScreenFactory.SCREEN_PRESENTATIE_TOEVOEGEN).showScreen());
                stage.show();
             }
         });

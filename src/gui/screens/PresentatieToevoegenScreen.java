@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package gui;
+package gui.screens;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,66 +12,21 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ComboBoxBuilder;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import jfxtras.scene.control.CalendarTextField;
+import model.IScreen;
 
 /**
  *
  * @author Maxim
  */
-public class PanelPresentatieToevoegen 
-{
-    public PanelPresentatieToevoegen() 
-    {
-        
-        
-        
-        
-       /*
-        COMBOX EXAMPLE
-        ---------------
-        root.addRow(9, new Label("ComboBox"), ComboBoxBuilder
-                .create()
-                .editable(true)
-                .build()
-        );*/
+public class PresentatieToevoegenScreen implements IScreen
+{  
 
-        /*
-        TEXT CHANGE LISTENER EXAMPLE
-        -----------------------------
-        promptText.numberProperty().addListener(new ChangeListener<BigDecimal>() {
-            @Override
-            public void changed(ObservableValue<? extends BigDecimal> observableValue, BigDecimal o, BigDecimal o1) {
-                System.out.println(o1);
-            }
-        });*/
-
-        /*
-        BUTTON EXAMPLE
-        --------------
-        Button button = new Button("Reset fields");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent arg0) {
-                defaultSpinner.setNumber(new BigDecimal(Math.random() * 1000));
-                decimalFormat.setNumber(new BigDecimal(Math.random() * 1000));
-                percent.setNumber(new BigDecimal(Math.random()));
-                localizedCurrency.setNumber(new BigDecimal(Math.random() * 1000));
-                disabledField.setNumber(new BigDecimal(Math.random() * 1000));
-                promptText.setNumber(null);
-            }
-        });
-        root.addRow(11, new Label(), button);
-        */
-    }
-    
     public Scene showScreen() 
     {
-
-        javafx.scene.layout.GridPane root = new javafx.scene.layout.GridPane();
+        javafx.scene.layout.GridPane root = new javafx.scene.layout.GridPane();        
         root.setHgap(10);
         root.setVgap(10);
         root.setPadding(new Insets(25, 25 ,25 ,25));
@@ -130,4 +85,5 @@ public class PanelPresentatieToevoegen
 
         return new Scene(root, 600, 600);
     }
+
 }
