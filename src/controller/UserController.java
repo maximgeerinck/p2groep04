@@ -1,6 +1,6 @@
 package controller;
 
-import domein.*;
+import entity.*;
 
 public class UserController {
 
