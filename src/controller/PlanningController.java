@@ -1,6 +1,7 @@
 package controller;
 import jfxtras.scene.control.agenda.Agenda;
 import entity.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -51,13 +52,17 @@ public class PlanningController {
             return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
         }
         
-        public void addPresentation(Presentation presentation){
+        public void addPresentation(String startTijd, String eindTijd, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip)
+        {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            Query q = session.createQuery("INSERT INTO Presentation(begin_time, end_time, location) VALUES ("+ 
-                    presentation.getStartTime() +"," + presentation.getEndTime()
-                    +"," +presentation.getLocation()+")");
             
+            Presentation p = new Presentation();
+            //p.setStartTime(new Timestamp(startTijd));
+            //p.setEndTime(new Timestamp(eindTijd));            
+            
+            session.save(p);
+            session.flush();
             session.close();
         }
         
