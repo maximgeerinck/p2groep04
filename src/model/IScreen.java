@@ -7,6 +7,7 @@
 package model;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -15,4 +16,5 @@ import javafx.scene.Scene;
 public interface IScreen 
 {
     Scene showScreen();
+    Pane getPane();
 }

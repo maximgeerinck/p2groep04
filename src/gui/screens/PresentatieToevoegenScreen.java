@@ -6,14 +6,20 @@
 
 package gui.screens;
 
+import java.util.Observable;
+import java.util.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import jfxtras.scene.control.CalendarTextField;
 import model.IScreen;
 
@@ -21,10 +27,9 @@ import model.IScreen;
  *
  * @author Maxim
  */
-public class PresentatieToevoegenScreen implements IScreen
+public class PresentatieToevoegenScreen extends Observable implements IScreen
 {  
-
-    public Scene showScreen() 
+    public Pane getPane() 
     {
         javafx.scene.layout.GridPane root = new javafx.scene.layout.GridPane();        
         root.setHgap(10);
@@ -81,9 +86,24 @@ public class PresentatieToevoegenScreen implements IScreen
         root.addRow(8, new Label("Tijdstip"), new TextField());
         
         Button btnAdd = new Button("Toevoegen");
-        root.addRow(9, btnAdd);
+        btnAdd.setOnAction(new EventHandler<ActionEvent>(){
 
-        return new Scene(root, 600, 600);
+            @Override
+            public void handle(ActionEvent t) {
+                //Roep setchanged aan ma das van de fucking klasse der boven -.-
+                PresentatieToevoegenScreen.this.setChanged();
+                PresentatieToevoegenScreen.this.notifyObservers();
+            }
+            
+        });
+        root.addRow(9, btnAdd);
+        
+        return root;
+    }
+     
+    public Scene showScreen() 
+    {       
+        return new Scene(getPane(), 600, 600);
     }
 
 }

@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.TreeMap;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
@@ -18,7 +20,7 @@ import jfxtras.scene.control.agenda.Agenda;
  *
  * @author Maxim
  */
-public class GraphicApplication
+public class GraphicApplication implements Observer
 {
     final Agenda agenda;
      
@@ -217,4 +219,11 @@ public class GraphicApplication
     public Agenda getAgenda() {
         return agenda;
     }       
+
+    @Override
+    public void update(Observable o, Object arg) {
+        //Redraw
+        System.out.println("TEST");
+        
+    }
 }

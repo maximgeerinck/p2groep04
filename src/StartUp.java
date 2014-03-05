@@ -1,16 +1,14 @@
 
 import gui.GraphicApplication;
 import gui.screens.PresentatieToevoegenScreen;
-import java.math.BigDecimal;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import jfxtras.scene.layout.VBox;
 import model.ScreenFactory;
 
 /*
@@ -42,21 +40,21 @@ public class StartUp extends Application
         StackPane sp1 = new StackPane();
         sp1.getChildren().add(application.getAgenda());
         
-        StackPane sp2 = new StackPane();
-        Button button = new Button("Nieuwe presentatie");       
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent arg0) {
-               Stage stage = new Stage();
-               stage.setTitle("Presentatie toevoegen");
-               stage.setScene(ScreenFactory.createScreen(ScreenFactory.SCREEN_PRESENTATIE_TOEVOEGEN).showScreen());
-               stage.show();
-            }
-        });
-        sp2.getChildren().add(button);
-        //root.getChildren().add(11, new Label(), button);
+        /* SIDEBAR */
+        VBox v = new VBox();
+        v.setMinWidth(350);
+
+        Accordion a = new Accordion();
         
-        root.getItems().addAll(sp1, sp2);
+        // Presentatie toevoegen
+        PresentatieToevoegenScreen presentaties = (PresentatieToevoegenScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PRESENTATIE_TOEVOEGEN);
+        presentaties.addObserver(application);
+        TitledPane tpPresentaties = new TitledPane("Presentatie toevoegen", presentaties.getPane());
+        a.getPanes().add(tpPresentaties);
+        a.setExpandedPane(tpPresentaties);        
+        v.add(a);
+        
+        root.getItems().addAll(sp1, v);
         root.setDividerPositions(0.9f, 0.6f, 0.9f);
         primaryStage.setScene(new Scene(root, 1500, 900));
         primaryStage.show();
