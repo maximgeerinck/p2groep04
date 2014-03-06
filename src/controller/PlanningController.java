@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.EntityManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import util.HibernateUtil;
+import util.JPAUtil;
+
 
 
 public class PlanningController {
@@ -21,14 +23,14 @@ public class PlanningController {
         public Agenda.AppointmentImpl[] retrievePresentations() 
         {
             
-           Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+           EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
            List<Agenda.AppointmentImpl> presentaties = new ArrayList();
            Calendar cal = GregorianCalendar.getInstance();
            Calendar cal2 = GregorianCalendar.getInstance();
 
-           session.beginTransaction();
+           manager.getTransaction().begin();
         
-            Query q = session.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC");
+            Query q = (Query) manager.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC");
             
             for(Presentation p : (List<Presentation>)q.list())
             {
@@ -47,32 +49,36 @@ public class PlanningController {
                 );
             }
 
-            session.close();
+            manager.getTransaction().commit();
+            manager.close();
 
             return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
         }
         
-        public void addPresentation(String startTijd, String eindTijd, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip)
+        public void addPresentation(String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip)
         {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
+            EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            manager.getTransaction().begin();
             
             Presentation p = new Presentation();
             //p.setStartTime(new Timestamp(startTijd));
             //p.setEndTime(new Timestamp(eindTijd));            
             
-            session.save(p);
-            session.flush();
-            session.close();
+            
+            
+            manager.persist(p);
+            manager.getTransaction().commit();
+            manager.close();
         }
         
         public void removePresentation(Presentation presentation)
         {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            Query q = session.createQuery("DELETE FROM Presentation WHERE id =" + presentation.getId() + ")");
+            EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            manager.getTransaction().begin();
+            Query q = (Query) manager.createQuery("DELETE FROM Presentation WHERE id =" + presentation.getId() + ")");
             
-            session.close();
+            manager.getTransaction().commit();
+            manager.close();
         }
     
 	public Planning filterOnCopromotor(User coPromotor) {
