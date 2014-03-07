@@ -104,24 +104,32 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
     @Override
     public void setValueAt(Object value, int row, int column) {
     }
+//
+//  Implement the ChangeListener
+//
 
-	/**
-	 * Implement the ChangeListener
-	 * @param e
-	 */
-	public void stateChanged(javax.swing.event.ChangeEvent e) {
-		// TODO - implement RowNumberTable.stateChanged
-		throw new UnsupportedOperationException();
-	}
+    public void stateChanged(ChangeEvent e) {
+        //  Keep the scrolling of the row table in sync with main table
 
-	/**
-	 * Implement the PropertyChangeListener
-	 * @param e
-	 */
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		// TODO - implement RowNumberTable.propertyChange
-		throw new UnsupportedOperationException();
-	}
+        JViewport viewport = (JViewport) e.getSource();
+        JScrollPane scrollPane = (JScrollPane) viewport.getParent();
+        scrollPane.getVerticalScrollBar().setValue(viewport.getViewPosition().y);
+    }
+//
+//  Implement the PropertyChangeListener
+//
+
+    public void propertyChange(PropertyChangeEvent e) {
+        //  Keep the row table in sync with the main table
+
+        if ("selectionModel".equals(e.getPropertyName())) {
+            setSelectionModel(main.getSelectionModel());
+        }
+
+        if ("rowHeight".equals(e.getPropertyName())) {
+            repaint();
+        }
+    }
 
     /*
      *  Attempt to mimic the table header renderer
@@ -153,19 +161,5 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
 
             return this;
         }
-
-		/**
-		 * 
-		 * @param table
-		 * @param value
-		 * @param isSelected
-		 * @param hasFocus
-		 * @param row
-		 * @param column
-		 */
-		public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			// TODO - implement RowNumberRenderer.getTableCellRendererComponent
-			throw new UnsupportedOperationException();
-		}
     }
 }

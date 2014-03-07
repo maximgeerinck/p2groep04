@@ -1,34 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Entity;
+import java.io.*;
 import java.util.*;
+import javax.persistence.*;
 
 /**
- *
  * @author Bram
  */
-@Entity
-public class ResearchDomain implements Serializable
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    
-    @Column(name = "created_on")
-    private Timestamp createdOn;
+@javax.persistence.Entity
+public class ResearchDomain implements Serializable {
+
 	@javax.persistence.Transient
 	private Collection<Suggestion> suggestions;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	private String name;
+
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@javax.persistence.Column(name="name")
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

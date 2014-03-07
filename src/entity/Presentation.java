@@ -1,51 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import org.joda.time.DateTime;
+import java.io.*;
 import java.util.*;
+import javax.persistence.*;
 
-@javax.persistence.Entity 
-public class Presentation implements Serializable
-{
-    @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id", nullable=false)
-    private int id;
-    
-    @Column(name = "start_time")
-    private Timestamp startTime;
-    
-    @Column(name = "end_time")
-    private Timestamp endTime;
-    
-    @javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
-    private Location location;
-    
-    @javax.persistence.Transient
-    private List<User> users;
-    
-    @javax.persistence.Transient
-    private List<Planning> plannings;
-    
-    private transient boolean editable;
+@javax.persistence.Entity
+public class Presentation implements Serializable {
+
 	@javax.persistence.Transient
 	private User user;
 	@javax.persistence.Transient
@@ -54,80 +15,108 @@ public class Presentation implements Serializable
 	private Collection<GuestRequest> guestRequests;
 	@javax.persistence.Transient
 	private Collection<User> guests;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 
-    public Presentation() {
-    }
-
-    public Presentation(Timestamp startTime, Timestamp endTime, Location location) 
-    {
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setLocation(location);
-        //changed();
-    }
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;        
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<Planning> getPlannings() {
-        return plannings;
-    }
-
-    public void setPlannings(List<Planning> plannings) {
-        this.plannings = plannings;
-    }
-
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-    
-    public String toDisplayString() 
-    {
-        // convert to datetime 
-        DateTime start = new DateTime(getStartTime());
-        DateTime end = new DateTime(getEndTime());
+	private transient boolean editable;
+	@javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
+	private Location location;
         
-        return start.toString("HH:mm") + " - " + end.toString("HH:mm");
+        private TimeFrame timeFrame;
+
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@javax.persistence.Column(name="editable")
+	public boolean isEditable() {
+		return this.editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	@javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
+	public Location getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Presentation() {
+		// TODO - implement Presentation.Presentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param startTime
+	 * @param endTime
+	 * @param location
+	 */
+	public Presentation(java.sql.Timestamp startTime, java.sql.Timestamp endTime, Location location) {
+		// TODO - implement Presentation.Presentation
+		throw new UnsupportedOperationException();
+	}
+
+	public String toDisplayString() {
+		// TODO - implement Presentation.toDisplayString
+		throw new UnsupportedOperationException();
+	}
+
+    public User getUser() {
+        return user;
     }
 
-    public boolean isEditable() {
-        return editable;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }   
+    public Planning getPlanning() {
+        return planning;
+    }
+
+    public void setPlanning(Planning planning) {
+        this.planning = planning;
+    }
+
+    public Collection<GuestRequest> getGuestRequests() {
+        return guestRequests;
+    }
+
+    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
+        this.guestRequests = guestRequests;
+    }
+
+    public Collection<User> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(Collection<User> guests) {
+        this.guests = guests;
+    }
+
+    public TimeFrame getTimeFrame() {
+        return timeFrame;
+    }
+
+    public void setTimeFrame(TimeFrame timeFrame) {
+        this.timeFrame = timeFrame;
+    }
+        
+        
+
 }

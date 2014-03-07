@@ -7,15 +7,18 @@
 package model;
 
 import entity.Planning;
+import entity.PlanningPresentation;
 import entity.Presentation;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.*;
-import java.io.*;
 
 /**
  *
@@ -23,6 +26,7 @@ import java.io.*;
  */
 @MappedSuperclass
 @javax.persistence.Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@javax.persistence.Entity
 public abstract class AbstractUser implements Serializable
 {
     @Id
@@ -53,6 +57,13 @@ public abstract class AbstractUser implements Serializable
     @javax.persistence.Transient
     protected List<Planning> plannings;
 
+    /**
+     * De lijst van presentaties waar de gebruiker naar toe gaat, deze presentaties zijn al in een planning opgenomen
+     */
+    @javax.persistence.Transient
+    protected List<PlanningPresentation> plannedPresentations;
+    
+    
     public AbstractUser() {
     }
 

@@ -12,6 +12,21 @@ import jfxtras.scene.control.agenda.Agenda;
 import util.JPAUtil;
 
 public class PlanningController {
+
+	/**
+	 * 
+	 * @param coPromotor
+	 */
+	public Planning filterOnCopromotor(domein.User coPromotor) {
+		// TODO - implement PlanningController.filterOnCopromotor
+		throw new UnsupportedOperationException();
+	}
+
+	public Planning filterOnAvailable() {
+		// TODO - implement PlanningController.filterOnAvailable
+		throw new UnsupportedOperationException();
+	}
+
 	public Agenda.AppointmentImpl[] retrievePresentations() 
         {
             EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -26,10 +41,10 @@ public class PlanningController {
              for(Presentation p : presentations)
              {
                  cal = ((Calendar) cal.clone());
-                 cal.setTime(p.getTimeFrame().getStartTime());
+                 cal.setTime(p.getStartTime());
 
                  cal2 = ((Calendar) cal2.clone());
-                 cal2.setTime(p.getTimeFrame().getEndTime());
+                 cal2.setTime(p.getEndTime());
 
                  presentaties.add(new Agenda.AppointmentImpl()
                      .withStartTime(cal)
@@ -89,4 +104,70 @@ public class PlanningController {
             manager.close();
 	}
 
+	/**
+	 * 
+	 * @param coPromotor
+	 */
+	public Planning filterOnCopromotor(User coPromotor) {
+		// TODO - implement PlanningController.filterOnCopromotor
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentations
+	 */
+	public void createPlanning(List<Presentation> presentations) {
+		// TODO - implement PlanningController.createPlanning
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param planning
+	 */
+	public void enablePlanning(Planning planning) {
+		// TODO - implement PlanningController.enablePlanning
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param plannig
+	 * @param startTime
+	 * @param endTime
+	 */
+	public void registerVisibilityPeriod(Planning plannig, Timestamp startTime, Timestamp endTime) {
+		// TODO - implement PlanningController.registerVisibilityPeriod
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param planning
+	 * @param visible
+	 */
+	public void changeVisibility(Planning planning, boolean visible) {
+		// TODO - implement PlanningController.changeVisibility
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param planning
+	 */
+	public void removePlanning(Planning planning) {
+		// TODO - implement PlanningController.removePlanning
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 * @param guest
+	 */
+	public void approveGuestRequest(Presentation presentation, User guest) {
+		// TODO - implement PlanningController.approveGuestRequest
+		throw new UnsupportedOperationException();
+	}
 }

@@ -54,54 +54,9 @@ public class PresentationTableModel extends AbstractTableModel {
 	 * @param rowIndex
 	 * @param columnIndex
 	 */
-	@Override()
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) throws IllegalStateException {
 		// TODO - implement PresentationTableModel.getValueAt
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param dataset
-	 */
-	public PresentationTableModel(java.util.List<Presentation> dataset) throws java.sql.SQLException {
-		// TODO - implement PresentationTableModel.PresentationTableModel
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param dataset
-	 */
-	private void setDataset(java.util.List<Presentation> dataset) {
-		// TODO - implement PresentationTableModel.setDataset
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param dataset
-	 */
-	public PresentationTableModel(java.util.List<Presentation> dataset) throws java.sql.SQLException {
-		// TODO - implement PresentationTableModel.PresentationTableModel
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param dataset
-	 */
-	private void setDataset(java.util.List<Presentation> dataset) {
-		// TODO - implement PresentationTableModel.setDataset
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param dataset
-	 */
-	public PresentationTableModel(java.util.List<Presentation> dataset) throws java.sql.SQLException {
-		// TODO - implement PresentationTableModel.PresentationTableModel
 		throw new UnsupportedOperationException();
 	}
 

@@ -6,21 +6,29 @@
 
 package entity;
 
-import javax.persistence.Entity;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Entity;
+import java.util.*;
 
 /**
  *
  * @author Bram
  */
 @Entity
-public class Campus 
+public class ResearchDomain implements Serializable
 {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String adres;
+    
+    @Column(name = "created_on")
+    private Timestamp createdOn;
+	@javax.persistence.Transient
+	private Collection<Suggestion> suggestions;
 }

@@ -13,19 +13,14 @@ import javax.persistence.Id;
 
 /**
  *
- * @author Maxim
+ * @author Bram
  */
 @Entity
-public class GuestRequest 
+public class Campus 
 {
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private boolean approved;
-        
-    private User guest;
-        
-    private Presentation presentation;
-    
+    private String name;
+    private String adres;
 }

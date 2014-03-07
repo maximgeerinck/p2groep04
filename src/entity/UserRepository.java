@@ -25,4 +25,67 @@ public class UserRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -15,4 +15,76 @@ public class PresentationRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
 }

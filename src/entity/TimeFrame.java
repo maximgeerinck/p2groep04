@@ -1,36 +1,40 @@
 package entity;
 
+import java.io.*;
 import java.sql.Timestamp;
-import java.util.List;
+import javax.persistence.*;
 
-public class TimeFrame {
+/**
+ * @author Bram
+ */
+@javax.persistence.Entity
+public class TimeFrame implements Serializable {
 
-	private Timestamp startTime;
-	private Timestamp endTime;
-	private List<String> daysNotEnabled;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public Timestamp getStartTime() {
-		return this.startTime;
-	}
+    private Timestamp startTime;
+    private Timestamp endTime;
 
-	public void setStartTime(Timestamp startTime) {
-		this.startTime = startTime;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public Timestamp getEndTime() {
-		return this.endTime;
-	}
+    public Timestamp getStartTime() {
+        return startTime;
+    }
 
-	public void setEndTime(Timestamp endTime) {
-		this.endTime = endTime;
-	}
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
 
-	public List<String> getDaysNotEnabled() {
-		return this.daysNotEnabled;
-	}
+    public Timestamp getEndTime() {
+        return endTime;
+    }
 
-	public void setDaysNotEnabled(List<String> daysNotEnabled) {
-		this.daysNotEnabled = daysNotEnabled;
-	}
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
 
 }

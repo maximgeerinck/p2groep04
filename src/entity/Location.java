@@ -1,33 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package entity;
 
-import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Entity;
+import java.io.*;
+import javax.persistence.*;
 
 /**
- *
  * @author Bram
  */
-@Entity
-public class Location implements Serializable
-{   
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @javax.persistence.ManyToOne(optional=false)
+@javax.persistence.Entity
+public class Location implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	private String classroom;
+	@javax.persistence.ManyToOne(optional=false)
 	@javax.persistence.JoinColumn(name="Locationid", referencedColumnName="id")
-    private Campus campus;
-    
-    private String classroom;
-    
+	private Campus campus;
+
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@javax.persistence.Column(name="classroom")
+	public String getClassroom() {
+		return this.classroom;
+	}
+
+	public void setClassroom(String classroom) {
+		this.classroom = classroom;
+	}
+
+	@javax.persistence.ManyToOne(optional=false)
+	@javax.persistence.JoinColumn(name="Locationid", referencedColumnName="id")
+	public Campus getCampus() {
+		return this.campus;
+	}
+
+	public void setCampus(Campus campus) {
+		this.campus = campus;
+	}
+
 }
