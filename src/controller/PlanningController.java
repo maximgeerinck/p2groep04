@@ -36,9 +36,9 @@ public class PlanningController {
 
             manager.getTransaction().begin();
 
-             Query q = (Query) manager.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC");
+            List<Presentation> presentations =  manager.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC").getResultList();
 
-             for(Presentation p : (List<Presentation>)q.list())
+             for(Presentation p : presentations)
              {
                  cal = ((Calendar) cal.clone());
                  cal.setTime(p.getStartTime());

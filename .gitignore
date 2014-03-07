@@ -2,3 +2,5 @@
 /src/hibernate.cfg.xml
 /nbproject/private/
 /dist/
+/src/META-INF/persistence.xml
+/src/META-INF/school.xml
