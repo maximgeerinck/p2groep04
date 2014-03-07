@@ -12,8 +12,7 @@ import javax.persistence.Persistence;
  * @author Roy
  */
 public class JPAUtil {
-    private final static EntityManagerFactory entityManagerFactory = 
-            Persistence.createEntityManagerFactory("school");
+    private final static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("school");
 
     public static EntityManagerFactory getEntityManagerFactory() {
         return entityManagerFactory;

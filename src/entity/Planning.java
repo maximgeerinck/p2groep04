@@ -15,13 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Entity;
+import java.util.*;
 
 
 @Entity
 public class Planning 
 {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@javax.persistence.Column(name="id", nullable=false)
     private int id;
     
     private int visible;
@@ -38,11 +40,14 @@ public class Planning
     @Column(name = "created_by")
     private int createdBy;
     
-    @ManyToMany
+    @javax.persistence.Transient
     private List<Presentation> presentations;
     
-    @OneToOne
+    @javax.persistence.OneToOne(optional=false)
+	@javax.persistence.JoinColumn(name="Planningid4", referencedColumnName="id", nullable=false)
     private User user;
+	@javax.persistence.Transient
+	private Collection<Presentation> presentation;
     
         
 }

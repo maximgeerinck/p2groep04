@@ -19,13 +19,14 @@ import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import org.joda.time.DateTime;
+import java.util.*;
 
-@Entity
-@Table(name = "Presentation") 
+@javax.persistence.Entity 
 public class Presentation implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id", nullable=false)
     private int id;
     
     @Column(name = "start_time")
@@ -34,16 +35,25 @@ public class Presentation implements Serializable
     @Column(name = "end_time")
     private Timestamp endTime;
     
-    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY)
+    @javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
     private Location location;
     
-    @ManyToMany
+    @javax.persistence.Transient
     private List<User> users;
     
-    @ManyToMany(mappedBy = "presentations")
+    @javax.persistence.Transient
     private List<Planning> plannings;
     
     private transient boolean editable;
+	@javax.persistence.Transient
+	private User user;
+	@javax.persistence.Transient
+	private Planning planning;
+	@javax.persistence.Transient
+	private Collection<GuestRequest> guestRequests;
+	@javax.persistence.Transient
+	private Collection<User> guests;
 
     public Presentation() {
     }

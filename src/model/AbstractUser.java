@@ -18,16 +18,19 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
  * @author Maxim
  */
 @MappedSuperclass
+@javax.persistence.Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class AbstractUser implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id", nullable=false)
     protected int id;
     
     protected String email;
@@ -47,19 +50,16 @@ public abstract class AbstractUser implements Serializable
     
     protected String[] roles;
     
-    /**
-     * 
-     */
-    @ManyToMany(mappedBy = "users")
+        @javax.persistence.Transient
     protected List<Presentation> presentations;
     
-    @OneToMany(mappedBy = "user")
+    @javax.persistence.Transient
     protected List<Planning> plannings;
 
     /**
      * De lijst van presentaties waar de gebruiker naar toe gaat, deze presentaties zijn al in een planning opgenomen
      */
-    @ManyToMany
+    @javax.persistence.Transient
     protected List<PlanningPresentation> plannedPresentations;
     
     

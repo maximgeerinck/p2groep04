@@ -24,7 +24,8 @@ public class Location implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @ManyToOne
+    @javax.persistence.ManyToOne(optional=false)
+	@javax.persistence.JoinColumn(name="Locationid", referencedColumnName="id")
     private Campus campus;
     
     private String classroom;

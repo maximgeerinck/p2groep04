@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.util.*;
 
 /**
  *
@@ -24,16 +25,25 @@ import javax.persistence.OneToOne;
 public class PlanningPresentation implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@javax.persistence.Column(name="id", nullable=false)
     private int id;
     
-    @ManyToOne
-    private Planning planning;
+    @javax.persistence.ManyToOne(optional=false)
+	@javax.persistence.JoinColumn(name="PlanningPresentationid4", referencedColumnName="id")
+    private Planning attribute;
     
-    @OneToOne
-    private Presentation presentation;
+    @javax.persistence.OneToOne(optional=false)
+	@javax.persistence.JoinColumn(name="PlanningPresentationid5", referencedColumnName="id")
+    private Presentation attribute2;
     
-    @ManyToMany
-    private List<User> users;
+    @javax.persistence.Transient
+    private List<User> attribute3;
+	@javax.persistence.Transient
+	private Planning planning;
+	@javax.persistence.Transient
+	private Presentation presentation;
+	@javax.persistence.Transient
+	private Collection<User> users;
     
 }

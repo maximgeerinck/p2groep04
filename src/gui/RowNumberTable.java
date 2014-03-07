@@ -1,96 +1,91 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.beans.*;
+import javax.swing.table.*;
 
 /**
- *
  * @author Maxim JTable that allows the use of row headers
  * @source: http://tips4java.wordpress.com/2008/11/18/row-number-table/
  */
-public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener 
-{
+public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener {
 
-    private JTable main;
-    private String[] rowHeaders = {
+	private javax.swing.JTable main;
+	private String[] rowHeaders = {
        "10u - 10u30",
        "11u - 11u30",
        "12u - 12u30",
        "13u - 13u30",
        "14u - 14u30"
     };
-        
-    public RowNumberTable(JTable table) {
-        main = table;
-        main.addPropertyChangeListener(this);
 
-        setFocusable(false);
-        setAutoCreateColumnsFromModel(false);
-        setSelectionModel(main.getSelectionModel());
+	/**
+	 * 
+	 * @param table
+	 */
+	public RowNumberTable(javax.swing.JTable table) {
+            main = table;
+            main.addPropertyChangeListener(this);
 
-        TableColumn column = new TableColumn();
-        column.setHeaderValue(" ");
-        addColumn(column);
-        column.setCellRenderer(new RowNumberRenderer());
+            setFocusable(false);
+            setAutoCreateColumnsFromModel(false);
+            setSelectionModel(main.getSelectionModel());
 
-        getColumnModel().getColumn(0).setPreferredWidth(100);
-        setPreferredScrollableViewportSize(getPreferredSize());
-    }
+            TableColumn column = new TableColumn();
+            column.setHeaderValue(" ");
+            addColumn(column);
+            column.setCellRenderer(new RowNumberRenderer());
 
-    @Override
-    public void addNotify() {
-        super.addNotify();
+            getColumnModel().getColumn(0).setPreferredWidth(100);
+            setPreferredScrollableViewportSize(getPreferredSize());
+	}
 
-        Component c = getParent();
+	@Override
+	public void addNotify() {
+            super.addNotify();
 
-		//  Keep scrolling of the row table in sync with the main table.
-        if (c instanceof JViewport) {
-            JViewport viewport = (JViewport) c;
-            viewport.addChangeListener(this);
-        }
-    }
+            Component c = getParent();
 
-    /*
-     *  Delegate method to main table
-     */
-    @Override
-    public int getRowCount() {
-        return main.getRowCount();
-    }
+                    //  Keep scrolling of the row table in sync with the main table.
+            if (c instanceof JViewport) {
+                JViewport viewport = (JViewport) c;
+                viewport.addChangeListener(this);
+            }
+	}
 
-    @Override
-    public int getRowHeight(int row) {
-        int rowHeight = main.getRowHeight(row);
+	/**
+	 * Delegate method to main table
+	 */
+	@Override
+	public int getRowCount() {
+            return main.getRowCount();
+	}
 
-        if (rowHeight != super.getRowHeight(row)) {
-            super.setRowHeight(row, rowHeight);
-        }
+	/**
+	 * 
+	 * @param row
+	 */
+	@Override
+	public int getRowHeight(int row) {
+            int rowHeight = main.getRowHeight(row);
 
-        return rowHeight;
-    }
+            if (rowHeight != super.getRowHeight(row)) {
+                super.setRowHeight(row, rowHeight);
+            }
 
-    /*
-     *  No model is being used for this table so just use the row number
-     *  as the value of the cell.
-     */
-    @Override
+            return rowHeight;
+	}
+
+	/**
+	 * No model is being used for this table so just use the row number
+	 * as the value of the cell.
+	 * @param row
+	 * @param column
+	 */
+	@Override
     public Object getValueAt(int row, int column) {
         return this.rowHeaders[row];
     }
