@@ -1,6 +1,9 @@
 package entity;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+
+
 
 public class UserRepository {
 

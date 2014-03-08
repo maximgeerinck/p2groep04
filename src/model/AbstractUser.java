@@ -1,10 +1,17 @@
 package model;
 
-import javax.persistence.*;
-import java.io.*;
-import java.util.*;
-import entity.*;
+
+import entity.Planning;
+import entity.Presentation;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 /**
  * @author Maxim
@@ -34,16 +41,16 @@ public abstract class AbstractUser implements Serializable
     protected String salt;
 
     @Column(name="last_login")
-    protected java.sql.Timestamp lastLogin;
+    protected Timestamp lastLogin;
 
     @Column(name="last_ip")
     protected String lastIp;
 
     @Column(name="created_on")
-    protected java.sql.Timestamp createdOn;
+    protected Timestamp createdOn;
 
     @Column(name="updated_on")
-    protected java.sql.Timestamp updatedOn;
+    protected Timestamp updatedOn;
 
     @Column(name="enabled")
     protected int enabled;
@@ -115,7 +122,7 @@ public abstract class AbstractUser implements Serializable
         this.salt = salt;
     }
 
-    public java.sql.Timestamp getLastLogin() {
+    public Timestamp getLastLogin() {
         return this.lastLogin;
     }
 

@@ -1,6 +1,8 @@
 package controller;
 
-import entity.*;
+
+import entity.Planning;
+import entity.Presentation;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,15 +13,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import jfxtras.scene.control.agenda.Agenda;
+import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
+import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 import util.JPAUtil;
 //import util.JPAUtil;
 
 public class PlanningController 
 {
-	public Agenda.AppointmentImpl[] retrievePresentations() 
+	public AppointmentImpl[] retrievePresentations() 
         {
             EntityManager em = JPAUtil.getEntityManager();
-            List<Agenda.AppointmentImpl> presentaties = new ArrayList();
+            List<AppointmentImpl> presentaties = new ArrayList();
             Calendar cal = GregorianCalendar.getInstance();
             Calendar cal2 = GregorianCalendar.getInstance();
 
@@ -35,18 +39,18 @@ public class PlanningController
                  cal2 = ((Calendar) cal2.clone());
                  cal2.setTime(p.getTimeFrame().getEndTime());
 
-                 presentaties.add(new Agenda.AppointmentImpl()
+                 presentaties.add(new AppointmentImpl()
                      .withStartTime(cal)
                      .withEndTime(cal2)
                      .withSummary("")
                      .withDescription("")
-                     .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))        
+                     .withAppointmentGroup(new AppointmentGroupImpl().withStyleClass("group15"))        
                  );
              }
 
             
              em.close();
-             return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
+             return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
 	}
 
 	/**

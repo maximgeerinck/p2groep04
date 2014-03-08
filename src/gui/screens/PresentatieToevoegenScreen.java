@@ -1,7 +1,9 @@
 package gui.screens;
 
-import java.util.*;
+
+import java.util.Observable;
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,17 +13,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import jfxtras.scene.control.CalendarTextField;
-import model.*;
+import model.IScreen;
 
 /**
  * @author Maxim
  */
+
 public class PresentatieToevoegenScreen extends Observable implements IScreen {
 
-	public javafx.scene.layout.Pane getPane() 
+	public Pane getPane() 
         {
-            javafx.scene.layout.GridPane root = new javafx.scene.layout.GridPane();        
+            GridPane root = new GridPane();        
             root.setHgap(10);
             root.setVgap(10);
             root.setPadding(new Insets(25, 25 ,25 ,25));
@@ -30,7 +35,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen {
             root.addRow(1, new Label("Eind tijd"), new CalendarTextField());
 
             ObservableList<String> options = 
-            FXCollections.observableArrayList(
+            observableArrayList(
                 "Campus Schoonmeersen",
                 "Campus Aalst"           
             );
@@ -38,7 +43,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen {
             root.addRow(2, new Label("Campus"), cbCampus);
 
             ObservableList<String> optLokalen = 
-            FXCollections.observableArrayList(
+            observableArrayList(
                 "B4001",
                 "B4002",           
                 "B4003"
@@ -47,7 +52,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen {
             root.addRow(3, new Label("Lokaal"), cbLokalen);
 
             ObservableList<String> optPromotoren = 
-            FXCollections.observableArrayList(
+            observableArrayList(
                 "Ikke",
                 "Iemand anders",           
                 "..."
@@ -56,7 +61,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen {
             root.addRow(4, new Label("Promotor"), cnPromotoren);
 
             ObservableList<String> optCoPromotoren = 
-            FXCollections.observableArrayList(
+            observableArrayList(
                 "Ikke",
                 "Iemand anders",           
                 "..."          
@@ -65,7 +70,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen {
             root.addRow(5, new Label("Co-Promotor"), cbCoPromotoren);
 
             ObservableList<String> optPresentatoren = 
-            FXCollections.observableArrayList(
+            observableArrayList(
                 "Ikke",
                 "Iemand anders",           
                 "..."          
@@ -91,7 +96,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen {
             return root;
 	}
 
-	public javafx.scene.Scene showScreen() 
+	public Scene showScreen() 
         {
             return new Scene(getPane(), 600, 600);
 	}
