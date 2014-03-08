@@ -4,53 +4,47 @@ import java.io.*;
 import javax.persistence.*;
 
 /**
- * @author Bram
+ * @author Maxim
  */
-@javax.persistence.Entity
-public class Location implements Serializable {
+@Entity
+public class Location implements Serializable 
+{
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
+    
+    @Column(name="classroom")
+    private String classroom;
+    
+    @ManyToOne(optional=false)
+    @JoinColumn(name="campus_id", referencedColumnName="id")
+    private Campus campus;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	@javax.persistence.Column(name="classroom")
-	private String classroom;
-	@javax.persistence.ManyToOne(optional=false)
-	@javax.persistence.JoinColumn(name="Locationid", referencedColumnName="id")
-	private Campus campus;
+    public Location() 
+    {
+    }
+    
+    public int getId() {
+        return this.id;
+    }
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String getClassroom() {
+        return this.classroom;
+    }
 
-	@javax.persistence.Column(name="classroom")
-	public String getClassroom() {
-		return this.classroom;
-	}
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
 
-	public void setClassroom(String classroom) {
-		this.classroom = classroom;
-	}
+    public Campus getCampus() {
+        return this.campus;
+    }
 
-	@javax.persistence.ManyToOne(optional=false)
-	@javax.persistence.JoinColumn(name="Locationid", referencedColumnName="id")
-	public Campus getCampus() {
-		return this.campus;
-	}
-
-	public void setCampus(Campus campus) {
-		this.campus = campus;
-	}
-
-	public Location() {
-		// TODO - implement Location.Location
-		throw new UnsupportedOperationException();
-	}
-
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
 }

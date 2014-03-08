@@ -10,46 +10,42 @@ import javax.persistence.*;
 @javax.persistence.Entity
 public class ResearchDomain implements Serializable {
 
-	@javax.persistence.Transient
-	private Collection<Suggestion> suggestions;
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	private int id;
-	@javax.persistence.Column(name="name")
-	private String name;
+    @Transient
+    private Collection<Suggestion> suggestions;
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
+    
+    @Column(name="name")
+    private String name;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    public ResearchDomain() 
+    {
+    }
+        
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@javax.persistence.Column(name="name")
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Collection<Suggestion> getSuggestions() {
-		return this.suggestions;
-	}
+    public Collection<Suggestion> getSuggestions() {
+        return this.suggestions;
+    }
 
-	public void setSuggestions(Collection<Suggestion> suggestions) {
-		this.suggestions = suggestions;
-	}
-
-	public ResearchDomain() {
-		// TODO - implement ResearchDomain.ResearchDomain
-		throw new UnsupportedOperationException();
-	}
-
+    public void setSuggestions(Collection<Suggestion> suggestions) {
+        this.suggestions = suggestions;
+    }
 }

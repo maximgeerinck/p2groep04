@@ -6,10 +6,13 @@
 
 package entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -18,28 +21,30 @@ import javax.persistence.Id;
 @Entity
 public class GuestRequest 
 {
-    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    
+    @Column(name="approved")
     private boolean approved;
         
+    @ManyToOne(optional=false)
+    @JoinColumn(name="guest_id", referencedColumnName="id")
     private User guest;
         
+    @ManyToOne(optional=false)
+    @JoinColumn(name="presentation_id", referencedColumnName="id")
     private Presentation presentation;
 
-	@javax.persistence.Column(name="approved")
-	public boolean isApproved() {
-		return this.approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
-	public GuestRequest() {
-		// TODO - implement GuestRequest.GuestRequest
-		throw new UnsupportedOperationException();
-	}
+    public GuestRequest() 
+    {
+    }
     
+    public boolean isApproved() {
+        return this.approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
 }

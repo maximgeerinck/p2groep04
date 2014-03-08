@@ -6,6 +6,7 @@
 
 package entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,32 +19,33 @@ import javax.persistence.Id;
 @Entity
 public class Campus 
 {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @Column(name="name")
     private String name;
-    private String adres;
+    
+    @Column(name="address")
+    private String address;
 
-	@javax.persistence.Column(name="name")
-	public String getName() {
-		return this.name;
-	}
+    public Campus()
+    {	
+    }
+    
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@javax.persistence.Column(name="adres")
-	public String getAdres() {
-		return this.adres;
-	}
+    public String getAddress() {
+        return this.address;
+    }
 
-	public void setAdres(String adres) {
-		this.adres = adres;
-	}
-
-	public Campus() {
-		// TODO - implement Campus.Campus
-		throw new UnsupportedOperationException();
-	}
+    public void setAddress(String adres) {
+        this.address = adres;
+    }
 }

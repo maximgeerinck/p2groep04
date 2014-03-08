@@ -1,45 +1,47 @@
 package entity;
 
 import java.io.*;
-import java.sql.Timestamp;
+import java.sql.Time;
 import javax.persistence.*;
 
 /**
  * @author Bram
  */
-@javax.persistence.Entity
+@Entity
 public class TimeFrame implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
 
-    private Timestamp startTime;
-    private Timestamp endTime;
+    @Column(name="start_time")
+    private Time startTime;
+    
+    @Column(name="end_time")
+    private Time endTime;
 
+    public TimeFrame() 
+    {
+    }
+        
     public int getId() {
         return id;
     }
 
-    public Timestamp getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
-
-	public TimeFrame() {
-		// TODO - implement TimeFrame.TimeFrame
-		throw new UnsupportedOperationException();
-	}
-
 }

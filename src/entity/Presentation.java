@@ -5,78 +5,83 @@ import java.util.*;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-public class Presentation implements Serializable {
+public class Presentation implements Serializable 
+{
 
-	@javax.persistence.Transient
-	private User user;
-	@javax.persistence.Transient
-	private Planning planning;
-	@javax.persistence.Transient
-	private Collection<GuestRequest> guestRequests;
-	@javax.persistence.Transient
-	private Collection<User> guests;
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+    @ManyToOne(optional=false)
+    @JoinColumn(name="user_id", referencedColumnName="id")
+    private User user;
+    
+    @ManyToOne(optional=false)
+    @JoinColumn(name="planning_id", referencedColumnName="id")
+    private Planning planning;
+    
+    @OneToMany
+    private Collection<GuestRequest> guestRequests;
+    
+    @ManyToMany
+    @JoinTable(name = "PresentationGuest",
+        inverseJoinColumns=@JoinColumn(name="presentation_id", referencedColumnName="id")        
+    )
+    private Collection<User> guests;
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
 
-	private transient boolean editable;
-	@javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
-	private Location location;
-        
-        @javax.persistence.Transient
-	private TimeFrame timeFrame;
+    @Column(name="editable")
+    private transient boolean editable;
+    
+    @JoinColumn(name="location_id", referencedColumnName="id")
+    @ManyToOne(fetch=FetchType.LAZY, optional=false)
+    private Location location;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    @Transient
+    private TimeFrame timeFrame;
+    
+    public Presentation() 
+    {
+    }
+    
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@javax.persistence.Column(name="editable")
-	public boolean isEditable() {
-		return this.editable;
-	}
+    public boolean isEditable() {
+        return this.editable;
+    }
 
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-	}
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 
-	@javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
-	public Location getLocation() {
-		return this.location;
-	}
+    public Location getLocation() {
+        return this.location;
+    }
 
-	public void setLocation(Location location) {
-		this.location = location;
-	}
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-	public Presentation() {
-		// TODO - implement Presentation.Presentation
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * 
+     * @param startTime
+     * @param endTime
+     * @param location
+     */
+    public Presentation(java.sql.Timestamp startTime, java.sql.Timestamp endTime, Location location) {
+        // TODO - implement Presentation.Presentation
+        throw new UnsupportedOperationException();
+    }
 
-	/**
-	 * 
-	 * @param startTime
-	 * @param endTime
-	 * @param location
-	 */
-	public Presentation(java.sql.Timestamp startTime, java.sql.Timestamp endTime, Location location) {
-		// TODO - implement Presentation.Presentation
-		throw new UnsupportedOperationException();
-	}
-
-	public String toDisplayString() {
-		// TODO - implement Presentation.toDisplayString
-		throw new UnsupportedOperationException();
-	}
+    public String toDisplayString() {
+        // TODO - implement Presentation.toDisplayString
+        throw new UnsupportedOperationException();
+    }
 
     public User getUser() {
         return user;
@@ -117,7 +122,4 @@ public class Presentation implements Serializable {
     public void setTimeFrame(TimeFrame timeFrame) {
         this.timeFrame = timeFrame;
     }
-        
-        
-
 }

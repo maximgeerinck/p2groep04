@@ -11,16 +11,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import jfxtras.scene.control.agenda.Agenda;
+import util.JPAUtil;
 //import util.JPAUtil;
 
 public class PlanningController 
 {
 	public Agenda.AppointmentImpl[] retrievePresentations() 
         {
-           /* EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProfessorService");
-            EntityManager em = emf.createEntityManager();
-            
-            //EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            EntityManager em = JPAUtil.getEntityManager();
             List<Agenda.AppointmentImpl> presentaties = new ArrayList();
             Calendar cal = GregorianCalendar.getInstance();
             Calendar cal2 = GregorianCalendar.getInstance();
@@ -47,10 +45,8 @@ public class PlanningController
              }
 
             
-             em.close();*/
-
-             //return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
-            return new Agenda.AppointmentImpl[0];
+             em.close();
+             return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
 	}
 
 	/**

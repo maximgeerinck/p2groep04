@@ -4,178 +4,186 @@ import javax.persistence.*;
 import java.io.*;
 import java.util.*;
 import entity.*;
+import java.sql.Timestamp;
 
 /**
  * @author Maxim
  */
 @MappedSuperclass
-public abstract class AbstractUser implements Serializable {
+public abstract class AbstractUser implements Serializable 
+{
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id", nullable=false)
-	protected int id;
-	protected String email;
-	protected String fistName;
-	protected String lastName;
-	protected String password;
-	protected String salt;
-	protected java.sql.Timestamp lastLogin;
-	protected String lastIp;
-	protected java.sql.Timestamp createdOn;
-	protected java.sql.Timestamp updatedOn;
-	protected int enabled;
-	protected int amountStudents;
-	protected String[] roles;
-        
-	/**
-	 * De lijst van presentaties waar de gebruiker naar toe gaat, deze presentaties zijn al in een planning opgenomen
-	 */
-	@javax.persistence.Transient
-	protected Collection<Presentation> presentations;
-	@javax.persistence.Transient
-	protected Collection<Planning> plannings;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id", nullable=false)
+    protected int id;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id", nullable=false)
-	public int getId() {
-		return this.id;
-	}
+    @Column(name="email")
+    protected String email;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(name="first_name")
+    protected String fistName;
 
-	@javax.persistence.Column(name="email")
-	public String getEmail() {
-		return this.email;
-	}
+    @Column(name="last_name")
+    protected String lastName;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Column(name="password")
+    protected String password;
 
-	@javax.persistence.Column(name="fistName")
-	public String getFistName() {
-		return this.fistName;
-	}
+    @Column(name="salt")
+    protected String salt;
 
-	public void setFistName(String fistName) {
-		this.fistName = fistName;
-	}
+    @Column(name="last_login")
+    protected java.sql.Timestamp lastLogin;
 
-	@javax.persistence.Column(name="lastName")
-	public String getLastName() {
-		return this.lastName;
-	}
+    @Column(name="last_ip")
+    protected String lastIp;
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    @Column(name="created_on")
+    protected java.sql.Timestamp createdOn;
 
-	@javax.persistence.Column(name="password")
-	public String getPassword() {
-		return this.password;
-	}
+    @Column(name="updated_on")
+    protected java.sql.Timestamp updatedOn;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    @Column(name="enabled")
+    protected int enabled;
 
-	@javax.persistence.Column(name="salt")
-	public String getSalt() {
-		return this.salt;
-	}
+    @Column(name="amount_students")
+    protected int amountStudents;
 
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+    @Column(name="roles")
+    protected String[] roles;
+    
+    public AbstractUser()
+    {        
+    }
 
-	@javax.persistence.Column(name="lastLogin")
-	public java.sql.Timestamp getLastLogin() {
-		return this.lastLogin;
-	}
+    /**
+     * De lijst van presentaties waar de gebruiker naar toe gaat, deze presentaties zijn al in een planning opgenomen
+     */
+    @Transient
+    protected Collection<Presentation> presentations;
 
-	public void setLastLogin(java.sql.Timestamp lastLogin) {
-		this.lastLogin = lastLogin;
-	}
+    @Transient
+    protected Collection<Planning> plannings;
 
-	@javax.persistence.Column(name="lastIp")
-	public String getLastIp() {
-		return this.lastIp;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public void setLastIp(String lastIp) {
-		this.lastIp = lastIp;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@javax.persistence.Column(name="createdOn")
-	public java.sql.Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public void setCreatedOn(java.sql.Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+    public void setEmail(String email) {
+            this.email = email;
+    }
 
-	@javax.persistence.Column(name="updatedOn")
-	public java.sql.Timestamp getUpdatedOn() {
-		return this.updatedOn;
-	}
+    public String getFistName() {
+            return this.fistName;
+    }
 
-	public void setUpdatedOn(java.sql.Timestamp updatedOn) {
-		this.updatedOn = updatedOn;
-	}
+    public void setFistName(String fistName) {
+            this.fistName = fistName;
+    }
 
-	@javax.persistence.Column(name="enabled")
-	public int getEnabled() {
-		return this.enabled;
-	}
+    public String getLastName() {
+            return this.lastName;
+    }
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}
+    public void setLastName(String lastName) {
+            this.lastName = lastName;
+    }
 
-	@javax.persistence.Column(name="amountStudents")
-	public int getAmountStudents() {
-		return this.amountStudents;
-	}
+    public String getPassword() {
+            return this.password;
+    }
 
-	public void setAmountStudents(int amountStudents) {
-		this.amountStudents = amountStudents;
-	}
+    public void setPassword(String password) {
+            this.password = password;
+    }
 
-	@javax.persistence.Column(name="roles")
-	public String[] getRoles() {
-		return this.roles;
-	}
+    public String getSalt() {
+        return this.salt;
+    }
 
-	public void setRoles(String[] roles) {
-		this.roles = roles;
-	}
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
-	@javax.persistence.Transient
-	public Collection<Presentation> getPresentations() {
-		return this.presentations;
-	}
+    public java.sql.Timestamp getLastLogin() {
+        return this.lastLogin;
+    }
 
-	public void setPresentations(Collection<Presentation> presentations) {
-		this.presentations = presentations;
-	}
+    public void setLastLogin(Timestamp lastLogin) {
+        this.lastLogin = lastLogin;
+    }
 
-	@javax.persistence.Transient
-	public Collection<Planning> getPlannings() {
-		return this.plannings;
-	}
+    public String getLastIp() {
+        return this.lastIp;
+    }
 
-	public void setPlannings(Collection<Planning> plannings) {
-		this.plannings = plannings;
-	}
+    public void setLastIp(String lastIp) {
+        this.lastIp = lastIp;
+    }
 
-	public AbstractUser() {
-		// TODO - implement AbstractUser.AbstractUser
-		throw new UnsupportedOperationException();
-	}
+    public Timestamp getCreatedOn() {
+        return this.createdOn;
+    }
 
+    public void setCreatedOn(Timestamp createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Timestamp getUpdatedOn() {
+        return this.updatedOn;
+    }
+
+    public void setUpdatedOn(Timestamp updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public int getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    public int getAmountStudents() {
+        return this.amountStudents;
+    }
+
+    public void setAmountStudents(int amountStudents) {
+        this.amountStudents = amountStudents;
+    }
+
+    public String[] getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(String[] roles) {
+        this.roles = roles;
+    }
+
+    public Collection<Presentation> getPresentations() {
+        return this.presentations;
+    }
+
+    public void setPresentations(Collection<Presentation> presentations) {
+        this.presentations = presentations;
+    }
+
+    public Collection<Planning> getPlannings() {
+        return this.plannings;
+    }
+
+    public void setPlannings(Collection<Planning> plannings) {
+        this.plannings = plannings;
+    }
 }
