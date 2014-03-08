@@ -19,7 +19,8 @@ import model.*;
  */
 public class PresentatieToevoegenScreen extends Observable implements IScreen {
 
-	public javafx.scene.layout.Pane getPane() {
+	public javafx.scene.layout.Pane getPane() 
+        {
             javafx.scene.layout.GridPane root = new javafx.scene.layout.GridPane();        
             root.setHgap(10);
             root.setVgap(10);

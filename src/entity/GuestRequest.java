@@ -27,5 +27,19 @@ public class GuestRequest
     private User guest;
         
     private Presentation presentation;
+
+	@javax.persistence.Column(name="approved")
+	public boolean isApproved() {
+		return this.approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	public GuestRequest() {
+		// TODO - implement GuestRequest.GuestRequest
+		throw new UnsupportedOperationException();
+	}
     
 }

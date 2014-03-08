@@ -14,7 +14,9 @@ public class ResearchDomain implements Serializable {
 	private Collection<Suggestion> suggestions;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
 	private int id;
+	@javax.persistence.Column(name="name")
 	private String name;
 
 	@javax.persistence.Id
@@ -35,6 +37,19 @@ public class ResearchDomain implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Collection<Suggestion> getSuggestions() {
+		return this.suggestions;
+	}
+
+	public void setSuggestions(Collection<Suggestion> suggestions) {
+		this.suggestions = suggestions;
+	}
+
+	public ResearchDomain() {
+		// TODO - implement ResearchDomain.ResearchDomain
+		throw new UnsupportedOperationException();
 	}
 
 }

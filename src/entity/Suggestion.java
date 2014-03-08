@@ -18,5 +18,37 @@ public class Suggestion implements Serializable
 	private String subject;
 	private ResearchDomain researchDomain;
 
+	@javax.persistence.Transient
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@javax.persistence.Column(name="subject")
+	public String getSubject() {
+		return this.subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	@javax.persistence.Transient
+	public ResearchDomain getResearchDomain() {
+		return this.researchDomain;
+	}
+
+	public void setResearchDomain(ResearchDomain researchDomain) {
+		this.researchDomain = researchDomain;
+	}
+
+	public Suggestion() {
+		// TODO - implement Suggestion.Suggestion
+		throw new UnsupportedOperationException();
+	}
+
 	
 }

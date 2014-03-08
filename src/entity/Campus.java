@@ -23,4 +23,27 @@ public class Campus
     private int id;
     private String name;
     private String adres;
+
+	@javax.persistence.Column(name="name")
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@javax.persistence.Column(name="adres")
+	public String getAdres() {
+		return this.adres;
+	}
+
+	public void setAdres(String adres) {
+		this.adres = adres;
+	}
+
+	public Campus() {
+		// TODO - implement Campus.Campus
+		throw new UnsupportedOperationException();
+	}
 }

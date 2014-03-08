@@ -37,4 +37,9 @@ public class TimeFrame implements Serializable {
         this.endTime = endTime;
     }
 
+	public TimeFrame() {
+		// TODO - implement TimeFrame.TimeFrame
+		throw new UnsupportedOperationException();
+	}
+
 }

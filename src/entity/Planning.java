@@ -1,16 +1,18 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-public class Planning {
+public class Planning implements Serializable {
 
 	@javax.persistence.Transient
 	private Collection<Presentation> presentation;
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
 	private int id;
+	@javax.persistence.Column(name="visible")
 	private boolean visible;
 	@Column(name="start_time")
 	private java.sql.Timestamp startTime;
@@ -64,6 +66,19 @@ public class Planning {
 
 	public void setAllowedToView(String allowedToView) {
 		this.allowedToView = allowedToView;
+	}
+
+	public Collection<Presentation> getPresentation() {
+		return this.presentation;
+	}
+
+	public void setPresentation(Collection<Presentation> presentation) {
+		this.presentation = presentation;
+	}
+
+	public Planning() {
+		// TODO - implement Planning.Planning
+		throw new UnsupportedOperationException();
 	}
 
 }

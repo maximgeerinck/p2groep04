@@ -10,28 +10,6 @@ import javax.swing.JOptionPane;
  */
 public class PresentationSortListener implements ActionListener {
 
-    /**
-     * 
-     * @param e
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) 
-    {
-        if(e.getSource() instanceof JComboBox)
-        {
-            JComboBox cb = (JComboBox)e.getSource();
-            String option = (String)cb.getSelectedItem();
-
-            JOptionPane.showMessageDialog(null, option);
-        } 
-        else if(e.getSource() instanceof JButton)
-        {
-            JButton btnSRC = (JButton)e.getSource();
-            
-        }
-        
-    }
-
 	/**
 	 * 
 	 * @param e
@@ -41,5 +19,4 @@ public class PresentationSortListener implements ActionListener {
 		// TODO - implement PresentationSortListener.actionPerformed
 		throw new UnsupportedOperationException();
 	}
-
 }

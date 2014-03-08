@@ -24,7 +24,8 @@ public class Presentation implements Serializable {
 	@javax.persistence.JoinColumn(name="Presentationid", referencedColumnName="id")
 	private Location location;
         
-        private TimeFrame timeFrame;
+        @javax.persistence.Transient
+	private TimeFrame timeFrame;
 
 	@javax.persistence.Id
 	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)

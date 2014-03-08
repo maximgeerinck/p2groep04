@@ -7,22 +7,28 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import jfxtras.scene.control.agenda.Agenda;
-import util.JPAUtil;
+//import util.JPAUtil;
 
-public class PlanningController {
+public class PlanningController 
+{
 	public Agenda.AppointmentImpl[] retrievePresentations() 
         {
-            EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+           /* EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProfessorService");
+            EntityManager em = emf.createEntityManager();
+            
+            //EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
             List<Agenda.AppointmentImpl> presentaties = new ArrayList();
             Calendar cal = GregorianCalendar.getInstance();
             Calendar cal2 = GregorianCalendar.getInstance();
 
-            manager.getTransaction().begin();
+            em.getTransaction().begin();
 
-            List<Presentation> presentations =  manager.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p ORDER BY DAY(p.startTime) ASC").getResultList();
-
+            List<Presentation> presentations =  em.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p").getResultList();
+            em.getTransaction().commit();
              for(Presentation p : presentations)
              {
                  cal = ((Calendar) cal.clone());
@@ -40,10 +46,11 @@ public class PlanningController {
                  );
              }
 
-             manager.getTransaction().commit();
-             manager.close();
+            
+             em.close();*/
 
-             return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
+             //return presentaties.toArray(new Agenda.AppointmentImpl[presentaties.size()]);
+            return new Agenda.AppointmentImpl[0];
 	}
 
 	/**
@@ -60,7 +67,7 @@ public class PlanningController {
 	 */
 	public void createPresentation(String startTime, String endTime, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) 
         {
-            EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+           /* EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
             manager.getTransaction().begin();
             
             Presentation p = new Presentation();
@@ -71,7 +78,7 @@ public class PlanningController {
             
             manager.persist(p);
             manager.getTransaction().commit();
-            manager.close();
+            manager.close();*/
 	}
 
 	/**
@@ -81,12 +88,33 @@ public class PlanningController {
 	public void removePresentation(Presentation presentation) 
         {
             //TODO: delete methode naar repository brengen
-            EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+           /* EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
             manager.getTransaction().begin();
             Query q = (Query) manager.createQuery("DELETE FROM Presentation WHERE id =" + presentation.getId() + ")");
             
             manager.getTransaction().commit();
-            manager.close();
+            manager.close();*/
+	}
+
+	/**
+	 * 
+	 * @param planning
+	 * @param visible
+	 */
+	public void changePlanningVisibility(Planning planning, boolean visible) {
+		// TODO - implement PlanningController.changePlanningVisibility
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param planning
+	 * @param startTime
+	 * @param endTime
+	 */
+	public void registerVisibilityPeriod(Planning planning, Timestamp startTime, Timestamp endTime) {
+		// TODO - implement PlanningController.registerVisibilityPeriod
+		throw new UnsupportedOperationException();
 	}
 
 }

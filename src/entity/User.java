@@ -43,4 +43,49 @@ public class User extends AbstractUser {
 		throw new UnsupportedOperationException();
 	}
 
+	@javax.persistence.Transient
+	public Collection<User> getStudents() {
+		return this.students;
+	}
+
+	public void setStudents(Collection<User> students) {
+		this.students = students;
+	}
+
+	@javax.persistence.Transient
+	public Collection<GuestRequest> getGuestRequests() {
+		return this.guestRequests;
+	}
+
+	public void setGuestRequests(Collection<GuestRequest> guestRequests) {
+		this.guestRequests = guestRequests;
+	}
+
+	@javax.persistence.Transient
+	public Presentation getPresentation() {
+		return this.presentation;
+	}
+
+	public void setPresentation(Presentation presentation) {
+		this.presentation = presentation;
+	}
+
+	@javax.persistence.Transient
+	public int getAmountOfStudents() {
+		return this.amountOfStudents;
+	}
+
+	public void setAmountOfStudents(int amountOfStudents) {
+		this.amountOfStudents = amountOfStudents;
+	}
+
+	@javax.persistence.Transient
+	public Collection<Suggestion> getSuggestion() {
+		return this.suggestion;
+	}
+
+	public void setSuggestion(Collection<Suggestion> suggestion) {
+		this.suggestion = suggestion;
+	}
+
 }

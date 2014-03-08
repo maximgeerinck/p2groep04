@@ -12,6 +12,7 @@ public class Location implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@javax.persistence.Column(name="classroom")
 	private String classroom;
 	@javax.persistence.ManyToOne(optional=false)
 	@javax.persistence.JoinColumn(name="Locationid", referencedColumnName="id")
@@ -45,6 +46,11 @@ public class Location implements Serializable {
 
 	public void setCampus(Campus campus) {
 		this.campus = campus;
+	}
+
+	public Location() {
+		// TODO - implement Location.Location
+		throw new UnsupportedOperationException();
 	}
 
 }
