@@ -28,12 +28,10 @@ public class GuestRequest
     @Column(name="approved")
     private boolean approved;
         
-    @ManyToOne(optional=false)
-    @JoinColumn(name="guest_id", referencedColumnName="id")
+    @javax.persistence.ManyToOne(optional=false)
     private User guest;
         
-    @ManyToOne(optional=false)
-    @JoinColumn(name="presentation_id", referencedColumnName="id")
+    @javax.persistence.ManyToOne(optional=false)
     private Presentation presentation;
 
     public GuestRequest() 

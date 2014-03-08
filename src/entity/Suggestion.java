@@ -23,17 +23,21 @@ public class Suggestion implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(optional=false)
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @javax.persistence.ManyToOne(optional=false)
+    @javax.persistence.JoinColumn(name="user_id", referencedColumnName="id")
     private User user;
     
     @Column(name="subject")
     private String subject;
     
-    @ManyToOne(optional=false)
-    @JoinColumn(name="research_domain_id", referencedColumnName="id")
+    @javax.persistence.ManyToOne(optional=false)
+    @javax.persistence.JoinColumn(name="research_domain_id", referencedColumnName="id")
     private ResearchDomain researchDomain;
 
+    public Suggestion() 
+    {
+    }
+    
     @Transient
     public User getUser() {
         return this.user;
@@ -57,10 +61,6 @@ public class Suggestion implements Serializable
 
     public void setResearchDomain(ResearchDomain researchDomain) {
         this.researchDomain = researchDomain;
-    }
-
-    public Suggestion() 
-    {
     }	
 
     public int getId() {

@@ -22,21 +22,16 @@ import javax.persistence.Transient;
 public class Presentation implements Serializable 
 {
 
-    @ManyToOne(optional=false)
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @javax.persistence.OneToOne(optional=false)
     private User user;
     
-    @ManyToOne(optional=false)
-    @JoinColumn(name="planning_id", referencedColumnName="id")
+    @javax.persistence.ManyToOne(optional=false)
+	@javax.persistence.JoinColumn(name="planning_id", referencedColumnName="id")
     private Planning planning;
     
-    @OneToMany
+    @javax.persistence.OneToMany(mappedBy="presentation")
     private Collection<GuestRequest> guestRequests;
     
-    @ManyToMany
-    @JoinTable(name = "PresentationGuest",
-        inverseJoinColumns=@JoinColumn(name="presentation_id", referencedColumnName="id")        
-    )
     private Collection<User> guests;
     
     @Id
@@ -46,11 +41,12 @@ public class Presentation implements Serializable
     @Column(name="editable")
     private transient boolean editable;
     
-    @JoinColumn(name="location_id", referencedColumnName="id")
-    @ManyToOne(fetch=FetchType.LAZY, optional=false)
+    @javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@javax.persistence.JoinColumn(name="location_id", referencedColumnName="id")
     private Location location;
 
-    @Transient
+    @javax.persistence.OneToOne(optional=false)
+	@javax.persistence.JoinColumn(name="timeframe_id", referencedColumnName="id")
     private TimeFrame timeFrame;
     
     public Presentation() 

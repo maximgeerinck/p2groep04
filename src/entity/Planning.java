@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Entity
 public class Planning implements Serializable 
 {
-    @Transient
+    @javax.persistence.OneToMany(mappedBy="planning")
     private Collection<Presentation> presentation;
     
     @Id

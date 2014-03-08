@@ -2,6 +2,7 @@ package entity;
 
 
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -26,21 +27,21 @@ import model.AbstractUser;
 public class User extends AbstractUser 
 {
 
-    @ManyToMany
-    @JoinTable(name = "UserStudent",
-        joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+    @ManyToMany(mappedBy = "promotors", cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_student",
+        joinColumns=@JoinColumn(name="promotor_id", referencedColumnName="id"),
         inverseJoinColumns=@JoinColumn(name="student_id", referencedColumnName="id")        
     )
     private Collection<User> students;
     
-    @ManyToMany
-    @JoinTable(name = "PresentationGuest",
-        joinColumns=@JoinColumn(name="guest_id", referencedColumnName="id")  
-    )
-    private Collection<Presentation> presentationsAttending;
+    private Collection<User> promotors;
     
-    @OneToMany(targetEntity = GuestRequest.class)
-    private Collection<GuestRequest> guestRequests;
+    @ManyToMany(mappedBy="guests", cascade = CascadeType.PERSIST)
+    @JoinTable(name = "presentation_guest",
+        joinColumns=@JoinColumn(name="guest_id", referencedColumnName="id"),
+        inverseJoinColumns=@JoinColumn(name="presentation_id", referencedColumnName="id")
+    )
+    private Collection<Presentation> presentationsAttending;   
     
     @ManyToOne(optional=false)
     @JoinColumn(name="presentation_id", referencedColumnName="id")
@@ -49,8 +50,6 @@ public class User extends AbstractUser
     @Column(name="amount_of_students")
     private int amountOfStudents = 0;
     
-    private Collection<Suggestion> suggestion;
-
     public User() 
     {
     }
@@ -84,14 +83,6 @@ public class User extends AbstractUser
         this.students = students;
     }
 
-    public Collection<GuestRequest> getGuestRequests() {
-        return this.guestRequests;
-    }
-
-    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
-        this.guestRequests = guestRequests;
-    }
-
     public Presentation getPresentation() {
         return this.presentation;
     }
@@ -107,15 +98,7 @@ public class User extends AbstractUser
     public void setAmountOfStudents(int amountOfStudents) {
         this.amountOfStudents = amountOfStudents;
     }
-
-    public Collection<Suggestion> getSuggestion() {
-        return this.suggestion;
-    }
-
-    public void setSuggestion(Collection<Suggestion> suggestion) {
-        this.suggestion = suggestion;
-    }
-
+    
     public Collection<Presentation> getPresentationsAttending() {
         return this.presentationsAttending;
     }

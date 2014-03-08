@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  * @author Maxim
@@ -20,9 +21,9 @@ import javax.persistence.Transient;
 public abstract class AbstractUser implements Serializable 
 {
 
+    @Column(name="id", nullable=true)
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id", nullable=false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     protected int id;
 
     @Column(name="email")
@@ -68,10 +69,12 @@ public abstract class AbstractUser implements Serializable
     /**
      * De lijst van presentaties waar de gebruiker naar toe gaat, deze presentaties zijn al in een planning opgenomen
      */
-    @Transient
+    @javax.persistence.OneToMany
+	@javax.persistence.JoinColumn(name="AbstractUserid", referencedColumnName="id")
     protected Collection<Presentation> presentations;
 
-    @Transient
+    @javax.persistence.OneToMany
+	@javax.persistence.JoinColumn(name="AbstractUserid", referencedColumnName="id", nullable=false)
     protected Collection<Planning> plannings;
 
     public int getId() {
@@ -122,11 +125,11 @@ public abstract class AbstractUser implements Serializable
         this.salt = salt;
     }
 
-    public Timestamp getLastLogin() {
+    public java.sql.Timestamp getLastLogin() {
         return this.lastLogin;
     }
 
-    public void setLastLogin(Timestamp lastLogin) {
+    public void setLastLogin(java.sql.Timestamp lastLogin) {
         this.lastLogin = lastLogin;
     }
 
@@ -138,19 +141,19 @@ public abstract class AbstractUser implements Serializable
         this.lastIp = lastIp;
     }
 
-    public Timestamp getCreatedOn() {
+    public java.sql.Timestamp getCreatedOn() {
         return this.createdOn;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
+    public void setCreatedOn(java.sql.Timestamp createdOn) {
         this.createdOn = createdOn;
     }
 
-    public Timestamp getUpdatedOn() {
+    public java.sql.Timestamp getUpdatedOn() {
         return this.updatedOn;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
+    public void setUpdatedOn(java.sql.Timestamp updatedOn) {
         this.updatedOn = updatedOn;
     }
 

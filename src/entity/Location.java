@@ -24,8 +24,8 @@ public class Location implements Serializable
     @Column(name="classroom")
     private String classroom;
     
-    @ManyToOne(optional=false)
-    @JoinColumn(name="campus_id", referencedColumnName="id")
+    @javax.persistence.ManyToOne(optional=false)
+	@javax.persistence.JoinColumn(name="campus_id", referencedColumnName="id")
     private Campus campus;
 
     public Location() 
