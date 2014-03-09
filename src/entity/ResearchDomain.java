@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 public class ResearchDomain implements Serializable {
 
     @javax.persistence.OneToMany
-	@javax.persistence.JoinColumn(name="ResearchDomainid", referencedColumnName="id", nullable=false)
+    @javax.persistence.JoinColumn(name="research_domain_id", referencedColumnName="id", nullable=false)
     private Collection<Suggestion> suggestions;
     
     @Id

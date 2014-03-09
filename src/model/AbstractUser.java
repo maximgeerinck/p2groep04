@@ -1,17 +1,12 @@
 package model;
 
 
-import entity.Planning;
-import entity.Presentation;
+import entity.Role;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import javax.persistence.*;
 
 /**
@@ -20,12 +15,6 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class AbstractUser implements Serializable 
 {
-
-    @Column(name="id", nullable=true)
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    protected int id;
-
     @Column(name="email")
     protected String email;
 
@@ -56,33 +45,11 @@ public abstract class AbstractUser implements Serializable
     @Column(name="enabled")
     protected int enabled;
 
-    @Column(name="amount_students")
-    protected int amountStudents;
-
-    @Column(name="roles")
-    protected String[] roles;
+    @Column(name="amount_of_students")
+    protected int amountOfStudents = 0;
     
     public AbstractUser()
     {        
-    }
-
-    /**
-     * De lijst van presentaties waar de gebruiker naar toe gaat, deze presentaties zijn al in een planning opgenomen
-     */
-    @javax.persistence.OneToMany
-	@javax.persistence.JoinColumn(name="AbstractUserid", referencedColumnName="id")
-    protected Collection<Presentation> presentations;
-
-    @javax.persistence.OneToMany
-	@javax.persistence.JoinColumn(name="AbstractUserid", referencedColumnName="id", nullable=false)
-    protected Collection<Planning> plannings;
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -165,35 +132,11 @@ public abstract class AbstractUser implements Serializable
         this.enabled = enabled;
     }
 
-    public int getAmountStudents() {
-        return this.amountStudents;
+    public int getAmountOfStudents() {
+        return amountOfStudents;
     }
 
-    public void setAmountStudents(int amountStudents) {
-        this.amountStudents = amountStudents;
-    }
-
-    public String[] getRoles() {
-        return this.roles;
-    }
-
-    public void setRoles(String[] roles) {
-        this.roles = roles;
-    }
-
-    public Collection<Presentation> getPresentations() {
-        return this.presentations;
-    }
-
-    public void setPresentations(Collection<Presentation> presentations) {
-        this.presentations = presentations;
-    }
-
-    public Collection<Planning> getPlannings() {
-        return this.plannings;
-    }
-
-    public void setPlannings(Collection<Planning> plannings) {
-        this.plannings = plannings;
-    }
+    public void setAmountOfStudents(int amountOfStudents) {
+        this.amountOfStudents = amountOfStudents;
+    }    
 }

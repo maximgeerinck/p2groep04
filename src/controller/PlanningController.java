@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -34,10 +35,14 @@ public class PlanningController
              for(Presentation p : presentations)
              {
                  cal = ((Calendar) cal.clone());
-                 cal.setTime(p.getTimeFrame().getStartTime());
+                 cal.setTime(p.getDate());
+                 cal.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getStartTime().getHours());
+                 cal.set(Calendar.MINUTE, p.getTimeFrame().getStartTime().getMinutes());
 
                  cal2 = ((Calendar) cal2.clone());
-                 cal2.setTime(p.getTimeFrame().getEndTime());
+                 cal2.setTime(p.getDate());
+                 cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
+                 cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
 
                  presentaties.add(new AppointmentImpl()
                      .withStartTime(cal)

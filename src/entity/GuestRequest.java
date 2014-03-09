@@ -23,15 +23,18 @@ public class GuestRequest
 {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ïd")
     private int id;
     
     @Column(name="approved")
     private boolean approved;
         
     @javax.persistence.ManyToOne(optional=false)
+    @JoinColumn(name = "guest_id", referencedColumnName = "id")
     private User guest;
         
     @javax.persistence.ManyToOne(optional=false)
+    @JoinColumn(name = "presentation_id", referencedColumnName = "id")
     private Presentation presentation;
 
     public GuestRequest() 

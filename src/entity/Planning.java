@@ -8,17 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
 public class Planning implements Serializable 
 {
-    @javax.persistence.OneToMany(mappedBy="planning")
-    private Collection<Presentation> presentation;
-    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     
     @Column(name="visible")
@@ -32,7 +31,15 @@ public class Planning implements Serializable
     
     @Column(name="allowed_to_view")
     private String allowedToView;
+    
+    @javax.persistence.OneToMany(mappedBy = "planning")
+    @JoinColumn(name = "planning_id")
+    private Collection<Presentation> presentations;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+    
     public Planning() 
     {
     }
@@ -77,11 +84,19 @@ public class Planning implements Serializable
         this.allowedToView = allowedToView;
     }
 
-    public Collection<Presentation> getPresentation() {
-        return this.presentation;
+    public Collection<Presentation> getPresentations() {
+        return presentations;
     }
 
-    public void setPresentation(Collection<Presentation> presentation) {
-        this.presentation = presentation;
+    public void setPresentations(Collection<Presentation> presentations) {
+        this.presentations = presentations;
+    }     
+
+    public User getUser() {
+        return user;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }        
 }

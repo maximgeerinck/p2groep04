@@ -2,19 +2,21 @@ package entity;
 
 
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import model.AbstractUser;
 
 /**
@@ -26,29 +28,42 @@ import model.AbstractUser;
 @Table(name = "user")
 public class User extends AbstractUser 
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected int id;
 
-    @ManyToMany(mappedBy = "promotors", cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name = "user_student",
-        joinColumns=@JoinColumn(name="promotor_id", referencedColumnName="id"),
-        inverseJoinColumns=@JoinColumn(name="student_id", referencedColumnName="id")        
+        joinColumns={@JoinColumn(name="promotor_id", referencedColumnName="id")},
+        inverseJoinColumns={@JoinColumn(name="student_id", referencedColumnName="id")}        
     )
     private Collection<User> students;
     
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.PERSIST)
     private Collection<User> promotors;
     
-    @ManyToMany(mappedBy="guests", cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name = "presentation_guest",
         joinColumns=@JoinColumn(name="guest_id", referencedColumnName="id"),
         inverseJoinColumns=@JoinColumn(name="presentation_id", referencedColumnName="id")
     )
     private Collection<Presentation> presentationsAttending;   
     
+    @javax.persistence.OneToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    protected Collection<Planning> plannings;
+
     @ManyToOne(optional=false)
     @JoinColumn(name="presentation_id", referencedColumnName="id")
     private Presentation presentation;
     
-    @Column(name="amount_of_students")
-    private int amountOfStudents = 0;
+    @ManyToMany
+    @JoinTable(name = "user_role",
+        joinColumns={@JoinColumn(name="role_id", referencedColumnName="id")},
+        inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}        
+    )
+    protected List<Role> roles;
     
     public User() 
     {
@@ -90,14 +105,6 @@ public class User extends AbstractUser
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
     }
-
-    public int getAmountOfStudents() {
-        return this.amountOfStudents;
-    }
-
-    public void setAmountOfStudents(int amountOfStudents) {
-        this.amountOfStudents = amountOfStudents;
-    }
     
     public Collection<Presentation> getPresentationsAttending() {
         return this.presentationsAttending;
@@ -106,5 +113,29 @@ public class User extends AbstractUser
     public void setPresentationsAttending(Collection<Presentation> presentationsAttending) {
         this.presentationsAttending = presentationsAttending;
     }
+
+    public Collection<User> getPromotors() {
+        return promotors;
+    }
+
+    public void setPromotors(Collection<User> promotors) {
+        this.promotors = promotors;
+    }
+
+    public Collection<Planning> getPlannings() {
+        return plannings;
+    }
+
+    public void setPlannings(Collection<Planning> plannings) {
+        this.plannings = plannings;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }    
 
 }
