@@ -138,4 +138,9 @@ public class User extends AbstractUser
         this.roles = roles;
     }    
 
+    @Override
+    public String toString() {
+        return Integer.toString(id);
+    }
+    
 }

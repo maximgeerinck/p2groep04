@@ -1,6 +1,6 @@
 package model;
 
-import gui.screens.PresentatieToevoegenScreen;
+import gui.screens.*;
 
 /**
  * @author Maxim
@@ -8,6 +8,7 @@ import gui.screens.PresentatieToevoegenScreen;
 public class ScreenFactory {
 
     public static final String SCREEN_PRESENTATIE_TOEVOEGEN = "ScreenPresentatieToevoegen";
+    public static final String SCREEN_PLANNING_OPSLAAN = "PlanningOpslaan";
 
     /**
      * 
@@ -19,6 +20,8 @@ public class ScreenFactory {
        {
            case SCREEN_PRESENTATIE_TOEVOEGEN:
                return new PresentatieToevoegenScreen();
+           case SCREEN_PLANNING_OPSLAAN:
+               return new PlanningOpslaanScreen();
        }
         return null;
     }

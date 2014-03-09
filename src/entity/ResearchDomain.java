@@ -56,4 +56,9 @@ public class ResearchDomain implements Serializable {
     public void setSuggestions(Collection<Suggestion> suggestions) {
         this.suggestions = suggestions;
     }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
 }

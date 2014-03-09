@@ -56,4 +56,10 @@ public class Location implements Serializable
     public void setCampus(Campus campus) {
         this.campus = campus;
     }
+
+    @Override
+    public String toString() {
+        return classroom;
+    }
+        
 }

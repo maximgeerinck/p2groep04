@@ -50,4 +50,9 @@ public class TimeFrame implements Serializable {
     public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
+    
+    @Override
+    public String toString() {
+        return startTime + " - " + endTime;
+    }
 }

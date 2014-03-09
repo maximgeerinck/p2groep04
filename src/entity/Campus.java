@@ -49,4 +49,13 @@ public class Campus
     public void setAddress(String adres) {
         this.address = adres;
     }
+
+    public int getId() {
+        return id;
+    }
+    
+    public String toString()
+    {
+        return this.name;
+    }
 }

@@ -1,5 +1,6 @@
 
 import gui.GraphicApplication;
+import gui.screens.PlanningOpslaanScreen;
 import gui.screens.PresentatieToevoegenScreen;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -52,6 +53,14 @@ public class StartUp extends Application
         TitledPane tpPresentaties = new TitledPane("Presentatie toevoegen", presentaties.getPane());
         a.getPanes().add(tpPresentaties);
         a.setExpandedPane(tpPresentaties);        
+        
+        // Planning opslaan
+        PlanningOpslaanScreen planningOpslaan = (PlanningOpslaanScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_OPSLAAN);
+        TitledPane tpPlanningOpslaan = new TitledPane("Planning settings", planningOpslaan.getPane());
+        a.getPanes().add(tpPlanningOpslaan);
+        a.setExpandedPane(tpPlanningOpslaan);       
+        
+        // voeg title panes toe aan accordion
         v.add(a);
         
         root.getItems().addAll(sp1, v);
