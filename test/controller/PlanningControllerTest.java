@@ -43,6 +43,13 @@ public class PlanningControllerTest {
         Assert.assertEquals(false, planning.isVisible());
     }
     
+    @Test(expected = NullPointerException.class)
+    public void planningNullVisibilty()
+    {
+        planningController.changePlanningVisibility(null, false);
+        
+    }
+    
     @Test
     public void testRegisterVisibilityPeriod()
     {
