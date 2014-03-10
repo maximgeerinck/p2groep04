@@ -90,7 +90,7 @@ public class Presentation implements Serializable
      * @param endTime
      * @param location
      */
-    public Presentation(Timestamp startTime, Timestamp endTime, Location location) {
+    public Presentation(TimeFrame timeFrame, Location location) {
         // TODO - implement Presentation.Presentation
         throw new UnsupportedOperationException();
     }

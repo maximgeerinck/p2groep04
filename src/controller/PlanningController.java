@@ -84,7 +84,7 @@ public class PlanningController
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(String startTime, String endTime, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) 
+    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) 
     {
        /* EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
         manager.getTransaction().begin();

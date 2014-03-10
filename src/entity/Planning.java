@@ -40,6 +40,10 @@ public class Planning implements Serializable
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     
+    private Timestamp visibleStart;
+    
+    private Timestamp visibleEnd;
+    
     public Planning() 
     {
     }
@@ -98,5 +102,23 @@ public class Planning implements Serializable
 
     public void setUser(User user) {
         this.user = user;
-    }        
+    } 
+
+    public void setVisibleStart(Timestamp visibleStart) {
+        this.visibleStart = visibleStart;
+    }
+
+    public void setVisibleEnd(Timestamp visibleEnd) {
+        this.visibleEnd = visibleEnd;
+    }
+
+    public Timestamp getVisibleStart() {
+        return visibleStart;
+    }
+
+    public Timestamp getVisibleEnd() {
+        return visibleEnd;
+    }
+    
+    
 }
