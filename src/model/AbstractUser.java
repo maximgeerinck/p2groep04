@@ -19,7 +19,7 @@ public abstract class AbstractUser implements Serializable
     protected String email;
 
     @Column(name="first_name")
-    protected String fistName;
+    protected String firstName;
 
     @Column(name="last_name")
     protected String lastName;
@@ -61,11 +61,11 @@ public abstract class AbstractUser implements Serializable
     }
 
     public String getFistName() {
-            return this.fistName;
+            return this.firstName;
     }
 
     public void setFistName(String fistName) {
-            this.fistName = fistName;
+            this.firstName = fistName;
     }
 
     public String getLastName() {

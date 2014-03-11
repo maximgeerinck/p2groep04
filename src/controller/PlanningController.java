@@ -6,6 +6,7 @@ import entity.Planning;
 import entity.Presentation;
 import model.PresentationRepository;
 import entity.TimeFrame;
+import entity.User;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -133,6 +134,32 @@ public class PlanningController
      */
     public void registerVisibilityPeriod(Planning planning, Timestamp startTime, Timestamp endTime) {
             // TODO - implement PlanningController.registerVisibilityPeriod
+            throw new UnsupportedOperationException();
+    }
+    public void notifyStakeHolders(Planning planning){
+        // TODO - implement
+        /**
+         * 
+         */
+        
+        List<Presentation> presentations = new ArrayList<>();
+        List<User> users = new ArrayList<>();
+        
+        presentations.addAll(planning.getPresentations());
+        
+        for(Presentation p: presentations)
+        {
+           if(p.isChanged()== true){
+           users.add(p.getUser());
+           users.addAll(p.getGuests()); 
+           }
+        }
+        
+        for(User u: users)
+        {
+            u.addNotification("The planning has been changed, please check the planning for more info.");
+        }
+        
             throw new UnsupportedOperationException();
     }
 }

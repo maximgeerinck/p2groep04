@@ -7,9 +7,7 @@
 package controller;
 
 import entity.User;
-import model.AbstractUser;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
 
 
@@ -37,7 +35,7 @@ public class UserControllerTest {
     }
   
     
-    @Test(expected = MaxAantalStudentenBerkeiktException.class)
+    @Test(expected = MaxAantalStudentenBereiktException.class)
     public void testPromotorHeeftAlZijnMaxAantalStudentenBereikt()
     {
        

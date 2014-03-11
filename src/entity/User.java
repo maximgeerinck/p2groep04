@@ -65,10 +65,13 @@ public class User extends AbstractUser
     )
     protected List<Role> roles;
     
+    private List<String> notifications;
+    
     public User() 
     {
+        
     }
-
+    
     @PrePersist
     public void onCreate() {
         // TODO - implement User.onCreate
@@ -88,6 +91,11 @@ public class User extends AbstractUser
     public boolean hasPromotor() {
         // TODO - implement User.hasPromotor
         throw new UnsupportedOperationException();
+    }
+    
+    public void addNotification(String notification)
+    {
+        this.notifications.add(notification);
     }
 
     public Collection<User> getStudents() {
@@ -136,7 +144,8 @@ public class User extends AbstractUser
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }    
+    }
+    
 
     @Override
     public String toString() {

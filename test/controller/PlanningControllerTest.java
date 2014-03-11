@@ -5,7 +5,9 @@
 package controller;
 
 import entity.Planning;
+import entity.Presentation;
 import java.sql.Timestamp;
+import java.util.List;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +23,14 @@ public class PlanningControllerTest {
     
     private Planning planning;
     private PlanningController planningController;
+    private List<Presentation> presentations;
     
     @Before
     public void before()
     {
         planning = new Planning();
         planningController = new PlanningController();
+        
     }
     
     @Test
@@ -65,9 +69,7 @@ public class PlanningControllerTest {
     @Test(expected = NullPointerException.class)
     public void testNullRegisterVisibilityPeriod()
     {
-        
         planningController.registerVisibilityPeriod(planning, null , null);
-        
     }
     
     @Test(expected = NullPointerException.class)
@@ -77,6 +79,15 @@ public class PlanningControllerTest {
        Timestamp visibleEnd = new Timestamp(20140311L); 
        
         planningController.registerVisibilityPeriod(null, visibleStart , visibleEnd);
+        
+    }
+    
+    @Test
+    public void testNotifyStakeholdersHasNotification(){
+        
+        planningController.notifyStakeHolders(planning);
+        
+        
         
     }
 }

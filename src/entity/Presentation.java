@@ -56,6 +56,8 @@ public class Presentation implements Serializable
     @Column(name = "date")
     private Date date;
     
+    private boolean changed = false;
+    
     public Presentation() 
     {
     }
@@ -146,5 +148,15 @@ public class Presentation implements Serializable
 
     public void setDate(Date date) {
         this.date = date;
-    }        
+    }
+
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+    
+    
 }
