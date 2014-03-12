@@ -52,9 +52,6 @@ public class JPAUtil
         entityManagerFactory.close();
     }
 
-	private JPAUtil() {
-		// TODO - implement JPAUtil.JPAUtil
-		throw new UnsupportedOperationException();
-	}
+	private JPAUtil() {}
     
 }

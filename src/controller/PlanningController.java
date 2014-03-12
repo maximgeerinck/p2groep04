@@ -12,12 +12,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.EntityManager;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 import model.CampusRepository;
 import model.LocationRepository;
 import model.PlanningRepository;
 import model.TimeFrameRepository;
+import util.JPAUtil;
 //import util.JPAUtil;
 
 public class PlanningController 
@@ -77,6 +79,7 @@ public class PlanningController
 
     /**
      * 
+     * @param timeFrame
      * @param startTime
      * @param endTime
      * @param campus
@@ -89,18 +92,17 @@ public class PlanningController
      */
     public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) 
     {
-       /* EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityManager manager = JPAUtil.getEntityManager();
         manager.getTransaction().begin();
 
-        Presentation p = new Presentation();
-        //p.setStartTime(new Timestamp(startTijd));
-        //p.setEndTime(new Timestamp(eindTijd));            
+        Presentation p = new Presentation(timeFrame, new Location(lokaal, new Campus(campus)));
+                    
 
 
 
         manager.persist(p);
         manager.getTransaction().commit();
-        manager.close();*/
+        manager.close();
     }
 
     /**

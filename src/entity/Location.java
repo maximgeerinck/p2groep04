@@ -29,9 +29,16 @@ public class Location implements Serializable
 	@javax.persistence.JoinColumn(name="campus_id", referencedColumnName="id")
     private Campus campus;
 
-    public Location() 
+    protected Location() 
     {
     }
+
+    public Location(String classroom, Campus campus) {
+        this.classroom = classroom;
+        this.campus = campus;
+    }
+    
+    
     
     public int getId() {
         return this.id;
