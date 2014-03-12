@@ -1,3 +1,8 @@
+# Roles
+INSERT INTO role (`id`, `role_name`) VALUES (1, "ROLE_BPC");
+INSERT INTO role (`id`, `role_name`) VALUES (2, "ROLE_STUDENT");
+INSERT INTO role (`id`, `role_name`) VALUES (3, "ROLE_PROMOTOR");
+
 # Time frames
 INSERT INTO timeframe (`id`, `start_time`, `end_time`) VALUES (1, "08:15:00", "09:15:00");
 INSERT INTO timeframe (`id`, `start_time`, `end_time`) VALUES (2, "09:15:00", "10:15:00");
@@ -29,6 +34,8 @@ INSERT INTO location (`id`, `classroom`, `campus_id`) VALUES (5, "B1005", 1);
 
 # -- EXAMPLE DATA FOR TESTING -- #
 INSERT INTO user (`id`, `amount_of_students`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`) VALUES (1, 0, NOW(), "maximgeerinck@hotmail.com", 1, "Maxim", "127.0.0.1", "Geerinck", "test123", "privatesalt", NOW()); 
-INSERT INTO planning (`id`, `allowed_to_view`, `start_time`, `end_time`, `visible`, `user_id`) VALUES (1, 1, "2014-03-09 11:05:18", "2014-04-09 11:05:17", 1, 1);
+INSERT INTO user_role (`user_id`, `role_id`) VALUES (1, 2);
+INSERT INTO planning (`id`, `allowed_to_view`, `start_time`, `end_time`, `visible`, `user_id`) VALUES (1, 1, "2014-03-11 11:05:18", "2014-04-09 11:05:17", 1, 1);
 
-INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `user_id`, `date`) VALUES (1, 1, 1, 1, 1, "2014-03-09");
+INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `user_id`, `date`) VALUES (1, 1, 1, 1, 1, "2014-03-11");
+
