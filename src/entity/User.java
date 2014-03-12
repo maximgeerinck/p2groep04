@@ -28,6 +28,11 @@ import model.AbstractUser;
 @Table(name = "user")
 public class User extends AbstractUser 
 {
+    
+    public static final String ROLE_PROMOTOR = "ROLE_PROMOTOR";
+    public static final String ROLE_BPC = "ROLE_BPC";
+    public static final String ROLE_STUDENT = "ROLE_STUDENT";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
