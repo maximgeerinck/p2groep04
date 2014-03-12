@@ -28,7 +28,7 @@ public class PresentationRepository extends Repository
     public List<Presentation> findAllByPlanning(Planning planning) {
         em.getTransaction().begin();
 
-        List<Presentation> presentations =  em.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p").getResultList();
+        List<Presentation> presentations =  em.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1").getResultList();
         em.getTransaction().commit();
         
         em.close();

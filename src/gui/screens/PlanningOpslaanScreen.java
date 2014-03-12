@@ -6,6 +6,11 @@
 
 package gui.screens;
 
+import controller.PlanningController;
+import entity.Planning;
+import java.sql.Timestamp;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,9 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.control.CalendarTextField;
-import jfxtras.scene.control.CalendarTimeTextField;
 import model.IScreen;
 
 /**
@@ -24,7 +27,12 @@ import model.IScreen;
  */
 public class PlanningOpslaanScreen implements IScreen 
 {
-
+    
+    private PlanningController planningController = new PlanningController();
+    private CalendarTextField ctEndTime;
+    private CalendarTextField ctStartTime;
+    private CheckBox cbVisibility;
+    
     @Override
     public Pane getPane() 
     {
@@ -34,16 +42,34 @@ public class PlanningOpslaanScreen implements IScreen
         root.setPadding(new Insets(25, 25 ,25 ,25));
         
         // zichtbaarheids periode
-        CalendarTextField c1 = new CalendarTextField();
-        CalendarTextField c2 = new CalendarTextField();                
-        root.addRow(0, new Label("Start tijd:"), c1);
-        root.addRow(1, new Label("Eind tijd:"), c2);
+        ctEndTime = new CalendarTextField();
+        ctStartTime = new CalendarTextField();                
+        root.addRow(0, new Label("Start tijd:"), ctEndTime);
+        root.addRow(1, new Label("Eind tijd:"), ctStartTime);
         
         // zichtbaar of niet
-        root.addRow(2, new Label("Zichtbaar"), new CheckBox());
+        cbVisibility = new CheckBox();
+        root.addRow(2, new Label("Zichtbaar"), cbVisibility);
         
         // opslaan
         Button btnSave = new Button("Opslaan");
+        btnSave.setOnAction(new EventHandler<ActionEvent>(){
+
+            @Override
+            public void handle(ActionEvent t) {
+                
+                Planning planning = planningController.retrievePlanning(1);
+                
+                // registreer visibility
+                Timestamp t1 = new Timestamp(PlanningOpslaanScreen.this.getCtStartTime().getCalendar().getTimeInMillis());
+                Timestamp t2 = new Timestamp(PlanningOpslaanScreen.this.getCtEndTime().getCalendar().getTimeInMillis());
+                planningController.registerVisibilityPeriod(planning, t1, t2);
+                
+                // registreer enabled of niet 
+                planningController.changePlanningVisibility(planning, !PlanningOpslaanScreen.this.getCbVisibility().isIndeterminate());                
+            }
+            
+        });
         root.addRow(3, btnSave);
         
         return root;
@@ -54,7 +80,28 @@ public class PlanningOpslaanScreen implements IScreen
     {
         return new Scene(getPane(), 600, 600);
     }
-    
-    
-    
+
+    public CalendarTextField getCtEndTime() {
+        return ctEndTime;
+    }
+
+    public void setCtEndTime(CalendarTextField ctEndTime) {
+        this.ctEndTime = ctEndTime;
+    }
+
+    public CalendarTextField getCtStartTime() {
+        return ctStartTime;
+    }
+
+    public void setCtStartTime(CalendarTextField ctStartTime) {
+        this.ctStartTime = ctStartTime;
+    }  
+
+    public CheckBox getCbVisibility() {
+        return cbVisibility;
+    }
+
+    public void setCbVisibility(CheckBox cbVisibility) {
+        this.cbVisibility = cbVisibility;
+    }    
 }

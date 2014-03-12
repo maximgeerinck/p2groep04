@@ -16,6 +16,7 @@ import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 import model.CampusRepository;
 import model.LocationRepository;
+import model.PlanningRepository;
 import model.TimeFrameRepository;
 //import util.JPAUtil;
 
@@ -25,6 +26,7 @@ public class PlanningController
     private TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
     private CampusRepository campusRepository = new CampusRepository();
     private LocationRepository locationRepository = new LocationRepository();
+    private PlanningRepository planningRepository = new PlanningRepository();
     
     public AppointmentImpl[] retrievePresentations() 
     {
@@ -121,9 +123,9 @@ public class PlanningController
      * @param planning
      * @param visible
      */
-    public void changePlanningVisibility(Planning planning, boolean visible) {
-            // TODO - implement PlanningController.changePlanningVisibility
-            throw new UnsupportedOperationException();
+    public void changePlanningVisibility(Planning planning, boolean visible) 
+    {
+        planning.setVisible(visible);
     }
 
     /**
@@ -133,9 +135,14 @@ public class PlanningController
      * @param endTime
      */
     public void registerVisibilityPeriod(Planning planning, Timestamp startTime, Timestamp endTime) {
-            // TODO - implement PlanningController.registerVisibilityPeriod
-            throw new UnsupportedOperationException();
+        planningRepository.changePlanningVisbilityPeriod(planning, startTime, endTime);
     }
+    
+    public Planning retrievePlanning(int id) 
+    {
+        return planningRepository.findOneById(id);
+    }
+    
     public void notifyStakeHolders(Planning planning){
         // TODO - implement
         /**
