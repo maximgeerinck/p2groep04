@@ -24,7 +24,6 @@ import model.AbstractUser;
  */
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "user")
 public class User extends AbstractUser 
 {
@@ -65,8 +64,8 @@ public class User extends AbstractUser
     
     @ManyToMany
     @JoinTable(name = "user_role",
-        joinColumns={@JoinColumn(name="role_id", referencedColumnName="id")},
-        inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}        
+        joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+        inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}        
     )
     protected List<Role> roles;
     
@@ -154,7 +153,7 @@ public class User extends AbstractUser
 
     @Override
     public String toString() {
-        return Integer.toString(id);
+        return String.format("%s %s", this.firstName, this.lastName); 
     }
     
 }

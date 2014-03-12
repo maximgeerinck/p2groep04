@@ -2,9 +2,10 @@ package gui.screens;
 
 
 import controller.PlanningController;
+import controller.UserController;
 import entity.Campus;
-import entity.Location;
 import entity.TimeFrame;
+import entity.User;
 import java.util.List;
 import java.util.Observable;
 import static javafx.collections.FXCollections.observableArrayList;
@@ -29,6 +30,7 @@ import model.IScreen;
 public class PresentatieToevoegenScreen extends Observable implements IScreen 
 {
     private PlanningController planningController = new PlanningController();
+    private UserController userController = new UserController();
     
     public Pane getPane() 
     {
@@ -58,34 +60,25 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         final ComboBox cbTimeframe = new ComboBox(dataTimeframes);
         root.addRow(3, new Label("Timeframe"), cbTimeframe);
         
-        ObservableList<String> optPromotoren = 
-        observableArrayList(
-            "Ikke",
-            "Iemand anders",           
-            "..."
-        );
-        final ComboBox cnPromotoren = new ComboBox(optPromotoren);
-        root.addRow(4, new Label("Promotor"), cnPromotoren);
+        // promotors
+        List<User> promotors = userController.retrievePromotors();
+        final ObservableList<User> dataPromotors = observableArrayList(promotors.toArray(new User[promotors.size()]));
+        final ComboBox cbPromotor = new ComboBox(dataPromotors);
+        root.addRow(4, new Label("Promotor"), cbPromotor);
 
-        ObservableList<String> optCoPromotoren = 
-        observableArrayList(
-            "Ikke",
-            "Iemand anders",           
-            "..."          
-        );
-        final ComboBox cbCoPromotoren = new ComboBox(optCoPromotoren);
+        
+        // co-promotor
+        final ComboBox cbCoPromotoren = new ComboBox(dataPromotors);
         root.addRow(5, new Label("Co-Promotor"), cbCoPromotoren);
 
-        ObservableList<String> optPresentatoren = 
-        observableArrayList(
-            "Ikke",
-            "Iemand anders",           
-            "..."          
-        );
-        final ComboBox cbPresentatoren = new ComboBox(optPresentatoren);
-        root.addRow(6, new Label("Presentator"), cbPresentatoren);
+        // students
+        List<User> students = userController.retrieveStudents();
+        final ObservableList<User> dataStudents = observableArrayList(students.toArray(new User[students.size()]));
+        final ComboBox cbStudents = new ComboBox(dataStudents);
+        root.addRow(6, new Label("Presentator"), cbStudents);
+        
+        // subject
         root.addRow(7, new Label("Onderwerp"), new TextField());
-        root.addRow(8, new Label("Tijdstip"), new TextField());
 
         Button btnAdd = new Button("Toevoegen");
         btnAdd.setOnAction(new EventHandler<ActionEvent>(){

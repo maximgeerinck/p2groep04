@@ -12,11 +12,11 @@ public class UserRepository extends Repository
     private Collection<User> users;
 
     public List<User> findAllStudents() {
-        return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u LEFT JOIN u.roles r WHERE r.name = :role").setParameter("role", User.ROLE_STUDENT).getResultList();
+       return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_STUDENT).getResultList();
     }
 
     public List<User> findAllPromotors() {
-        return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u LEFT JOIN u.roles r WHERE r.name = :role").setParameter("role", User.ROLE_PROMOTOR).getResultList();
+        return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_PROMOTOR).getResultList();
     }
 
     /**
@@ -30,6 +30,6 @@ public class UserRepository extends Repository
 
     public User findBPC() 
     {
-       return (User)em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u LEFT JOIN u.roles r WHERE r.name = :role").setParameter("role", User.ROLE_BPC).getSingleResult();
+       return (User)em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_BPC).getSingleResult();
     }
 }
