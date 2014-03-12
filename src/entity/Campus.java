@@ -30,7 +30,7 @@ public class Campus
     @Column(name="address")
     private String address;
 
-    private Campus()
+    public Campus()
     {
         
     }

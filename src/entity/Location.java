@@ -29,7 +29,7 @@ public class Location implements Serializable
 	@javax.persistence.JoinColumn(name="campus_id", referencedColumnName="id")
     private Campus campus;
 
-    private Location() 
+    public Location() 
     {
     }
 

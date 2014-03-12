@@ -44,7 +44,7 @@ public class Planning implements Serializable
     
     private Timestamp visibleEnd;
     
-    private Planning() 
+    public Planning() 
     {
     }
     

@@ -4,6 +4,7 @@ import entity.Campus;
 import entity.Location;
 import entity.Planning;
 import entity.Presentation;
+import entity.Suggestion;
 import model.PresentationRepository;
 import entity.TimeFrame;
 import entity.User;
@@ -20,6 +21,7 @@ import model.CampusRepository;
 import model.LocationRepository;
 import model.PlanningRepository;
 import model.TimeFrameRepository;
+import model.UserRepository;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import util.JPAUtil;
 //import util.JPAUtil;
@@ -31,6 +33,7 @@ public class PlanningController
     private CampusRepository campusRepository = new CampusRepository();
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
+    
     
     public AppointmentImpl[] retrievePresentations() 
     {
@@ -97,11 +100,33 @@ public class PlanningController
     {
         EntityManager manager = JPAUtil.getEntityManager();
         manager.getTransaction().begin();
-             
-                
+        
+        //De gegevens van de campus setten
+        Campus deCampus = new Campus();
+        deCampus.setName(campus);
+        
+        //De gegevens van het lokaal en campus setten
+        Location location = new Location();
+        location.setClassroom(lokaal);
+        location.setCampus(deCampus);
+                  
+        //Het onderwerp setten
+        Suggestion suggestion = new Suggestion();
+        suggestion.setSubject(onderwerp);
+        suggestion.setUser(null);
+        
+        
+        
         Presentation p = new Presentation();
-         p.setTimeFrame(timeFrame);
-         p.setDate(date);
+               
+        p.setUser();
+        p.setTimeFrame(timeFrame);
+        p.setDate(date);
+        p.setLocation(location);
+        p.setLocation(location);
+        
+        
+        
          
          
         
