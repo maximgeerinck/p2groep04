@@ -4,20 +4,26 @@ import entity.Campus;
 import entity.Location;
 import entity.Planning;
 import entity.Presentation;
+import entity.Suggestion;
 import model.PresentationRepository;
 import entity.TimeFrame;
 import entity.User;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.EntityManager;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 import model.CampusRepository;
 import model.LocationRepository;
 import model.PlanningRepository;
 import model.TimeFrameRepository;
+import model.UserRepository;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import util.JPAUtil;
 //import util.JPAUtil;
 
 public class PlanningController 
@@ -27,6 +33,8 @@ public class PlanningController
     private CampusRepository campusRepository = new CampusRepository();
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
+    private UserRepository userRepository = new UserRepository();
+    
     
     public AppointmentImpl[] retrievePresentations() 
     {
@@ -77,6 +85,7 @@ public class PlanningController
 
     /**
      * 
+     * @param timeFrame
      * @param startTime
      * @param endTime
      * @param campus
@@ -84,23 +93,48 @@ public class PlanningController
      * @param promotor
      * @param coPromotor
      * @param presentator
+     * @param date
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) 
+    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, int promotor, int coPromotor, int presentator, String onderwerp, Date date) 
     {
-       /* EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityManager manager = JPAUtil.getEntityManager();
         manager.getTransaction().begin();
-
+        
+        //De gegevens van de campus setten
+        Campus deCampus = new Campus();
+        deCampus.setName(campus);
+        
+        //De gegevens van het lokaal en campus setten
+        Location location = new Location();
+        location.setClassroom(lokaal);
+        location.setCampus(deCampus);
+                  
+        //Het onderwerp setten
+        Suggestion suggestion = new Suggestion();
+        suggestion.setSubject(onderwerp);
+        suggestion.setUser(null);
+        
+        
+        
         Presentation p = new Presentation();
-        //p.setStartTime(new Timestamp(startTijd));
-        //p.setEndTime(new Timestamp(eindTijd));            
-
-
+        
+        List<User> promotors = new ArrayList<>();
+        
+        promotors.add(userRepository.findUserById(promotor));
+        promotors.add(userRepository.findUserById(coPromotor));
+               
+        p.setUser(userRepository.findUserById(presentator));
+        p.setPromotors(promotors);
+        p.setTimeFrame(timeFrame);
+        p.setDate(date);
+        p.setLocation(location);
+        
 
         manager.persist(p);
         manager.getTransaction().commit();
-        manager.close();*/
+        manager.close();
     }
 
     /**
@@ -141,32 +175,5 @@ public class PlanningController
     public Planning retrievePlanning(int id) 
     {
         return planningRepository.findOneById(id);
-    }
-    
-    public void notifyStakeHolders(Planning planning){
-        // TODO - implement
-        /**
-         * 
-         */
-        
-        List<Presentation> presentations = new ArrayList<>();
-        List<User> users = new ArrayList<>();
-        
-        presentations.addAll(planning.getPresentations());
-        
-        for(Presentation p: presentations)
-        {
-           if(p.isChanged()== true){
-           users.add(p.getUser());
-           users.addAll(p.getGuests()); 
-           }
-        }
-        
-        for(User u: users)
-        {
-            u.addNotification("The planning has been changed, please check the planning for more info.");
-        }
-        
-            throw new UnsupportedOperationException();
     }
 }

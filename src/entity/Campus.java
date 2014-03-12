@@ -31,7 +31,13 @@ public class Campus
     private String address;
 
     public Campus()
-    {	
+    {
+        
+    }
+
+    public Campus(String name)
+    {
+        setName(name);
     }
     
     public String getName() {

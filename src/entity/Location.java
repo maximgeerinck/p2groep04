@@ -32,6 +32,14 @@ public class Location implements Serializable
     public Location() 
     {
     }
+
+    public Location(Campus campus, String classroom)
+    {
+        setCampus(campus);
+        setClassroom(classroom);
+    }
+    
+    
     
     public int getId() {
         return this.id;

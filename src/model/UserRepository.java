@@ -18,6 +18,10 @@ public class UserRepository extends Repository
     public List<User> findAllPromotors() {
         return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_PROMOTOR).getResultList();
     }
+    public User findUserById(int id)
+    {
+        return (User)em.createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();
+    }
 
     /**
      * 

@@ -153,6 +153,14 @@ public class User extends AbstractUser
     public int getId() {
         return id;
     }
+
+    public List<String> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<String> notifications) {
+        this.notifications = notifications;
+    }
        
 
     @Override
