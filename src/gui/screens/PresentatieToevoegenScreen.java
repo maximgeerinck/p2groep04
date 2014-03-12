@@ -40,7 +40,8 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
     private CampusController campusController       = new CampusController();
     
     private ComboBox cbLocations = new ComboBox();
-    private ComboBox cbCoPromotors = new ComboBox();    
+    private ComboBox cbCoPromotors = new ComboBox();
+    private CalendarTextField ctfCalendar = new CalendarTextField();
     
     public Pane getPane() 
     {
@@ -48,13 +49,36 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         root.setHgap(10);
         root.setVgap(10);
         root.setPadding(new Insets(25, 25 ,25 ,25));
-
-        root.addRow(0, new Label("Date"), new CalendarTextField());
         
+        //Datum
+        ctfCalendar.setPromptText("Kies een datum");
+        root.addRow(0, new Label("Datum :"), ctfCalendar);
+        
+        // timeframe
+        List<TimeFrame> timeframes = planningController.retrieveTimeFrames();
+        final ObservableList<TimeFrame> dataTimeframes = observableArrayList(timeframes.toArray(new TimeFrame[timeframes.size()]));
+        final ComboBox cbTimeframe = new ComboBox(dataTimeframes);
+        cbTimeframe.setPromptText("Kies een periode");
+        root.addRow(1, new Label("Periode :"), cbTimeframe);
+        
+        // students
+        List<User> students = userController.retrieveStudents();
+        final ObservableList<User> dataStudents = observableArrayList(students.toArray(new User[students.size()]));
+        final ComboBox cbStudents = new ComboBox(dataStudents);
+        cbStudents.setPromptText("Kies een student");
+        cbStudents.setEditable(true);
+        root.addRow(2, new Label("Student :"), cbStudents);        
+
+        //Co-Promotors
+        cbCoPromotors.setPromptText("Kies een co-promotor");
+        cbCoPromotors.setEditable(true);
+        root.addRow(3, new Label("Co-Promotor :"), cbCoPromotors);
+        
+        //Campuses
         List<Campus> campuses = planningController.retrieveCampuses();
         final ObservableList<Campus> dataCampus = observableArrayList(campuses.toArray(new Campus[campuses.size()]));
         final ComboBox cbCampus = new ComboBox(dataCampus);
-        cbCampus.setPromptText("Please choose a campus");
+        cbCampus.setPromptText("Kies een campus");
         cbCampus.valueProperty().addListener(new ChangeListener<Object>() {
 
             @Override
@@ -68,26 +92,20 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
                 }
             }
         });
-        root.addRow(1, new Label("Campus"), cbCampus);        
+        root.addRow(4, new Label("Campus :"), cbCampus);        
         
         // location
         List<Location> locations = locationController.retrieveLocations(null);
         final ObservableList<Location> dataLocations = observableArrayList(locations.toArray(new Location[locations.size()]));
         cbLocations = new ComboBox(dataLocations);
-        root.addRow(2, new Label("Locatie"), cbLocations);
-        
-        // timeframe
-        List<TimeFrame> timeframes = planningController.retrieveTimeFrames();
-        final ObservableList<TimeFrame> dataTimeframes = observableArrayList(timeframes.toArray(new TimeFrame[timeframes.size()]));
-        final ComboBox cbTimeframe = new ComboBox(dataTimeframes);
-        root.addRow(3, new Label("Timeframe"), cbTimeframe);
+        root.addRow(5, new Label("Locatie :"), cbLocations);
         
         // promotors
-        List<User> promotors = userController.retrievePromotors();
+        /*List<User> promotors = userController.retrievePromotors();
         final ObservableList<User> dataPromotors = observableArrayList(promotors.toArray(new User[promotors.size()]));
         final ComboBox cbPromotor = new ComboBox(dataPromotors);
         cbPromotor.setPromptText("Please pick a promotor");
-        root.addRow(4, new Label("Promotor"), cbPromotor);
+        root.addRow(5, new Label("Promotor :"), cbPromotor);
         cbPromotor.valueProperty().addListener(new ChangeListener<Object>() {
 
             @Override
@@ -108,17 +126,12 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
                 cbCoPromotors.getItems().setAll(dataCoPromotors);
                 cbCoPromotors.setPromptText("Please choose a co-promotor");
             }
-        });
+        });*/
 
-        cbCoPromotors.setPromptText("Please pick a co-promotor");
-        root.addRow(5, new Label("Co-Promotor"), cbCoPromotors);
-
-        // students
-        List<User> students = userController.retrieveStudents();
-        final ObservableList<User> dataStudents = observableArrayList(students.toArray(new User[students.size()]));
-        final ComboBox cbStudents = new ComboBox(dataStudents);
-        root.addRow(6, new Label("Presentator"), cbStudents);        
-
+        
+        
+        
+        //Button Toevoegen
         Button btnAdd = new Button("Toevoegen");
         btnAdd.setOnAction(new EventHandler<ActionEvent>(){
 
@@ -129,8 +142,8 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
             }
 
         });
-        root.addRow(7, btnAdd);
-
+        root.addRow(6, btnAdd);
+        
         return root;
     }
 

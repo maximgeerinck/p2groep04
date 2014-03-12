@@ -41,15 +41,16 @@ public class PlanningOpslaanScreen implements IScreen
         root.setVgap(10);
         root.setPadding(new Insets(25, 25 ,25 ,25));
         
+        // zichtbaar of niet
+        cbVisibility = new CheckBox();
+        cbVisibility.setSelected(true);
+        root.addRow(0, new Label("Zichtbaar :"), cbVisibility);
+        
         // zichtbaarheids periode
         ctEndTime = new CalendarTextField();
         ctStartTime = new CalendarTextField();                
-        root.addRow(0, new Label("Start tijd:"), ctEndTime);
-        root.addRow(1, new Label("Eind tijd:"), ctStartTime);
-        
-        // zichtbaar of niet
-        cbVisibility = new CheckBox();
-        root.addRow(2, new Label("Zichtbaar"), cbVisibility);
+        root.addRow(1, new Label("Vanaf :"), ctEndTime);
+        root.addRow(2, new Label("Tot :"), ctStartTime);
         
         // opslaan
         Button btnSave = new Button("Opslaan");

@@ -56,7 +56,7 @@ public class StartUp extends Application
         
         // Planning opslaan
         PlanningOpslaanScreen planningOpslaan = (PlanningOpslaanScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_OPSLAAN);
-        TitledPane tpPlanningOpslaan = new TitledPane("Planning settings", planningOpslaan.getPane());
+        TitledPane tpPlanningOpslaan = new TitledPane("Instellingen", planningOpslaan.getPane());
         a.getPanes().add(tpPlanningOpslaan);
         a.setExpandedPane(tpPlanningOpslaan);       
         
