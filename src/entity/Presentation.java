@@ -93,10 +93,11 @@ public class Presentation implements Serializable
      * @param location
      */
     public Presentation(TimeFrame timeFrame, Location location) {
-        // TODO - implement Presentation.Presentation
-        throw new UnsupportedOperationException();
+        setTimeFrame(timeFrame);
+        setLocation(location);
     }
 
+    
     public String toDisplayString() {
         // TODO - implement Presentation.toDisplayString
         throw new UnsupportedOperationException();

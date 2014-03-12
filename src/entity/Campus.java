@@ -30,14 +30,11 @@ public class Campus
     @Column(name="address")
     private String address;
 
-    protected Campus()
-    {	
+    private Campus()
+    {
+        
     }
 
-    public Campus(String name) {
-        this.name = name;
-    }
-    
     
     public String getName() {
         return this.name;

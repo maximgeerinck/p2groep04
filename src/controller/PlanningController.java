@@ -7,6 +7,7 @@ import entity.Presentation;
 import model.PresentationRepository;
 import entity.TimeFrame;
 import entity.User;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import model.CampusRepository;
 import model.LocationRepository;
 import model.PlanningRepository;
 import model.TimeFrameRepository;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import util.JPAUtil;
 //import util.JPAUtil;
 
@@ -87,15 +89,22 @@ public class PlanningController
      * @param promotor
      * @param coPromotor
      * @param presentator
+     * @param date
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) 
+    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip, Date date) 
     {
         EntityManager manager = JPAUtil.getEntityManager();
         manager.getTransaction().begin();
-
-        Presentation p = new Presentation(timeFrame, new Location(lokaal, new Campus(campus)));
+             
+                
+        Presentation p = new Presentation();
+         p.setTimeFrame(timeFrame);
+         p.setDate(date);
+         
+         
+        
                     
 
 
