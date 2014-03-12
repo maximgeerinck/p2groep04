@@ -6,6 +6,9 @@ package controller;
 
 import entity.Planning;
 import entity.Presentation;
+import entity.TimeFrame;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import junit.framework.Assert;
@@ -24,6 +27,7 @@ public class PlanningControllerTest {
     private Planning planning;
     private PlanningController planningController;
     private List<Presentation> presentations;
+    private Presentation presentation;
     
     @Before
     public void before()
@@ -83,11 +87,15 @@ public class PlanningControllerTest {
     }
     
     @Test
-    public void testNotifyStakeholdersHasNotification(){
+    public void testCreateCorrectPlanning(){
+      
+      
         
-        planningController.notifyStakeHolders(planning);
-        
-        
-        
+      planningController.createPresentation(new TimeFrame(new Time(20140310L),new Time(20140311L)), 
+              "Schoonmeersen", "B1.027", 1, 
+              2, 3, "onderwerp", new Date(2014,03,12));
+      
+      
+      
     }
 }

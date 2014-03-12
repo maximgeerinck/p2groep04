@@ -30,6 +30,12 @@ public class TimeFrame implements Serializable {
     public TimeFrame() 
     {
     }
+    
+    public TimeFrame(Time startTime, Time endTime)
+    {
+        setStartTime(startTime);
+        setEndTime(endTime);
+    }
         
     public int getId() {
         return id;

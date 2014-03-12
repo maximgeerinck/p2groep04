@@ -33,6 +33,7 @@ public class PlanningController
     private CampusRepository campusRepository = new CampusRepository();
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
+    private UserRepository userRepository = new UserRepository();
     
     
     public AppointmentImpl[] retrievePresentations() 
@@ -96,7 +97,7 @@ public class PlanningController
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip, Date date) 
+    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, int promotor, int coPromotor, int presentator, String onderwerp, Date date) 
     {
         EntityManager manager = JPAUtil.getEntityManager();
         manager.getTransaction().begin();
@@ -118,21 +119,18 @@ public class PlanningController
         
         
         Presentation p = new Presentation();
+        
+        List<User> promotors = new ArrayList<>();
+        
+        promotors.add(userRepository.findUserById(promotor));
+        promotors.add(userRepository.findUserById(coPromotor));
                
-        p.setUser();
+        p.setUser(userRepository.findUserById(presentator));
+        p.setPromotors(promotors);
         p.setTimeFrame(timeFrame);
         p.setDate(date);
         p.setLocation(location);
-        p.setLocation(location);
         
-        
-        
-         
-         
-        
-                    
-
-
 
         manager.persist(p);
         manager.getTransaction().commit();
@@ -177,32 +175,5 @@ public class PlanningController
     public Planning retrievePlanning(int id) 
     {
         return planningRepository.findOneById(id);
-    }
-    
-    public void notifyStakeHolders(Planning planning){
-        // TODO - implement
-        /**
-         * 
-         */
-        
-        List<Presentation> presentations = new ArrayList<>();
-        List<User> users = new ArrayList<>();
-        
-        presentations.addAll(planning.getPresentations());
-        
-        for(Presentation p: presentations)
-        {
-           if(p.isChanged()== true){
-           users.add(p.getUser());
-           users.addAll(p.getGuests()); 
-           }
-        }
-        
-        for(User u: users)
-        {
-            u.addNotification("The planning has been changed, please check the planning for more info.");
-        }
-        
-            throw new UnsupportedOperationException();
     }
 }

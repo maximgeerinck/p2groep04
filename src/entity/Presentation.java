@@ -2,8 +2,8 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,6 +58,8 @@ public class Presentation implements Serializable
     
     private boolean changed = false;
     
+    private List<User> promotors;
+    
     public Presentation() 
     {
     }
@@ -97,6 +99,18 @@ public class Presentation implements Serializable
         setLocation(location);
     }
 
+    public void notifyStakeholders()
+    {
+        this.getUser().addNotification("There has been a change in the planning, please check the planning for more information.");
+        for(User us: this.getPromotors())
+        {
+            us.addNotification("There has been a change in the planning, please check the planning for more information.");
+        }
+        for(User u: this.getGuests())
+        {
+            u.addNotification("There has been a change in the planning, please check the planning for more information.");
+        }
+    }
     
     public String toDisplayString() {
         // TODO - implement Presentation.toDisplayString
@@ -158,6 +172,16 @@ public class Presentation implements Serializable
     public void setChanged(boolean changed) {
         this.changed = changed;
     }
+
+    public List<User> getPromotors() {
+        return promotors;
+    }
+
+    public void setPromotors(List<User> promotors) {
+        this.promotors = promotors;
+    }
+    
+    
     
     
 }

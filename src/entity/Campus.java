@@ -35,6 +35,10 @@ public class Campus
         
     }
 
+    public Campus(String name)
+    {
+        setName(name);
+    }
     
     public String getName() {
         return this.name;

@@ -33,7 +33,11 @@ public class Location implements Serializable
     {
     }
 
-    
+    public Location(Campus campus, String classroom)
+    {
+        setCampus(campus);
+        setClassroom(classroom);
+    }
     
     
     
