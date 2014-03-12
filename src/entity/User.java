@@ -149,7 +149,11 @@ public class User extends AbstractUser
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+       
 
     @Override
     public String toString() {

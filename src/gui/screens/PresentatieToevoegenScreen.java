@@ -1,13 +1,19 @@
 package gui.screens;
 
 
+import controller.CampusController;
+import controller.LocationController;
 import controller.PlanningController;
 import controller.UserController;
 import entity.Campus;
+import entity.Location;
 import entity.TimeFrame;
 import entity.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import jfxtras.scene.control.CalendarTextField;
@@ -29,8 +34,13 @@ import model.IScreen;
 
 public class PresentatieToevoegenScreen extends Observable implements IScreen 
 {
-    private PlanningController planningController = new PlanningController();
-    private UserController userController = new UserController();
+    private PlanningController planningController   = new PlanningController();
+    private UserController userController           = new UserController();
+    private LocationController locationController   = new LocationController();
+    private CampusController campusController       = new CampusController();
+    
+    private ComboBox cbLocations = new ComboBox();
+    private ComboBox cbCoPromotors = new ComboBox();    
     
     public Pane getPane() 
     {
@@ -44,15 +54,27 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         List<Campus> campuses = planningController.retrieveCampuses();
         final ObservableList<Campus> dataCampus = observableArrayList(campuses.toArray(new Campus[campuses.size()]));
         final ComboBox cbCampus = new ComboBox(dataCampus);
-        
-/*        List<Location> locations = planningController.retrieveLocations(null);
-        final ObservableList<Location> dataLocation = observableArrayList(locations.toArray(new Location[locations.size()]));
-        final ComboBox cbLocation = new ComboBox(dataLocation);*/
-        
-        root.addRow(1, new Label("Campus"), cbCampus, new Label("Locatie"), new ComboBox());        
+        cbCampus.setPromptText("Please choose a campus");
+        cbCampus.valueProperty().addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Object> ov, Object t, Object t1) {
+                List<Location> locations = locationController.retrieveLocations((Campus)t1);
+                cbLocations.getItems().setAll(locations);    
+                if(locations.size() == 0) {
+                    cbLocations.setPromptText("No locations found.");
+                } else {
+                    cbLocations.setPromptText("Please pick a location.");
+                }
+            }
+        });
+        root.addRow(1, new Label("Campus"), cbCampus);        
         
         // location
-        root.addRow(2, new Label("Locatie"));
+        List<Location> locations = locationController.retrieveLocations(null);
+        final ObservableList<Location> dataLocations = observableArrayList(locations.toArray(new Location[locations.size()]));
+        cbLocations = new ComboBox(dataLocations);
+        root.addRow(2, new Label("Locatie"), cbLocations);
         
         // timeframe
         List<TimeFrame> timeframes = planningController.retrieveTimeFrames();
@@ -64,34 +86,50 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         List<User> promotors = userController.retrievePromotors();
         final ObservableList<User> dataPromotors = observableArrayList(promotors.toArray(new User[promotors.size()]));
         final ComboBox cbPromotor = new ComboBox(dataPromotors);
+        cbPromotor.setPromptText("Please pick a promotor");
         root.addRow(4, new Label("Promotor"), cbPromotor);
+        cbPromotor.valueProperty().addListener(new ChangeListener<Object>() {
 
-        
-        // co-promotor
-        final ComboBox cbCoPromotoren = new ComboBox(dataPromotors);
-        root.addRow(5, new Label("Co-Promotor"), cbCoPromotoren);
+            @Override
+            public void changed(ObservableValue<? extends Object> ov, Object t, Object t1) {
+                // co-promotor
+                List<User> coPromotors = new ArrayList<>();
+                // get already picked promotor if any
+                User currentPromotor = ((User)(cbPromotor.getSelectionModel().getSelectedItem()));
+                if(currentPromotor != null) {
+                   for(User u : (List<User>)cbPromotor.getItems()) 
+                   {
+                       if(u.getId() != currentPromotor.getId()) {
+                           coPromotors.add(u);
+                       }
+                   } 
+                }
+                final ObservableList<User> dataCoPromotors = observableArrayList(coPromotors.toArray(new User[coPromotors.size()]));
+                cbCoPromotors.getItems().setAll(dataCoPromotors);
+                cbCoPromotors.setPromptText("Please choose a co-promotor");
+            }
+        });
+
+        cbCoPromotors.setPromptText("Please pick a co-promotor");
+        root.addRow(5, new Label("Co-Promotor"), cbCoPromotors);
 
         // students
         List<User> students = userController.retrieveStudents();
         final ObservableList<User> dataStudents = observableArrayList(students.toArray(new User[students.size()]));
         final ComboBox cbStudents = new ComboBox(dataStudents);
-        root.addRow(6, new Label("Presentator"), cbStudents);
-        
-        // subject
-        root.addRow(7, new Label("Onderwerp"), new TextField());
+        root.addRow(6, new Label("Presentator"), cbStudents);        
 
         Button btnAdd = new Button("Toevoegen");
         btnAdd.setOnAction(new EventHandler<ActionEvent>(){
 
             @Override
             public void handle(ActionEvent t) {
-                //Roep setchanged aan ma das van de fucking klasse der boven -.-
                 PresentatieToevoegenScreen.this.setChanged();
                 PresentatieToevoegenScreen.this.notifyObservers();
             }
 
         });
-        root.addRow(9, btnAdd);
+        root.addRow(7, btnAdd);
 
         return root;
     }

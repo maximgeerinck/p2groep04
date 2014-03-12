@@ -8,6 +8,7 @@ package model;
 
 import entity.Campus;
 import entity.Location;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,9 @@ import java.util.List;
 public class LocationRepository extends Repository
 {
     public List<Location> findByCampus(Campus campus) {
+        if(campus == null) {
+            return new ArrayList<Location>();
+        }
         return em.createQuery("SELECT l FROM " + Location.class.getSimpleName() + " l JOIN l.campus c WHERE c.id = :id").setParameter("id", campus.getId()).getResultList();
     }
 }
