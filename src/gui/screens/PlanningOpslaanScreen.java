@@ -48,7 +48,11 @@ public class PlanningOpslaanScreen implements IScreen
         
         // zichtbaarheids periode
         ctEndTime = new CalendarTextField();
-        ctStartTime = new CalendarTextField();                
+        ctStartTime = new CalendarTextField();
+        if(cbVisibility.isSelected() == false){
+           ctEndTime.setDisable(true);
+           ctStartTime.setDisable(true);
+        }    
         root.addRow(1, new Label("Vanaf :"), ctEndTime);
         root.addRow(2, new Label("Tot :"), ctStartTime);
         

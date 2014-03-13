@@ -72,7 +72,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         //Co-Promotors
         cbCoPromotors.setPromptText("Kies een co-promotor");
         cbCoPromotors.setEditable(true);
-        root.addRow(3, new Label("Co-Promotor :"), cbCoPromotors);
+        root.addRow(4, new Label("Co-Promotor :"), cbCoPromotors);
         
         //Campuses
         List<Campus> campuses = planningController.retrieveCampuses();
@@ -92,20 +92,20 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
                 }
             }
         });
-        root.addRow(4, new Label("Campus :"), cbCampus);        
+        root.addRow(5, new Label("Campus :"), cbCampus);        
         
         // location
         List<Location> locations = locationController.retrieveLocations(null);
         final ObservableList<Location> dataLocations = observableArrayList(locations.toArray(new Location[locations.size()]));
         cbLocations = new ComboBox(dataLocations);
-        root.addRow(5, new Label("Locatie :"), cbLocations);
+        root.addRow(6, new Label("Locatie :"), cbLocations);
         
         // promotors
-        /*List<User> promotors = userController.retrievePromotors();
+        List<User> promotors = userController.retrievePromotors();
         final ObservableList<User> dataPromotors = observableArrayList(promotors.toArray(new User[promotors.size()]));
         final ComboBox cbPromotor = new ComboBox(dataPromotors);
         cbPromotor.setPromptText("Please pick a promotor");
-        root.addRow(5, new Label("Promotor :"), cbPromotor);
+        root.addRow(3, new Label("Promotor :"), cbPromotor);
         cbPromotor.valueProperty().addListener(new ChangeListener<Object>() {
 
             @Override
@@ -126,7 +126,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
                 cbCoPromotors.getItems().setAll(dataCoPromotors);
                 cbCoPromotors.setPromptText("Please choose a co-promotor");
             }
-        });*/
+        });
 
         
         
@@ -142,7 +142,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
             }
 
         });
-        root.addRow(6, btnAdd);
+        root.addRow(7, btnAdd);
         
         return root;
     }
