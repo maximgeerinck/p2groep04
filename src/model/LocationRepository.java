@@ -21,6 +21,6 @@ public class LocationRepository extends Repository
         if(campus == null) {
             return new ArrayList<Location>();
         }
-        return em.createQuery("SELECT l FROM " + Location.class.getSimpleName() + " l JOIN l.campus c WHERE c.id = :id").setParameter("id", campus.getId()).getResultList();
+        return getEm().createQuery("SELECT l FROM " + Location.class.getSimpleName() + " l JOIN l.campus c WHERE c.id = :id").setParameter("id", campus.getId()).getResultList();
     }
 }

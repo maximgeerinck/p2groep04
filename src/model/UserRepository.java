@@ -12,15 +12,15 @@ public class UserRepository extends Repository
     private Collection<User> users;
 
     public List<User> findAllStudents() {
-       return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_STUDENT).getResultList();
+       return getEm().createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_STUDENT).getResultList();
     }
 
     public List<User> findAllPromotors() {
-        return em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_PROMOTOR).getResultList();
+        return getEm().createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_PROMOTOR).getResultList();
     }
     public User findUserById(int id)
     {
-        return (User)em.createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();
+        return (User)getEm().createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();
     }
 
     /**
@@ -34,6 +34,6 @@ public class UserRepository extends Repository
 
     public User findBPC() 
     {
-       return (User)em.createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_BPC).getSingleResult();
+       return (User)getEm().createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_BPC).getSingleResult();
     }
 }

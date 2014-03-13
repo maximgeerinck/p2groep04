@@ -43,7 +43,7 @@ public class PlanningController
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
 
-        List<Presentation> presentations = presentationRepository.findAllByPlanning(null);
+        List<Presentation> presentations = presentationRepository.findAllByPlanning(planningRepository.findOneById(1));
         
         for(Presentation p : presentations)
         {
@@ -97,46 +97,48 @@ public class PlanningController
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, int promotor, int coPromotor, int presentator, String onderwerp, Date date) 
-    {
-        EntityManager manager = JPAUtil.getEntityManager();
-        manager.getTransaction().begin();
-        
-        //De gegevens van de campus setten
-        Campus deCampus = new Campus();
-        deCampus.setName(campus);
-        
-        //De gegevens van het lokaal en campus setten
-        Location location = new Location();
-        location.setClassroom(lokaal);
-        location.setCampus(deCampus);
-                  
-        //Het onderwerp setten
-        Suggestion suggestion = new Suggestion();
-        suggestion.setSubject(onderwerp);
-        suggestion.setUser(null);
-        
-        
-        
-        Presentation p = new Presentation();
-        
-        List<User> promotors = new ArrayList<>();
-        
-        promotors.add(userRepository.findUserById(promotor));
-        promotors.add(userRepository.findUserById(coPromotor));
-               
-        p.setUser(userRepository.findUserById(presentator));
-        p.setPromotors(promotors);
-        p.setTimeFrame(timeFrame);
-        p.setDate(date);
-        p.setLocation(location);
-        
+    
+        public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, int promotor, int coPromotor, int presentator, String onderwerp, Date date) 
+        {
+            return;
+            /*EntityManager manager = JPAUtil.getEntityManager();
+            manager.getTransaction().begin();
 
-        manager.persist(p);
-        manager.getTransaction().commit();
-        manager.close();
-    }
+            //De gegevens van de campus setten
+            Campus deCampus = new Campus();
+            deCampus.setName(campus);
 
+            //De gegevens van het lokaal en campus setten
+            Location location = new Location();
+            location.setClassroom(lokaal);
+            location.setCampus(deCampus);
+
+            //Het onderwerp setten
+            Suggestion suggestion = new Suggestion();
+            suggestion.setSubject(onderwerp);
+            suggestion.setUser(null);
+
+
+
+            Presentation p = new Presentation();
+
+            List<User> promotors = new ArrayList<>();
+
+            promotors.add(userRepository.findUserById(promotor));
+            promotors.add(userRepository.findUserById(coPromotor));
+
+            p.setUser(userRepository.findUserById(presentator));
+            p.setPromotors(promotors);
+            p.setTimeFrame(timeFrame);
+            p.setDate(date);
+            p.setLocation(location);
+
+
+            manager.persist(p);
+            manager.getTransaction().commit();
+            manager.close();
+         */
+        }
     /**
      * 
      * @param presentation

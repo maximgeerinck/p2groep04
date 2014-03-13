@@ -26,12 +26,12 @@ public class PresentationRepository extends Repository
      * @return 
      */
     public List<Presentation> findAllByPlanning(Planning planning) {
-        em.getTransaction().begin();
+        getEm().getTransaction().begin();
 
-        List<Presentation> presentations =  em.createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1").getResultList();
-        em.getTransaction().commit();
+        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1").getResultList();
+        getEm().getTransaction().commit();
         
-        em.close();
+        getEm().close();
         
         return presentations;
     }

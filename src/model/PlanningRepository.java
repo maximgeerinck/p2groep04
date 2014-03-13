@@ -8,6 +8,7 @@ package model;
 
 import entity.Planning;
 import java.sql.Timestamp;
+import util.JPAUtil;
 
 /**
  *
@@ -17,21 +18,21 @@ public class PlanningRepository extends Repository
 {
     public Planning findOneById(int id) 
     {
-        return (Planning)em.createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = 1").getSingleResult();
+        return (Planning)getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = 1").getSingleResult();
     }
     
     public void changePlanningVisbility(Planning planning, boolean visible) 
     {
-        em.getTransaction().begin();
+        getEm().getTransaction().begin();
         planning.setVisible(visible);
-        em.getTransaction().commit();
+        getEm().getTransaction().commit();
     }
     
     public void changePlanningVisbilityPeriod(Planning planning, Timestamp startTime, Timestamp endTime)
     {
-        em.getTransaction().begin();
+        getEm().getTransaction().begin();
         planning.setStartTime(startTime);
         planning.setEndTime(endTime);
-        em.getTransaction().commit();
+        getEm().getTransaction().commit();
     }
 }

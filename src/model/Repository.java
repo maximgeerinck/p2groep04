@@ -7,6 +7,7 @@
 package model;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import util.JPAUtil;
 
 /**
@@ -16,4 +17,11 @@ import util.JPAUtil;
 public abstract class Repository 
 {
     protected EntityManager em = JPAUtil.getEntityManager();
+
+    public EntityManager getEm() 
+    {
+        return JPAUtil.getEntityManager();
+    }
+    
+    
 }

@@ -16,6 +16,6 @@ import java.util.List;
 public class CampusRepository extends Repository
 {
     public List<Campus> findAll() {
-        return em.createQuery("SELECT c FROM " + Campus.class.getSimpleName() + " c ").getResultList();
+        return getEm().createQuery("SELECT c FROM " + Campus.class.getSimpleName() + " c ").getResultList();
     }
 }
