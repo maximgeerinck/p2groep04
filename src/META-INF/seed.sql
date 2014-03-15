@@ -191,6 +191,10 @@ INSERT INTO user_role (`user_id`, `role_id`) VALUES (3, 2);
 INSERT INTO user (`id`, `amount_of_students`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`) VALUES (4, 0, NOW(), "maximgeerinck@hotmail.com", 1, "Maxim", "127.0.0.1", "Geerinck", "test123", "privatesalt", NOW()); 
 INSERT INTO user_role (`user_id`, `role_id`) VALUES (4, 3);
 
+# user: Logan Dupont - STUDENT
+INSERT INTO user (`id`, `amount_of_students`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`) VALUES (5, 0, NOW(), "logandupont@hotmail.com", 1, "Logan", "127.0.0.1", "Dupont", "test123", "privatesalt", NOW()); 
+INSERT INTO user_role (`user_id`, `role_id`) VALUES (5, 3);
+
 
 # planning, door BPC
 INSERT INTO planning (`id`, `allowed_to_view`, `start_time`, `end_time`, `visible`, `user_id`) VALUES (1, 1, NOW() - INTERVAL 1 DAY, NOW() + INTERVAL 1 DAY, 1, 1);
