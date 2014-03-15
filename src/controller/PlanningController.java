@@ -2,21 +2,17 @@ package controller;
 
 import model.*;
 import entity.*;
+import java.util.List;
 
 /**
  * import util.JPAUtil;
  */
 public class PlanningController {
 
-	private PresentationRepository presentationRepository = new PresentationRepository();
-	private PresentationRepository attribute = new PresentationRepository();
-	private TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
-	private CampusRepository campusRepository = new CampusRepository();
-	private LocationRepository locationRepository = new LocationRepository();
-	private PresentationRepository attribute2 = new PresentationRepository();
-	private TimeFrameRepository attribute3 = new TimeFrameRepository();
-	private CampusRepository attribute4 = new CampusRepository();
-	private LocationRepository attribute5 = new LocationRepository();
+	private PresentationRepository presentationRepository;
+	private TimeFrameRepository timeFrameRepository;
+	private CampusRepository campusRepository;
+	private LocationRepository locationRepository;
 
 	public jfxtras.scene.control.agenda.Agenda.AppointmentImpl[] retrievePresentations() {
 		// TODO - implement PlanningController.retrievePresentations
@@ -84,7 +80,7 @@ public class PlanningController {
 	 * 
 	 * @param campus
 	 */
-	public java.util.List<Location> retrieveLocations(Campus campus) {
+	public List<Location> retrieveLocations(Campus campus) {
 		// TODO - implement PlanningController.retrieveLocations
 		throw new UnsupportedOperationException();
 	}

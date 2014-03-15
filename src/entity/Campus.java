@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * @author Bram
  */
-@javax.persistence.Entity
+@Entity
 public class Campus {
 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -1,5 +1,7 @@
 package util;
 
+import javax.persistence.EntityManager;
+
 /**
  * @author Maxim
  */

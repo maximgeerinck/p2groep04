@@ -6,6 +6,7 @@
 
 package controller;
 
+import controller.UserController;
 import entity.User;
 import org.junit.Test;
 import org.junit.Before;

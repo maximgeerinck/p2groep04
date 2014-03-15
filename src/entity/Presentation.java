@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import javax.persistence.*;
 
-@javax.persistence.Entity
+@Entity
 public class Presentation implements Serializable {
 
 	private Collection<GuestRequest> guestRequests;

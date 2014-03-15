@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * @author Maxim
  */
-@javax.persistence.Entity
+@Entity
 public class GuestRequest {
 
 	private Presentation presentation;
@@ -17,6 +17,7 @@ public class GuestRequest {
 	@Column(name="ïd")
 	private int id;
 
+	@javax.persistence.ManyToOne(optional=false)
 	public User getUser() {
 		return this.user;
 	}

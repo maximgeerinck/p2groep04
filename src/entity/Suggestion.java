@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Suggestion implements Serializable {
 
 	private Student student;
+	private User user;
 	private ResearchDomain researchDomain;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -17,7 +18,16 @@ public class Suggestion implements Serializable {
 	private int id;
 	@Column(name="subject")
 	private String subject;
-	private User user;
+
+	@javax.persistence.ManyToOne(optional=false)
+	@javax.persistence.JoinColumn(name="user_id", referencedColumnName="id")
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -37,14 +47,6 @@ public class Suggestion implements Serializable {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Suggestion() {
