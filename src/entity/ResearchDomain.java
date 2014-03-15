@@ -38,15 +38,11 @@ public class ResearchDomain implements Serializable {
 		this.name = name;
 	}
 
-	public ResearchDomain() {
-		// TODO - implement ResearchDomain.ResearchDomain
-		throw new UnsupportedOperationException();
-	}
+	public ResearchDomain() {}
 
 	@Override
 	public String toString() {
-		// TODO - implement ResearchDomain.toString
-		throw new UnsupportedOperationException();
+		return name;
 	}
 
 }

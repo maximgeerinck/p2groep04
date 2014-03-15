@@ -1,12 +1,15 @@
 package model;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+
 /**
  * @author Maxim
  */
 public interface IScreen {
 
-	javafx.scene.layout.Pane getPane();
+	Pane getPane();
 
-	javafx.scene.Scene showScreen();
+	Scene showScreen();
 
 }

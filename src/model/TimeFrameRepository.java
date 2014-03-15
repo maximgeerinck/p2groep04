@@ -1,15 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package model;
 
-import entity.*;
+import entity.TimeFrame;
+import java.util.List;
 
 /**
+ *
  * @author Maxim
  */
-public class TimeFrameRepository extends Repository {
-
-	public java.util.List<TimeFrame> findAll() {
-		// TODO - implement TimeFrameRepository.findAll
-		throw new UnsupportedOperationException();
-	}
-
+public class TimeFrameRepository extends Repository
+{
+    public List<TimeFrame> findAll()
+    {
+        return em.createQuery("SELECT t FROM " + TimeFrame.class.getSimpleName() + " t").getResultList();
+    }
 }

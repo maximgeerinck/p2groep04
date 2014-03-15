@@ -49,15 +49,11 @@ public class Suggestion implements Serializable {
 		this.subject = subject;
 	}
 
-	public Suggestion() {
-		// TODO - implement Suggestion.Suggestion
-		throw new UnsupportedOperationException();
-	}
+	public Suggestion() {}
 
 	@Override
 	public String toString() {
-		// TODO - implement Suggestion.toString
-		throw new UnsupportedOperationException();
+		return subject;
 	}
 
 }

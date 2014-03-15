@@ -46,9 +46,6 @@ public class GuestRequest {
 		this.id = id;
 	}
 
-	public GuestRequest() {
-		// TODO - implement GuestRequest.GuestRequest
-		throw new UnsupportedOperationException();
-	}
+	public GuestRequest() {}
 
 }

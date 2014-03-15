@@ -2,24 +2,22 @@ package controller;
 
 import model.*;
 import entity.*;
+import java.util.List;
 
 public class UserController {
 
 	private UserRepository userRepository = new UserRepository();
 
-	public java.util.List<User> retrievePromotors() {
-		// TODO - implement UserController.retrievePromotors
-		throw new UnsupportedOperationException();
+	public List<Promotor> retrievePromotors() {
+		 return userRepository.findAllPromotors();
 	}
 
-	public User retrieveBPC() {
-		// TODO - implement UserController.retrieveBPC
-		throw new UnsupportedOperationException();
+	public BPCoordinator retrieveBPC() {
+		return userRepository.findBPC();
 	}
 
-	public java.util.List<User> retrieveStudents() {
-		// TODO - implement UserController.retrieveStudents
-		throw new UnsupportedOperationException();
+	public List<Student> retrieveStudents() {
+		return userRepository.findAllStudents();
 	}
 
 }

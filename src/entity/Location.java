@@ -47,10 +47,12 @@ public class Location implements Serializable {
 		this.campus = campus;
 	}
 
-	public Location() {
-		// TODO - implement Location.Location
-		throw new UnsupportedOperationException();
+        public Location(Campus campus, String classroom) {
+                setCampus(campus);
+                setClassroom(classroom);
 	}
+        
+	public Location() {}
 
 	@Override
 	public String toString() {
@@ -63,9 +65,6 @@ public class Location implements Serializable {
 	 * @param campus
 	 * @param classroom
 	 */
-	public Location(entity.Campus campus, String classroom) {
-		// TODO - implement Location.Location
-		throw new UnsupportedOperationException();
-	}
+	
 
 }

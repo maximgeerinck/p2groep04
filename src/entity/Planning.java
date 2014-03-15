@@ -101,9 +101,6 @@ public class Planning implements Serializable {
 		this.visibleEnd = visibleEnd;
 	}
 
-	public Planning() {
-		// TODO - implement Planning.Planning
-		throw new UnsupportedOperationException();
-	}
+	public Planning() {}
 
 }

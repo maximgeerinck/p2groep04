@@ -46,23 +46,16 @@ public class Campus {
 		this.address = address;
 	}
 
-	public Campus() {
-		// TODO - implement Campus.Campus
-		throw new UnsupportedOperationException();
-	}
+	public Campus() {}
 
+        public Campus(String name) {
+                setName(name);
+	}
+        
 	public String toString() {
-		// TODO - implement Campus.toString
-		throw new UnsupportedOperationException();
+		return this.name;
 	}
 
-	/**
-	 * 
-	 * @param name
-	 */
-	public Campus(String name) {
-		// TODO - implement Campus.Campus
-		throw new UnsupportedOperationException();
-	}
+	
 
 }
