@@ -1,79 +1,61 @@
 package entity;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
-
-
+import java.io.*;
+import javax.persistence.*;
 
 /**
  * @author Bram
  */
+@javax.persistence.Entity
+public class Suggestion implements Serializable {
 
-@Entity
-public class Suggestion implements Serializable 
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	private Student student;
+	private ResearchDomain researchDomain;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	@Column(name="subject")
+	private String subject;
+	private User user;
 
-    @javax.persistence.ManyToOne(optional=false)
-    @javax.persistence.JoinColumn(name="user_id", referencedColumnName="id")
-    private User user;
-    
-    @Column(name="subject")
-    private String subject;
-    
-    @javax.persistence.ManyToOne(optional=false)
-    @javax.persistence.JoinColumn(name="research_domain_id", referencedColumnName="id")
-    private ResearchDomain researchDomain;
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
 
-    public Suggestion() 
-    {
-    }
-    
-    @Transient
-    public User getUser() {
-        return this.user;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	@javax.persistence.Column(name="subject")
+	public String getSubject() {
+		return this.subject;
+	}
 
-    public String getSubject() {
-        return this.subject;
-    }
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+	public User getUser() {
+		return this.user;
+	}
 
-    public ResearchDomain getResearchDomain() {
-        return this.researchDomain;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setResearchDomain(ResearchDomain researchDomain) {
-        this.researchDomain = researchDomain;
-    }	
+	public Suggestion() {
+		// TODO - implement Suggestion.Suggestion
+		throw new UnsupportedOperationException();
+	}
 
-    public int getId() {
-        return id;
-    }
+	@Override
+	public String toString() {
+		// TODO - implement Suggestion.toString
+		throw new UnsupportedOperationException();
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    @Override
-    public String toString() {
-        return subject;
-    }
 }

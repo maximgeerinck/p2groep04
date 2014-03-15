@@ -1,187 +1,132 @@
 package entity;
 
-import java.io.Serializable;
-import java.sql.Date;
-import java.util.Collection;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import java.io.*;
+import java.util.*;
+import javax.persistence.*;
 
+@javax.persistence.Entity
+public class Presentation implements Serializable {
 
+	private Collection<GuestRequest> guestRequests;
+	private TimeFrame timeFrame;
+	private Planning planning;
+	private Student presentator;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	@Column(name="editable")
+	private transient boolean editable;
+	private Location location;
+	@OneToOne(optional=false)
+	@JoinColumn(name="user_id", referencedColumnName="id")
+	private User user;
+	@ManyToMany(mappedBy="presentationsAttending", cascade=CascadeType.PERSIST)
+	private Collection<User> guests;
+	@Column(name="date")
+	private java.sql.Date date;
+	private boolean changed = false;
 
-@Entity
-public class Presentation implements Serializable 
-{
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
 
-    @OneToOne(optional=false)
-    @JoinColumn(name="user_id", referencedColumnName="id")
-    private User user;
-    
-    @ManyToOne(optional=false)
-    @JoinColumn(name="planning_id", referencedColumnName="id")
-    private Planning planning;
-    
-    @OneToMany(mappedBy="presentation")
-    private Collection<GuestRequest> guestRequests;
-    
-    @ManyToMany(mappedBy="presentationsAttending", cascade = CascadeType.PERSIST)
-    private Collection<User> guests;
-    
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    @Column(name="editable")
-    private transient boolean editable;
-    
-    @javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
-    @javax.persistence.JoinColumn(name="location_id", referencedColumnName="id")
-    private Location location;
+	@javax.persistence.Column(name="editable")
+	public boolean isEditable() {
+		return this.editable;
+	}
 
-    @javax.persistence.OneToOne(optional=false)
-    @javax.persistence.JoinColumn(name="timeframe_id", referencedColumnName="id")
-    private TimeFrame timeFrame;
-    
-    @Column(name = "date")
-    private Date date;
-    
-    private boolean changed = false;
-    
-    private List<User> promotors;
-    
-    public Presentation() 
-    {
-    }
-    
-    public int getId() {
-        return this.id;
-    }
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@javax.persistence.ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@javax.persistence.JoinColumn(name="location_id", referencedColumnName="id")
+	public Location getLocation() {
+		return this.location;
+	}
 
-    public boolean isEditable() {
-        return this.editable;
-    }
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
+	@javax.persistence.Transient
+	public User getUser() {
+		return this.user;
+	}
 
-    public Location getLocation() {
-        return this.location;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+	@javax.persistence.Transient
+	public Collection<User> getGuests() {
+		return this.guests;
+	}
 
-    /**
-     * 
-     * @param startTime
-     * @param endTime
-     * @param location
-     */
-    public Presentation(TimeFrame timeFrame, Location location) {
-        setTimeFrame(timeFrame);
-        setLocation(location);
-    }
+	public void setGuests(Collection<User> guests) {
+		this.guests = guests;
+	}
 
-    public void notifyStakeholders()
-    {
-        this.getUser().addNotification("There has been a change in the planning, please check the planning for more information.");
-        for(User us: this.getPromotors())
-        {
-            us.addNotification("There has been a change in the planning, please check the planning for more information.");
-        }
-        for(User u: this.getGuests())
-        {
-            u.addNotification("There has been a change in the planning, please check the planning for more information.");
-        }
-    }
-    
-    public String toDisplayString() {
-        // TODO - implement Presentation.toDisplayString
-        throw new UnsupportedOperationException();
-    }
+	@javax.persistence.Column(name="\"date\"")
+	public java.sql.Date getDate() {
+		return this.date;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public void setDate(java.sql.Date date) {
+		this.date = date;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	@javax.persistence.Column(name="changed")
+	public boolean isChanged() {
+		return this.changed;
+	}
 
-    public Planning getPlanning() {
-        return planning;
-    }
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
 
-    public void setPlanning(Planning planning) {
-        this.planning = planning;
-    }
+	public Presentation() {
+		// TODO - implement Presentation.Presentation
+		throw new UnsupportedOperationException();
+	}
 
-    public Collection<GuestRequest> getGuestRequests() {
-        return guestRequests;
-    }
+	/**
+	 * 
+	 * @param startTime
+	 * @param endTime
+	 * @param location
+	 */
+	public Presentation(java.sql.Timestamp startTime, java.sql.Timestamp endTime, Location location) {
+		// TODO - implement Presentation.Presentation
+		throw new UnsupportedOperationException();
+	}
 
-    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
-        this.guestRequests = guestRequests;
-    }
+	public String toDisplayString() {
+		// TODO - implement Presentation.toDisplayString
+		throw new UnsupportedOperationException();
+	}
 
-    public Collection<User> getGuests() {
-        return guests;
-    }
+	/**
+	 * 
+	 * @param timeFrame
+	 * @param location
+	 */
+	public Presentation(entity.TimeFrame timeFrame, entity.Location location) {
+		// TODO - implement Presentation.Presentation
+		throw new UnsupportedOperationException();
+	}
 
-    public void setGuests(Collection<User> guests) {
-        this.guests = guests;
-    }
+	public void notifyStakeholders() {
+		// TODO - implement Presentation.notifyStakeholders
+		throw new UnsupportedOperationException();
+	}
 
-    public TimeFrame getTimeFrame() {
-        return timeFrame;
-    }
-
-    public void setTimeFrame(TimeFrame timeFrame) {
-        this.timeFrame = timeFrame;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public boolean isChanged() {
-        return changed;
-    }
-
-    public void setChanged(boolean changed) {
-        this.changed = changed;
-    }
-
-    public List<User> getPromotors() {
-        return promotors;
-    }
-
-    public void setPromotors(List<User> promotors) {
-        this.promotors = promotors;
-    }
-    
-    
-    
-    
 }

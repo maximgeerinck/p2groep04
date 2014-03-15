@@ -1,60 +1,67 @@
 package entity;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import java.io.*;
+import java.util.*;
 
 /**
- *
  * @author Maxim
  */
-@Entity
-@Table(name = "role")
-public class Role implements Serializable 
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
-    
-    @Column(name = "role_name")
-    private String roleName;
+@Table(name="role")
+@javax.persistence.Entity
+public class Role implements Serializable {
 
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.PERSIST)
-    private List<User> users;
-    
-    public Role()
-    {        
-    }
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
+	private int id;
+	@Column(name="role_name")
+	private String roleName;
+	@ManyToMany(mappedBy="roles", cascade=CascadeType.PERSIST)
+	private Collection<User> users;
+	@ManyToMany(mappedBy="roles", cascade=CascadeType.PERSIST)
+	private Collection<User> attribute;
 
-    public int getId() {
-        return id;
-    }
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getRoleName() {
-        return roleName;
-    }
+	@javax.persistence.Column(name="role_name")
+	public String getRoleName() {
+		return this.roleName;
+	}
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 
-    public List<User> getUsers() {
-        return users;
-    }
+	@javax.persistence.Transient
+	public Collection<User> getUsers() {
+		return this.users;
+	}
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }            
+	public void setUsers(Collection<User> users) {
+		this.users = users;
+	}
+
+	@javax.persistence.Transient
+	public Collection<User> getAttribute() {
+		return this.attribute;
+	}
+
+	public void setAttribute(Collection<User> attribute) {
+		this.attribute = attribute;
+	}
+
+	public Role() {
+		// TODO - implement Role.Role
+		throw new UnsupportedOperationException();
+	}
+
 }

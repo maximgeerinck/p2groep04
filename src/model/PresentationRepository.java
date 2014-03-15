@@ -1,38 +1,28 @@
 package model;
 
-import entity.GuestRequest;
-import entity.Planning;
-import entity.Presentation;
-import java.util.Collection;
-import java.util.List;
-import javax.persistence.EntityManager;
-import util.JPAUtil;
+import java.util.*;
+import entity.*;
 
-public class PresentationRepository extends Repository
-{
-    private Collection<Presentation> presentations;    
-    /**
-     * 
-     * @param presentation
-     */
-    public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
-            // TODO - implement PresentationRepository.findGuestRequestsByPresentation
-            throw new UnsupportedOperationException();
-    }
-    
-    /**
-     * 
-     * @param planning
-     * @return 
-     */
-    public List<Presentation> findAllByPlanning(Planning planning) {
-        getEm().getTransaction().begin();
+public class PresentationRepository extends Repository {
 
-        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1").getResultList();
-        getEm().getTransaction().commit();
-        
-        getEm().close();
-        
-        return presentations;
-    }
+	private Collection<Presentation> presentations;
+
+	/**
+	 * 
+	 * @param presentation
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
+		// TODO - implement PresentationRepository.findGuestRequestsByPresentation
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param planning
+	 */
+	public java.util.List<Presentation> findAllByPlanning(Planning planning) {
+		// TODO - implement PresentationRepository.findAllByPlanning
+		throw new UnsupportedOperationException();
+	}
+
 }

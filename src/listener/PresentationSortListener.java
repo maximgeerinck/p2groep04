@@ -1,7 +1,5 @@
 package listener;
 
-import java.awt.event.*;
-
 /**
  * @author Maxim
  */
@@ -16,4 +14,5 @@ public class PresentationSortListener implements ActionListener {
 		// TODO - implement PresentationSortListener.actionPerformed
 		throw new UnsupportedOperationException();
 	}
+
 }

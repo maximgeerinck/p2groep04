@@ -1,26 +1,25 @@
 package controller;
 
-import entity.User;
-import java.util.List;
-import model.UserRepository;
+import model.*;
+import entity.*;
 
-public class UserController 
-{
-    
-    private UserRepository userRepository = new UserRepository();
-    
-    public List<User> retrievePromotors()
-    {
-        return userRepository.findAllPromotors();
-    }
-    
-    public User retrieveBPC() 
-    {
-        return userRepository.findBPC();
-    }
-    
-    public List<User> retrieveStudents() 
-    {
-        return userRepository.findAllStudents();
-    }
+public class UserController {
+
+	private UserRepository userRepository = new UserRepository();
+
+	public java.util.List<User> retrievePromotors() {
+		// TODO - implement UserController.retrievePromotors
+		throw new UnsupportedOperationException();
+	}
+
+	public User retrieveBPC() {
+		// TODO - implement UserController.retrieveBPC
+		throw new UnsupportedOperationException();
+	}
+
+	public java.util.List<User> retrieveStudents() {
+		// TODO - implement UserController.retrieveStudents
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -1,39 +1,160 @@
 package model;
 
-import entity.GuestRequest;
-import entity.User;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import entity.*;
 
+public class UserRepository extends Repository {
 
+	private Collection<User> users;
 
-public class UserRepository extends Repository
-{
-    private Collection<User> users;
+	public java.util.List<User> findAllStudents() {
+		// TODO - implement UserRepository.findAllStudents
+		throw new UnsupportedOperationException();
+	}
 
-    public List<User> findAllStudents() {
-       return getEm().createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_STUDENT).getResultList();
-    }
+	public java.util.List<User> findAllPromotors() {
+		// TODO - implement UserRepository.findAllPromotors
+		throw new UnsupportedOperationException();
+	}
 
-    public List<User> findAllPromotors() {
-        return getEm().createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_PROMOTOR).getResultList();
-    }
-    public User findUserById(int id)
-    {
-        return (User)getEm().createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();
-    }
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
 
-    /**
-     * 
-     * @param user
-     */
-    public List<GuestRequest> findGuestRequestsByUser(User user) {
-            // TODO - implement UserRepository.findGuestRequestsByUser
-            throw new UnsupportedOperationException();
-    }	
+	public User findBPC() {
+		// TODO - implement UserRepository.findBPC
+		throw new UnsupportedOperationException();
+	}
 
-    public User findBPC() 
-    {
-       return (User)getEm().createQuery("SELECT u FROM " + User.class.getSimpleName() + " u JOIN u.roles r WHERE r.roleName = :role ORDER BY u.firstName").setParameter("role", User.ROLE_BPC).getSingleResult();
-    }
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public java.util.List<GuestRequest> findGuestRequestsByUser(User user) {
+		// TODO - implement UserRepository.findGuestRequestsByUser
+		throw new UnsupportedOperationException();
+	}
+
 }

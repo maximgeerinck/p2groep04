@@ -1,5 +1,4 @@
 package controller;
 
-public class RegisterController 
-{
+public class RegisterController {
 }

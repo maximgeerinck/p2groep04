@@ -1,64 +1,63 @@
 package entity;
 
-import java.io.Serializable;
-import java.sql.Time;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-
+import java.io.*;
+import java.util.*;
+import javax.persistence.*;
 
 /**
  * @author Bram
  */
-@Entity
+@javax.persistence.Entity
 public class TimeFrame implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
+	private Collection<Presentation> presentations;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	@Column(name="start_time")
+	private java.sql.Time startTime;
+	@Column(name="end_time")
+	private java.sql.Time endTime;
 
-    @Column(name="start_time")
-    private Time startTime;
-    
-    @Column(name="end_time")
-    private Time endTime;
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
 
-    public TimeFrame() 
-    {
-    }
-    
-    public TimeFrame(Time startTime, Time endTime)
-    {
-        setStartTime(startTime);
-        setEndTime(endTime);
-    }
-        
-    public int getId() {
-        return id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Time getStartTime() {
-        return startTime;
-    }
+	@javax.persistence.Column(name="start_time")
+	public java.sql.Time getStartTime() {
+		return this.startTime;
+	}
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
+	public void setStartTime(java.sql.Time startTime) {
+		this.startTime = startTime;
+	}
 
-    public Time getEndTime() {
-        return endTime;
-    }
+	@javax.persistence.Column(name="end_time")
+	public java.sql.Time getEndTime() {
+		return this.endTime;
+	}
 
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
-    
-    @Override
-    public String toString() {
-        return startTime + " - " + endTime;
-    }
+	public void setEndTime(java.sql.Time endTime) {
+		this.endTime = endTime;
+	}
+
+	public TimeFrame() {
+		// TODO - implement TimeFrame.TimeFrame
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String toString() {
+		// TODO - implement TimeFrame.toString
+		throw new UnsupportedOperationException();
+	}
+
 }

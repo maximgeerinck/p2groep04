@@ -1,67 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
- *
  * @author Bram
  */
-@Entity
-public class Campus 
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    
-    @Column(name="name")
-    private String name;
-    
-    @Column(name="address")
-    private String address;
+@javax.persistence.Entity
+public class Campus {
 
-    public Campus()
-    {
-        
-    }
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@Column(name="id")
+	private int id;
+	@Column(name="name")
+	private String name;
+	@Column(name="address")
+	private String address;
 
-    public Campus(String name)
-    {
-        setName(name);
-    }
-    
-    public String getName() {
-        return this.name;
-    }
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="id")
+	public int getId() {
+		return this.id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getAddress() {
-        return this.address;
-    }
+	@javax.persistence.Column(name="name")
+	public String getName() {
+		return this.name;
+	}
 
-    public void setAddress(String adres) {
-        this.address = adres;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public int getId() {
-        return id;
-    }
-    
-    public String toString()
-    {
-        return this.name;
-    }
+	@javax.persistence.Column(name="address")
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Campus() {
+		// TODO - implement Campus.Campus
+		throw new UnsupportedOperationException();
+	}
+
+	public String toString() {
+		// TODO - implement Campus.toString
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param name
+	 */
+	public Campus(String name) {
+		// TODO - implement Campus.Campus
+		throw new UnsupportedOperationException();
+	}
+
 }

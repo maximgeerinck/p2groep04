@@ -1,51 +1,53 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
- *
  * @author Maxim
  */
-@Entity
-public class GuestRequest 
-{
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "ïd")
-    private int id;
-    
-    @Column(name="approved")
-    private boolean approved;
-        
-    @javax.persistence.ManyToOne(optional=false)
-    @JoinColumn(name = "guest_id", referencedColumnName = "id")
-    private User guest;
-        
-    @javax.persistence.ManyToOne(optional=false)
-    @JoinColumn(name = "presentation_id", referencedColumnName = "id")
-    private Presentation presentation;
+@javax.persistence.Entity
+public class GuestRequest {
 
-    public GuestRequest() 
-    {
-    }
-    
-    public boolean isApproved() {
-        return this.approved;
-    }
+	private Presentation presentation;
+	private User user;
+	@Column(name="approved")
+	private boolean approved;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ïd")
+	private int id;
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@javax.persistence.Column(name="approved")
+	public boolean isApproved() {
+		return this.approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	@javax.persistence.Column(name="ïd")
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public GuestRequest() {
+		// TODO - implement GuestRequest.GuestRequest
+		throw new UnsupportedOperationException();
+	}
+
 }
