@@ -7,6 +7,8 @@ import controller.PlanningController;
 import controller.UserController;
 import entity.Campus;
 import entity.Location;
+import entity.Promotor;
+import entity.Student;
 import entity.TimeFrame;
 import entity.User;
 import java.util.ArrayList;
@@ -62,7 +64,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         root.addRow(1, new Label("Periode :"), cbTimeframe);
         
         // students
-        List<User> students = userController.retrieveStudents();
+        List<Student> students = userController.retrieveStudents();
         final ObservableList<User> dataStudents = observableArrayList(students.toArray(new User[students.size()]));
         final ComboBox cbStudents = new ComboBox(dataStudents);
         cbStudents.setPromptText("Kies een student");
@@ -101,7 +103,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         root.addRow(6, new Label("Locatie :"), cbLocations);
         
         // promotors
-        List<User> promotors = userController.retrievePromotors();
+        List<Promotor> promotors = userController.retrievePromotors();
         final ObservableList<User> dataPromotors = observableArrayList(promotors.toArray(new User[promotors.size()]));
         final ComboBox cbPromotor = new ComboBox(dataPromotors);
         cbPromotor.setPromptText("Please pick a promotor");
