@@ -18,21 +18,21 @@ public class PlanningRepository extends Repository
 {
     public Planning findOneById(int id) 
     {
-        return (Planning)getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = 1").getSingleResult();
+        return (Planning)em.createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = 1").getSingleResult();
     }
     
     public void changePlanningVisbility(Planning planning, boolean visible) 
     {
-        getEm().getTransaction().begin();
+        em.getTransaction().begin();
         planning.setVisible(visible);
-        getEm().getTransaction().commit();
+        em.getTransaction().commit();
     }
     
     public void changePlanningVisbilityPeriod(Planning planning, Timestamp startTime, Timestamp endTime)
     {
-        getEm().getTransaction().begin();
+        em.getTransaction().begin();
         planning.setStartTime(startTime);
         planning.setEndTime(endTime);
-        getEm().getTransaction().commit();
+        em.getTransaction().commit();
     }
 }

@@ -1,10 +1,14 @@
 package model;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 /**
  * @author Maxim
  */
 public abstract class Repository {
 
-	protected javax.persistence.EntityManager entityManager;
+        @PersistenceContext
+	protected EntityManager em;
 
 }
