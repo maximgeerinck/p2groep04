@@ -151,12 +151,12 @@ public class Presentation implements Serializable {
         setStartTime(startTime);
 
     }
-
+/**
     public String toDisplayString() {
         // TODO - implement Presentation.toDisplayString
         throw new UnsupportedOperationException();
     }
-
+*/
     /**
      *
      * @param timeFrame
@@ -166,5 +166,27 @@ public class Presentation implements Serializable {
         setTimeFrame(timeFrame);
         setLocation(location);
     }
+    public void notifyStakeHolders(Planning planning){
+       
+         List<Presentation> presentations = new ArrayList<>();
+         List<User> users = new ArrayList<>();
+         
+         presentations.addAll(planning.getPresentations());
+         
+         for(Presentation p: presentations)
+         {
+            
+            users.add(p.getPresentator());
+            users.addAll(p.getGuests()); 
+            
+         }
+         
+         for(User u: users)
+         {
+             u.sendMail();
+         }
+         
+             
+     }
 
 }

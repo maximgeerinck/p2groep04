@@ -181,5 +181,9 @@ public class User {
     public String toString() {
         return this.lastName + " " + this.firstName;
     }
+    
+    public void sendMail(){
+       
+    }
 
 }
