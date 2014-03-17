@@ -18,7 +18,7 @@ import javax.persistence.PrePersist;
 @MappedSuperclass
 public class User {
 
-    private Collection<GuestRequest> guestRequests;
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,13 +63,7 @@ public class User {
     @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
     protected Collection<Planning> plannings;
 
-    public Collection<GuestRequest> getGuestRequests() {
-        return this.guestRequests;
-    }
-
-    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
-        this.guestRequests = guestRequests;
-    }
+    
 
     public int getId() {
         return this.id;

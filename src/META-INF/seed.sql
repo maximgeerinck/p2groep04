@@ -198,7 +198,7 @@ INSERT INTO student (`id`, `created_on`, `email`, `enabled`, `first_name`, `last
 
 # planning, door BPC
 INSERT INTO planning (`id`, `allowed_to_view`, `start_time`, `end_time`, `visible`, `bpcoordinator_id`) VALUES (1, 1, NOW() - INTERVAL 1 DAY, NOW() + INTERVAL 1 DAY, 1, 1);
-INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `student_id`, `date`) VALUES (1, 1, 1, 1, 4, CURDATE());
-INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `student_id`, `date`) VALUES (2, 1, 1, 4, 4, CURDATE() + INTERVAL 1 DAY);
-INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `student_id`, `date`) VALUES (3, 1, 1, 3, 4, CURDATE() + INTERVAL 2 DAY);
+INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `presentator_id`, `date`) VALUES (1, 1, 1, 1, 4, CURDATE());
+INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `presentator_id`, `date`) VALUES (2, 1, 1, 4, 4, CURDATE() + INTERVAL 1 DAY);
+INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `presentator_id`, `date`) VALUES (3, 1, 1, 3, 4, CURDATE() + INTERVAL 2 DAY);
 

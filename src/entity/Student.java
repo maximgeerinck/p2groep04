@@ -27,6 +27,8 @@ import javax.persistence.Table;
 @Table(name = "student")
 public class Student extends User{
     
+    private Collection<GuestRequest> guestRequests;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
