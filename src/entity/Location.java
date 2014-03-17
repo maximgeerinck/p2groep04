@@ -59,8 +59,7 @@ public class Location implements Serializable {
 
     @Override
     public String toString() {
-        // TODO - implement Location.toString
-        throw new UnsupportedOperationException();
+        return classroom;
     }
 
     /**

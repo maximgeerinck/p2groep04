@@ -15,12 +15,13 @@ public class UserRepository extends Repository
     private Collection<User> users;
 
     public List<Student> findAllStudents() {
-       return getEm().createQuery("SELECT u FROM " + Student.class.getSimpleName()).getResultList();
+       return getEm().createQuery("SELECT s FROM " + Student.class.getSimpleName() + " s").getResultList();
     }
 
     public List<Promotor> findAllPromotors() {
-        return getEm().createQuery("SELECT u FROM " + Promotor.class.getSimpleName()).getResultList();
+        return getEm().createQuery("SELECT p FROM " + Promotor.class.getSimpleName() + " p").getResultList();
     }
+    
     public User findUserById(int id)
     {
         return (User)getEm().createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();

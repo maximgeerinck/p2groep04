@@ -174,14 +174,12 @@ public class User {
 
     @PrePersist()
     public void onCreate() {
-        // TODO - implement User.onCreate
-        throw new UnsupportedOperationException();
+
     }
 
     @Override()
     public String toString() {
-        // TODO - implement User.toString
-        throw new UnsupportedOperationException();
+        return this.lastName + " " + this.firstName;
     }
 
 }
