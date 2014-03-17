@@ -1,61 +1,61 @@
 package entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
  * @author Bram
  */
 @Entity
-public class Campus {
+public class Campus implements Serializable 
+{
 
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Id
-	@Column(name="id")
-	private int id;
-	@Column(name="name")
-	private String name;
-	@Column(name="address")
-	private String address;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    @Column(name = "name")
+    private String name;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(name = "address")
+    private String address;
 
-	@javax.persistence.Column(name="name")
-	public String getName() {
-		return this.name;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getId() {
+        return this.id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@javax.persistence.Column(name="address")
-	public String getAddress() {
-		return this.address;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Campus() {}
+    public String getAddress() {
+        return this.address;
+    }
 
-        public Campus(String name) {
-                setName(name);
-	}
-        
-	public String toString() {
-		return this.name;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	
+    public Campus() {
+    }
 
+    public Campus(String name) {
+        setName(name);
+    }
+
+    public String toString() {
+        return this.name;
+    }
 }

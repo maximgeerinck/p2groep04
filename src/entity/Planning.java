@@ -7,100 +7,108 @@ import javax.persistence.*;
 @javax.persistence.Entity
 public class Planning implements Serializable {
 
-	private Collection<Presentation> presentations;
-	private BPCoordinator bpCoordinator;
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Id
-	@Column(name="id")
-	private int id;
-	@Column(name="visible")
-	private boolean visible;
-	@Column(name="start_time")
-	private java.sql.Timestamp startTime;
-	@Column(name="end_time")
-	private java.sql.Timestamp endTime;
-	@Column(name="allowed_to_view")
-	private String allowedToView;
-	@ManyToOne
-	@JoinColumn(name="user_id", referencedColumnName="id")
-	private User user;
-	private java.sql.Timestamp visibleStart;
-	private java.sql.Timestamp visibleEnd;
+    private Collection<Presentation> presentations;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(name = "visible")
+    private boolean visible;
 
-	@javax.persistence.Column(name="visible")
-	public boolean isVisible() {
-		return this.visible;
-	}
+    @Column(name = "start_time")
+    private java.sql.Timestamp startTime;
 
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
+    @Column(name = "end_time")
+    private java.sql.Timestamp endTime;
 
-	@javax.persistence.Column(name="start_time")
-	public java.sql.Timestamp getStartTime() {
-		return this.startTime;
-	}
+    @Column(name = "allowed_to_view")
+    private String allowedToView;
 
-	public void setStartTime(java.sql.Timestamp startTime) {
-		this.startTime = startTime;
-	}
+    @ManyToOne
+    @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
+    private BPCoordinator bpcoordinator;
 
-	@javax.persistence.Column(name="end_time")
-	public java.sql.Timestamp getEndTime() {
-		return this.endTime;
-	}
+    @Column(name = "visible_start")
+    private java.sql.Timestamp visibleStart;
+    
+    @Column(name = "visible_end")
+    private java.sql.Timestamp visibleEnd;
 
-	public void setEndTime(java.sql.Timestamp endTime) {
-		this.endTime = endTime;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	@javax.persistence.Column(name="allowed_to_view")
-	public String getAllowedToView() {
-		return this.allowedToView;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setAllowedToView(String allowedToView) {
-		this.allowedToView = allowedToView;
-	}
+    public boolean isVisible() {
+        return this.visible;
+    }
 
-	@javax.persistence.Transient
-	public User getUser() {
-		return this.user;
-	}
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public java.sql.Timestamp getStartTime() {
+        return this.startTime;
+    }
 
-	@javax.persistence.Column(name="visibleStart")
-	public java.sql.Timestamp getVisibleStart() {
-		return this.visibleStart;
-	}
+    public void setStartTime(java.sql.Timestamp startTime) {
+        this.startTime = startTime;
+    }
 
-	public void setVisibleStart(java.sql.Timestamp visibleStart) {
-		this.visibleStart = visibleStart;
-	}
+    public java.sql.Timestamp getEndTime() {
+        return this.endTime;
+    }
 
-	@javax.persistence.Column(name="visibleEnd")
-	public java.sql.Timestamp getVisibleEnd() {
-		return this.visibleEnd;
-	}
+    public void setEndTime(java.sql.Timestamp endTime) {
+        this.endTime = endTime;
+    }
 
-	public void setVisibleEnd(java.sql.Timestamp visibleEnd) {
-		this.visibleEnd = visibleEnd;
-	}
+    public String getAllowedToView() {
+        return this.allowedToView;
+    }
 
-	public Planning() {}
+    public void setAllowedToView(String allowedToView) {
+        this.allowedToView = allowedToView;
+    }
+
+    public java.sql.Timestamp getVisibleStart() {
+        return this.visibleStart;
+    }
+
+    public void setVisibleStart(java.sql.Timestamp visibleStart) {
+        this.visibleStart = visibleStart;
+    }
+
+    public java.sql.Timestamp getVisibleEnd() {
+        return this.visibleEnd;
+    }
+
+    public void setVisibleEnd(java.sql.Timestamp visibleEnd) {
+        this.visibleEnd = visibleEnd;
+    }
+
+    public Collection<Presentation> getPresentations() {
+        return presentations;
+    }
+
+    public void setPresentations(Collection<Presentation> presentations) {
+        this.presentations = presentations;
+    }
+
+    public BPCoordinator getBpcoordinator() {
+        return bpcoordinator;
+    }
+
+    public void setBpcoordinator(BPCoordinator bpcoordinator) {
+        this.bpcoordinator = bpcoordinator;
+    }
+
+    public Planning() {
+    }
 
 }

@@ -17,6 +17,6 @@ public class TimeFrameRepository extends Repository
 {
     public List<TimeFrame> findAll()
     {
-        return em.createQuery("SELECT t FROM " + TimeFrame.class.getSimpleName() + " t").getResultList();
+        return getEm().createQuery("SELECT t FROM " + TimeFrame.class.getSimpleName() + " t").getResultList();
     }
 }

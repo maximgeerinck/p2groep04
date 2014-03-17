@@ -9,62 +9,65 @@ import javax.persistence.*;
 @javax.persistence.Entity
 public class Location implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
-	@Column(name="classroom")
-	private String classroom;
-	private Campus campus;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    
+    @Column(name = "classroom")
+    private String classroom;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "campus_id", referencedColumnName = "id")
+    private Campus campus;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@javax.persistence.Column(name="classroom")
-	public String getClassroom() {
-		return this.classroom;
-	}
+    @Column(name = "classroom")
+    public String getClassroom() {
+        return this.classroom;
+    }
 
-	public void setClassroom(String classroom) {
-		this.classroom = classroom;
-	}
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
 
-	@javax.persistence.ManyToOne(optional=false)
-	@javax.persistence.JoinColumn(name="campus_id", referencedColumnName="id")
-	public Campus getCampus() {
-		return this.campus;
-	}
+    public Campus getCampus() {
+        return this.campus;
+    }
 
-	public void setCampus(Campus campus) {
-		this.campus = campus;
-	}
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
 
-        public Location(Campus campus, String classroom) {
-                setCampus(campus);
-                setClassroom(classroom);
-	}
-        
-	public Location() {}
+    public Location(Campus campus, String classroom) {
+        setCampus(campus);
+        setClassroom(classroom);
+    }
 
-	@Override
-	public String toString() {
-		// TODO - implement Location.toString
-		throw new UnsupportedOperationException();
-	}
+    public Location() {
+    }
 
-	/**
-	 * 
-	 * @param campus
-	 * @param classroom
-	 */
+    @Override
+    public String toString() {
+        // TODO - implement Location.toString
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @param campus
+     * @param classroom
+     */
 	
 
 }

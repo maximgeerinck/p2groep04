@@ -10,19 +10,20 @@ import javax.persistence.*;
 @javax.persistence.Entity
 public class TimeFrame implements Serializable {
 
+    @OneToMany
     private Collection<Presentation> presentations;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "start_time")
     private java.sql.Time startTime;
+
     @Column(name = "end_time")
     private java.sql.Time endTime;
 
-    @javax.persistence.Id
-    @javax.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
-    @javax.persistence.Column(name = "id")
     public int getId() {
         return this.id;
     }
@@ -31,7 +32,6 @@ public class TimeFrame implements Serializable {
         this.id = id;
     }
 
-    @javax.persistence.Column(name = "start_time")
     public java.sql.Time getStartTime() {
         return this.startTime;
     }
@@ -40,7 +40,6 @@ public class TimeFrame implements Serializable {
         this.startTime = startTime;
     }
 
-    @javax.persistence.Column(name = "end_time")
     public java.sql.Time getEndTime() {
         return this.endTime;
     }

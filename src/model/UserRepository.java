@@ -15,15 +15,15 @@ public class UserRepository extends Repository
     private Collection<User> users;
 
     public List<Student> findAllStudents() {
-       return em.createQuery("SELECT u FROM " + Student.class.getSimpleName()).getResultList();
+       return getEm().createQuery("SELECT u FROM " + Student.class.getSimpleName()).getResultList();
     }
 
     public List<Promotor> findAllPromotors() {
-        return em.createQuery("SELECT u FROM " + Promotor.class.getSimpleName()).getResultList();
+        return getEm().createQuery("SELECT u FROM " + Promotor.class.getSimpleName()).getResultList();
     }
     public User findUserById(int id)
     {
-        return (User)em.createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();
+        return (User)getEm().createQuery("SELECT u FROM" + User.class.getSimpleName() + "WHERE id=" + id +";").getSingleResult();
     }
 
     /**
@@ -37,6 +37,6 @@ public class UserRepository extends Repository
 
     public BPCoordinator findBPC() 
     {
-       return (BPCoordinator)em.createQuery("SELECT u FROM " + BPCoordinator.class.getSimpleName()).getSingleResult();
+       return (BPCoordinator)getEm().createQuery("SELECT u FROM " + BPCoordinator.class.getSimpleName()).getSingleResult();
     }
 }

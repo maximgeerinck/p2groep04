@@ -1,51 +1,52 @@
 package entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
  * @author Maxim
  */
 @Entity
-public class GuestRequest {
+public class GuestRequest implements Serializable {
 
-	private Presentation presentation;
-	private User user;
-	@Column(name="approved")
-	private boolean approved;
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ïd")
-	private int id;
+    private Presentation presentation;
+    
+    @OneToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
+    
+    @Column(name="approved")
+    private boolean approved;
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="ïd")
+    private int id;
 
-	@javax.persistence.ManyToOne(optional=false)
-	public User getUser() {
-		return this.user;
-	}
+    public Student getStudent() {
+        return this.student;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
-	@javax.persistence.Column(name="approved")
-	public boolean isApproved() {
-		return this.approved;
-	}
+    public boolean isApproved() {
+            return this.approved;
+    }
 
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
+    public void setApproved(boolean approved) {
+            this.approved = approved;
+    }
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="ïd")
-	public int getId() {
-		return this.id;
-	}
+    public int getId() {
+            return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+            this.id = id;
+    }
 
-	public GuestRequest() {}
+    public GuestRequest() {}
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
 /**
@@ -17,165 +18,176 @@ import javax.persistence.PrePersist;
 @MappedSuperclass
 public class User {
 
-	private Collection<GuestRequest> guestRequests;
-	@Id()
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	protected int id;
-	@Column(name="email")
-	protected String email;
-	@Column(name="first_name")
-	protected String firstName;
-	@Column(name="last_name")
-	protected String lastName;
-	@Column(name="password")
-	protected String password;
-	@Column(name="salt")
-	protected String salt;
-	@Column(name="last_login")
-	protected java.sql.Timestamp lastLogin;
-	@Column(name="last_ip")
-	protected String lastIp;
-	@Column(name="created_on")
-	protected java.sql.Timestamp createdOn;
-	@Column(name="updated_on")
-	protected java.sql.Timestamp updatedOn;
-	@Column(name="enabled")
-	protected int enabled;
-	@ManyToMany()
-	@JoinTable(name="presentation_guest", joinColumns=@JoinColumn(name="guest_id", referencedColumnName="id"), inverseJoinColumns=@JoinColumn(name="presentation_id", referencedColumnName="id"))
-	protected Collection<Presentation> presentationsAttending;
-	@javax.persistence.OneToMany()
-	@JoinColumn(name="user_id", referencedColumnName="id")
-	protected Collection<Planning> plannings;
+    private Collection<GuestRequest> guestRequests;
 
-	public Collection<GuestRequest> getGuestRequests() {
-		return this.guestRequests;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected int id;
 
-	public void setGuestRequests(Collection<GuestRequest> guestRequests) {
-		this.guestRequests = guestRequests;
-	}
+    @Column(name = "email")
+    protected String email;
 
-	public int getId() {
-		return this.id;
-	}
+    @Column(name = "first_name")
+    protected String firstName;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(name = "last_name")
+    protected String lastName;
 
-	public String getEmail() {
-		return this.email;
-	}
+    @Column(name = "password")
+    protected String password;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Column(name = "salt")
+    protected String salt;
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+    @Column(name = "last_login")
+    protected java.sql.Timestamp lastLogin;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @Column(name = "last_ip")
+    protected String lastIp;
 
-	public String getLastName() {
-		return this.lastName;
-	}
+    @Column(name = "created_on")
+    protected java.sql.Timestamp createdOn;
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    @Column(name = "updated_on")
+    protected java.sql.Timestamp updatedOn;
 
-	public String getPassword() {
-		return this.password;
-	}
+    @Column(name = "enabled")
+    protected int enabled;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    @ManyToMany
+    @JoinTable(name = "presentation_guest", joinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "presentation_id", referencedColumnName = "id"))
+    protected Collection<Presentation> presentationsAttending;
 
-	public String getSalt() {
-		return this.salt;
-	}
+    @OneToMany
+    @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
+    protected Collection<Planning> plannings;
 
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+    public Collection<GuestRequest> getGuestRequests() {
+        return this.guestRequests;
+    }
 
-	public java.sql.Timestamp getLastLogin() {
-		return this.lastLogin;
-	}
+    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
+        this.guestRequests = guestRequests;
+    }
 
-	public void setLastLogin(java.sql.Timestamp lastLogin) {
-		this.lastLogin = lastLogin;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public String getLastIp() {
-		return this.lastIp;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setLastIp(String lastIp) {
-		this.lastIp = lastIp;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public java.sql.Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setCreatedOn(java.sql.Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-	public java.sql.Timestamp getUpdatedOn() {
-		return this.updatedOn;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setUpdatedOn(java.sql.Timestamp updatedOn) {
-		this.updatedOn = updatedOn;
-	}
+    public String getLastName() {
+        return this.lastName;
+    }
 
-	public int getEnabled() {
-		return this.enabled;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}
+    public String getPassword() {
+        return this.password;
+    }
 
-	public Collection<Presentation> getPresentationsAttending() {
-		return this.presentationsAttending;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setPresentationsAttending(Collection<Presentation> presentationsAttending) {
-		this.presentationsAttending = presentationsAttending;
-	}
+    public String getSalt() {
+        return this.salt;
+    }
 
-	public Collection<Planning> getPlannings() {
-		return this.plannings;
-	}
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
-	public void setPlannings(Collection<Planning> plannings) {
-		this.plannings = plannings;
-	}
+    public java.sql.Timestamp getLastLogin() {
+        return this.lastLogin;
+    }
 
-	public User() {
-		// TODO - implement User.User
-		throw new UnsupportedOperationException();
-	}
+    public void setLastLogin(java.sql.Timestamp lastLogin) {
+        this.lastLogin = lastLogin;
+    }
 
-	@PrePersist()
-	public void onCreate() {
-		// TODO - implement User.onCreate
-		throw new UnsupportedOperationException();
-	}
+    public String getLastIp() {
+        return this.lastIp;
+    }
 
-	@Override()
-	public String toString() {
-		// TODO - implement User.toString
-		throw new UnsupportedOperationException();
-	}
+    public void setLastIp(String lastIp) {
+        this.lastIp = lastIp;
+    }
+
+    public java.sql.Timestamp getCreatedOn() {
+        return this.createdOn;
+    }
+
+    public void setCreatedOn(java.sql.Timestamp createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public java.sql.Timestamp getUpdatedOn() {
+        return this.updatedOn;
+    }
+
+    public void setUpdatedOn(java.sql.Timestamp updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public int getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    public Collection<Presentation> getPresentationsAttending() {
+        return this.presentationsAttending;
+    }
+
+    public void setPresentationsAttending(Collection<Presentation> presentationsAttending) {
+        this.presentationsAttending = presentationsAttending;
+    }
+
+    public Collection<Planning> getPlannings() {
+        return this.plannings;
+    }
+
+    public void setPlannings(Collection<Planning> plannings) {
+        this.plannings = plannings;
+    }
+
+    public User() {
+    }
+
+    @PrePersist()
+    public void onCreate() {
+        // TODO - implement User.onCreate
+        throw new UnsupportedOperationException();
+    }
+
+    @Override()
+    public String toString() {
+        // TODO - implement User.toString
+        throw new UnsupportedOperationException();
+    }
 
 }

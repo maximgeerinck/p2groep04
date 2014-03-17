@@ -15,26 +15,39 @@ public class Presentation implements Serializable {
 
     @Column(name = "editable")
     private transient boolean editable;
-    private Location location;
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-    @ManyToMany(mappedBy = "presentationsAttending", cascade = CascadeType.PERSIST)
-    private Collection<User> guests;
-    @Column(name = "date")
-    private java.sql.Date date;
-    private boolean changed = false;
 
+    @OneToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
+
+    @ManyToMany(mappedBy = "presentationsAttending", cascade = CascadeType.PERSIST)
+    private Collection<Student> guests;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    
+    @OneToMany
     private Collection<GuestRequest> guestRequests;
+    
+    @OneToOne
+    @JoinColumn(name = "timeframe_id", referencedColumnName = "id")
     private TimeFrame timeFrame;
+    
+    @ManyToOne
+    @JoinColumn(name = "planning_id", referencedColumnName = "id")
     private Planning planning;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "presentator_id", referencedColumnName = "id")
     private Student presentator;
+
+    @Column(name = "end_time")
     private Timestamp endTime;
+    
+    @Column(name = "start_time")
     private Timestamp startTime;
 
-    @javax.persistence.Id
-    @javax.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
-    @javax.persistence.Column(name = "id")
     public int getId() {
         return this.id;
     }
@@ -42,8 +55,7 @@ public class Presentation implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
-    @javax.persistence.Column(name = "editable")
+    
     public boolean isEditable() {
         return this.editable;
     }
@@ -52,8 +64,6 @@ public class Presentation implements Serializable {
         this.editable = editable;
     }
 
-    @javax.persistence.ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @javax.persistence.JoinColumn(name = "location_id", referencedColumnName = "id")
     public Location getLocation() {
         return this.location;
     }
@@ -62,25 +72,14 @@ public class Presentation implements Serializable {
         this.location = location;
     }
 
-    @javax.persistence.Transient
-    public User getUser() {
-        return this.user;
+    public Collection<Student> getGuests() {
+        return guests;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @javax.persistence.Transient
-    public Collection<User> getGuests() {
-        return this.guests;
-    }
-
-    public void setGuests(Collection<User> guests) {
+    public void setGuests(Collection<Student> guests) {
         this.guests = guests;
     }
 
-    @javax.persistence.Column(name = "\"date\"")
     public Date getDate() {
         return this.date;
     }
@@ -103,15 +102,6 @@ public class Presentation implements Serializable {
 
     public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
-    }
-
-    @Column(name = "changed")
-    public boolean isChanged() {
-        return this.changed;
-    }
-
-    public void setChanged(boolean changed) {
-        this.changed = changed;
     }
 
     public Collection<GuestRequest> getGuestRequests() {
@@ -175,18 +165,6 @@ public class Presentation implements Serializable {
     public Presentation(TimeFrame timeFrame, Location location) {
         setTimeFrame(timeFrame);
         setLocation(location);
-    }
-
-    public void notifyStakeholders() {
-        /*
-         this.getUser().addNotification("There has been a change in the planning, please check the planning for more information.");
-         for (User us : this.getPromotors()) {
-         us.addNotification("There has been a change in the planning, please check the planning for more information.");
-         }
-         for (User u : this.getGuests()) {
-         u.addNotification("There has been a change in the planning, please check the planning for more information.");
-         }
-         */
     }
 
 }

@@ -7,20 +7,29 @@
 package entity;
 
 import java.util.*;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Bram
  */
 @Entity
+@Table(name = "bpcoordinator")
 public class BPCoordinator extends User{
 
-	private Collection<Planning> plannings;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected int id;
+    
+    private Collection<Planning> plannings;
 
-	public BPCoordinator() {
-		// TODO - implement BPCoordinator.BPCoordinator
-		throw new UnsupportedOperationException();
-	}
+    public BPCoordinator() {
+    }
     
 }

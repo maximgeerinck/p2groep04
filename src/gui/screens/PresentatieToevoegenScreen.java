@@ -65,7 +65,7 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         
         // students
         List<Student> students = userController.retrieveStudents();
-        final ObservableList<User> dataStudents = observableArrayList(students.toArray(new User[students.size()]));
+        final ObservableList<Student> dataStudents = observableArrayList(students.toArray(new Student[students.size()]));
         final ComboBox cbStudents = new ComboBox(dataStudents);
         cbStudents.setPromptText("Kies een student");
         cbStudents.setEditable(true);

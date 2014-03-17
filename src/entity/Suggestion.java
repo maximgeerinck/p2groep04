@@ -9,51 +9,52 @@ import javax.persistence.*;
 @javax.persistence.Entity
 public class Suggestion implements Serializable {
 
-	private Student student;
-	private User user;
-	private ResearchDomain researchDomain;
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
-	@Column(name="subject")
-	private String subject;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
 
-	@javax.persistence.ManyToOne(optional=false)
-	@javax.persistence.JoinColumn(name="user_id", referencedColumnName="id")
-	public User getUser() {
-		return this.user;
-	}
+    @OneToOne
+    @JoinColumn(name = "researchdomain_id", referencedColumnName = "id")
+    private ResearchDomain researchDomain;
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
-	@javax.persistence.Column(name="id")
-	public int getId() {
-		return this.id;
-	}
+    @Column(name = "subject")
+    private String subject;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Student getStudent() {
+        return student;
+    }
 
-	@javax.persistence.Column(name="subject")
-	public String getSubject() {
-		return this.subject;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public Suggestion() {}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-		return subject;
-	}
+    public String getSubject() {
+        return this.subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public Suggestion() {
+    }
+
+    @Override
+    public String toString() {
+        return subject;
+    }
 
 }

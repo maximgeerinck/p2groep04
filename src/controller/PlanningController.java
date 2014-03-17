@@ -14,11 +14,11 @@ import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
  */
 public class PlanningController {
 
-    private PresentationRepository presentationRepository;
-    private TimeFrameRepository timeFrameRepository;
-    private CampusRepository campusRepository;
-    private LocationRepository locationRepository;
-    private PlanningRepository planningRepository;
+    private PresentationRepository presentationRepository = new PresentationRepository();
+    private TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
+    private CampusRepository campusRepository = new CampusRepository();
+    private LocationRepository locationRepository = new LocationRepository();
+    private PlanningRepository planningRepository = new PlanningRepository();
 
     public AppointmentImpl[] retrievePresentations() {
         List<AppointmentImpl> presentaties = new ArrayList();
@@ -48,6 +48,11 @@ public class PlanningController {
         }
 
         return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
+    }
+    
+    public Planning retrievePlanning(int id) {
+        return planningRepository.findOneById(id);
+                
     }
 
     /**
