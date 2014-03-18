@@ -20,13 +20,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/**
- *
- * @author Bram
- */
 @Entity
 @Table(name = "student")
-public class Student extends User{
+public class Student extends User
+{
      
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +34,7 @@ public class Student extends User{
     @JoinColumn(name = "presentation_id", referencedColumnName = "id")
     private Presentation presentation;
     
-    @OneToMany
+    @OneToMany(mappedBy = "student", targetEntity = Suggestion.class)
     private Collection<Suggestion> suggestions;
     
     @OneToOne
