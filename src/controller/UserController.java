@@ -3,11 +3,12 @@ package controller;
 import model.*;
 import entity.*;
 import java.util.List;
-import jfxtras.scene.control.agenda.Agenda;
+import javax.persistence.EntityManager;
 
-public class UserController 
-{
+public class UserController {
+
     private UserRepository userRepository = new UserRepository();
+    private final int MAX_AANTAL_STUDENTEN = 20;
 
     public List<Promotor> retrievePromotors() {
         return userRepository.findAllPromotors();
@@ -20,4 +21,40 @@ public class UserController
     public List<Student> retrieveStudents() {
         return userRepository.findAllStudents();
     }
+
+    public void attachPromotorToStudent(Student student, Promotor promotor) {
+
+        if (promotor.getAmountOfStudents() > MAX_AANTAL_STUDENTEN) {
+            throw new IllegalArgumentException("This promotor has reached his maximum capacity of student it may have.");
+        }
+
+        EntityManager em = userRepository.getEm();
+        em.getTransaction().begin();
+
+        student.getPromotors().add(promotor);
+        promotor.getStudents().add(student);
+        promotor.setAmountOfStudents(promotor.getAmountOfStudents() + 1);
+
+        em.persist(student);
+        em.persist(promotor);
+        em.flush();
+        em.getTransaction().commit();
+
+    }
+
+    public void detachPromotorFromStudent(Student student, Promotor promotor) {
+        EntityManager em = userRepository.getEm();
+        em.getTransaction().begin();
+
+        student.getPromotors().remove(promotor);
+        promotor.getStudents().remove(student);
+        promotor.setAmountOfStudents(promotor.getAmountOfStudents() - 1);
+        
+        em.persist(student);
+        em.persist(promotor);
+        em.flush();
+        em.getTransaction().commit();
+        
+    }
+
 }
