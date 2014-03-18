@@ -47,6 +47,14 @@ public class Presentation implements Serializable {
     
     @Column(name = "start_time")
     private Timestamp startTime;
+    
+    @OneToOne
+    @JoinColumn(name = "promotor_id", referencedColumnName = "id")
+    private Promotor promotor;
+    
+    @OneToOne
+    @JoinColumn(name = "copromotor_id", referencedColumnName = "id")
+    private Promotor coPromotor;
 
     public int getId() {
         return this.id;
@@ -151,6 +159,22 @@ public class Presentation implements Serializable {
         setStartTime(startTime);
 
     }
+
+    public Promotor getPromotor() {
+        return promotor;
+    }
+
+    public void setPromotor(Promotor promotor) {
+        this.promotor = promotor;
+    }
+
+    public Promotor getCoPromotor() {
+        return coPromotor;
+    }
+
+    public void setCoPromotor(Promotor coPromotor) {
+        this.coPromotor = coPromotor;
+    }    
 /**
     public String toDisplayString() {
         // TODO - implement Presentation.toDisplayString

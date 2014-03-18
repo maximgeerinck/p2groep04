@@ -11,7 +11,9 @@ import entity.Promotor;
 import entity.Student;
 import entity.TimeFrame;
 import entity.User;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Observable;
 import javafx.beans.value.ChangeListener;
@@ -68,12 +70,39 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         final ObservableList<Student> dataStudents = observableArrayList(students.toArray(new Student[students.size()]));
         final ComboBox cbStudents = new ComboBox(dataStudents);
         cbStudents.setPromptText("Kies een student");
-        cbStudents.setEditable(true);
         root.addRow(2, new Label("Student :"), cbStudents);        
 
+         // promotors
+        List<Promotor> promotors = userController.retrievePromotors();
+        final ObservableList<Promotor> dataPromotors = observableArrayList(promotors.toArray(new Promotor[promotors.size()]));
+        final ComboBox cbPromotor = new ComboBox(dataPromotors);
+        cbPromotor.setPromptText("Please pick a promotor");
+        root.addRow(3, new Label("Promotor :"), cbPromotor);
+        cbPromotor.valueProperty().addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Object> ov, Object t, Object t1) {
+
+                // co-promotor
+                List<Promotor> coPromotors = new ArrayList<>();
+                // get already picked promotor if any
+                Promotor currentPromotor = ((Promotor)(cbPromotor.getSelectionModel().getSelectedItem()));
+                if(currentPromotor != null) {
+                   for(Promotor u : (List<Promotor>)cbPromotor.getItems()) 
+                   {
+                       if(u.getId() != currentPromotor.getId()) {
+                           coPromotors.add(u);
+                       }
+                   } 
+                }
+                final ObservableList<Promotor> dataCoPromotors = observableArrayList(coPromotors.toArray(new Promotor[coPromotors.size()]));
+                cbCoPromotors.getItems().setAll(dataCoPromotors);
+                cbCoPromotors.setPromptText("Please choose a co-promotor");
+            }
+        });
+        
         //Co-Promotors
         cbCoPromotors.setPromptText("Kies een co-promotor");
-        cbCoPromotors.setEditable(true);
         root.addRow(4, new Label("Co-Promotor :"), cbCoPromotors);
         
         //Campuses
@@ -102,43 +131,13 @@ public class PresentatieToevoegenScreen extends Observable implements IScreen
         cbLocations = new ComboBox(dataLocations);
         root.addRow(6, new Label("Locatie :"), cbLocations);
         
-        // promotors
-        List<Promotor> promotors = userController.retrievePromotors();
-        final ObservableList<User> dataPromotors = observableArrayList(promotors.toArray(new User[promotors.size()]));
-        final ComboBox cbPromotor = new ComboBox(dataPromotors);
-        cbPromotor.setPromptText("Please pick a promotor");
-        root.addRow(3, new Label("Promotor :"), cbPromotor);
-        cbPromotor.valueProperty().addListener(new ChangeListener<Object>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Object> ov, Object t, Object t1) {
-                // co-promotor
-                List<User> coPromotors = new ArrayList<>();
-                // get already picked promotor if any
-                User currentPromotor = ((User)(cbPromotor.getSelectionModel().getSelectedItem()));
-                if(currentPromotor != null) {
-                   for(User u : (List<User>)cbPromotor.getItems()) 
-                   {
-                       if(u.getId() != currentPromotor.getId()) {
-                           coPromotors.add(u);
-                       }
-                   } 
-                }
-                final ObservableList<User> dataCoPromotors = observableArrayList(coPromotors.toArray(new User[coPromotors.size()]));
-                cbCoPromotors.getItems().setAll(dataCoPromotors);
-                cbCoPromotors.setPromptText("Please choose a co-promotor");
-            }
-        });
-
-        
-        
-        
         //Button Toevoegen
         Button btnAdd = new Button("Toevoegen");
         btnAdd.setOnAction(new EventHandler<ActionEvent>(){
 
             @Override
             public void handle(ActionEvent t) {
+                planningController.createPresentation((Calendar)ctfCalendar.getCalendar(), (TimeFrame)cbTimeframe.getValue(), (Location)cbLocations.getValue(), (Promotor)cbPromotor.getValue(), (Promotor)cbCoPromotors.getValue(), (Student)cbStudents.getValue());
                 PresentatieToevoegenScreen.this.setChanged();
                 PresentatieToevoegenScreen.this.notifyObservers();
             }

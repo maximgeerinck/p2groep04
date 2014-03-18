@@ -2,10 +2,12 @@ package controller;
 
 import model.*;
 import entity.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.EntityManager;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 
@@ -54,59 +56,6 @@ public class PlanningController {
         return planningRepository.findOneById(id);
                 
     }
-
-    /**
-     *
-     * @param startTime
-     * @param endTime
-     * @param campus
-     * @param lokaal
-     * @param promotor
-     * @param coPromotor
-     * @param presentator
-     * @param onderwerp
-     * @param tijdstip
-     */
-    public void createPresentation(String startTime, String endTime, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) {
-        /*EntityManager manager = JPAUtil.getEntityManager();
-         manager.getTransaction().begin();
-
-         //De gegevens van de campus setten
-         Campus deCampus = new Campus();
-         deCampus.setName(campus);
-
-         //De gegevens van het lokaal en campus setten
-         Location location = new Location();
-         location.setClassroom(lokaal);
-         location.setCampus(deCampus);
-
-         //Het onderwerp setten
-         Suggestion suggestion = new Suggestion();
-         suggestion.setSubject(onderwerp);
-         suggestion.setUser(null);
-
-
-
-         Presentation p = new Presentation();
-
-         List<User> promotors = new ArrayList<>();
-
-         promotors.add(userRepository.findUserById(promotor));
-         promotors.add(userRepository.findUserById(coPromotor));
-
-         p.setUser(userRepository.findUserById(presentator));
-         p.setPromotors(promotors);
-         p.setTimeFrame(timeFrame);
-         p.setDate(date);
-         p.setLocation(location);
-
-
-         manager.persist(p);
-         manager.getTransaction().commit();
-         manager.close();
-         */
-    }
-
     /**
      *
      * @param presentation
@@ -167,9 +116,27 @@ public class PlanningController {
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(TimeFrame timeFrame, String campus, String lokaal, String promotor, String coPromotor, String presentator, String onderwerp, String tijdstip) {
-        // TODO - implement PlanningController.createPresentation
-        throw new UnsupportedOperationException();
+    public void createPresentation(Calendar calendar, TimeFrame timeFrame, Location lokaal, Promotor promotor, Promotor coPromotor, Student presentator) 
+    {
+        //check if presentation is already on this timeframe and date
+        if(presentationRepository.findExistsByCalendarTimeFrame(calendar, timeFrame))
+            throw new IllegalArgumentException("Presentation already exists");
+                
+        EntityManager em = planningRepository.getEm();
+        em.getTransaction().begin();
+        
+        Presentation presentation = new Presentation();
+        presentation.setDate(new Date(calendar.getTime().getTime()));
+        presentation.setTimeFrame(timeFrame);
+        presentation.setPresentator(presentator);
+        presentation.setLocation(lokaal);        
+        presentation.setPlanning(retrievePlanning(1));
+        presentation.setPromotor(promotor);
+        presentation.setCoPromotor(coPromotor);
+        
+        em.persist(presentation);
+        em.flush();
+        em.getTransaction().commit(); 
     }
 
     /**
@@ -179,6 +146,66 @@ public class PlanningController {
     public void notifyStakeHolders(Planning planning) {
         // TODO - implement PlanningController.notifyStakeHolders
         throw new UnsupportedOperationException();
+    }
+
+    public Agenda.Appointment[] retrievePresentationsByPromotor(Promotor promotor) {
+        List<AppointmentImpl> presentaties = new ArrayList();
+        Calendar cal = GregorianCalendar.getInstance();
+        Calendar cal2 = GregorianCalendar.getInstance();
+
+        List<Presentation> presentations = presentationRepository.findAllByPlanningPromotor(planningRepository.findOneById(1), promotor);
+
+        for (Presentation p : presentations) {
+            cal = ((Calendar) cal.clone());
+            cal.setTime(p.getDate());
+            cal.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getStartTime().getHours());
+            cal.set(Calendar.MINUTE, p.getTimeFrame().getStartTime().getMinutes());
+
+            cal2 = ((Calendar) cal2.clone());
+            cal2.setTime(p.getDate());
+            cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
+            cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
+
+            presentaties.add(new AppointmentImpl()
+                    .withStartTime(cal)
+                    .withEndTime(cal2)
+                    .withSummary("")
+                    .withDescription("")
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
+            );
+        }
+
+        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
+    }
+
+    public Agenda.Appointment[] retrievePresentationsByResearchdomain(ResearchDomain researchDomain) {
+        List<AppointmentImpl> presentaties = new ArrayList();
+        Calendar cal = GregorianCalendar.getInstance();
+        Calendar cal2 = GregorianCalendar.getInstance();
+
+        List<Presentation> presentations = presentationRepository.findAllByPlanningResearchdomain(planningRepository.findOneById(1), researchDomain);
+
+        for (Presentation p : presentations) {
+            cal = ((Calendar) cal.clone());
+            cal.setTime(p.getDate());
+            cal.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getStartTime().getHours());
+            cal.set(Calendar.MINUTE, p.getTimeFrame().getStartTime().getMinutes());
+
+            cal2 = ((Calendar) cal2.clone());
+            cal2.setTime(p.getDate());
+            cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
+            cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
+
+            presentaties.add(new AppointmentImpl()
+                    .withStartTime(cal)
+                    .withEndTime(cal2)
+                    .withSummary("")
+                    .withDescription("")
+                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
+            );
+        }
+
+        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
     }
 
 }

@@ -9,6 +9,7 @@ public class ScreenFactory {
 
     public static final String SCREEN_PRESENTATIE_TOEVOEGEN = "ScreenPresentatieToevoegen";
     public static final String SCREEN_PLANNING_OPSLAAN = "PlanningOpslaan";
+    public static final String SCREEN_PLANNING_VIEW = "PlanningTonen";
 
     /**
      * 
@@ -22,6 +23,8 @@ public class ScreenFactory {
                return new PresentatieToevoegenScreen();
            case SCREEN_PLANNING_OPSLAAN:
                return new PlanningOpslaanScreen();
+           case SCREEN_PLANNING_VIEW:
+               return new ViewPlanningScreen();
        }
         return null;
     }

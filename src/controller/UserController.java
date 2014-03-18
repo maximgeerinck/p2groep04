@@ -3,21 +3,21 @@ package controller;
 import model.*;
 import entity.*;
 import java.util.List;
+import jfxtras.scene.control.agenda.Agenda;
 
-public class UserController {
+public class UserController 
+{
+    private UserRepository userRepository = new UserRepository();
 
-	private UserRepository userRepository = new UserRepository();
+    public List<Promotor> retrievePromotors() {
+        return userRepository.findAllPromotors();
+    }
 
-	public List<Promotor> retrievePromotors() {
-		 return userRepository.findAllPromotors();
-	}
+    public BPCoordinator retrieveBPC() {
+        return userRepository.findBPC();
+    }
 
-	public BPCoordinator retrieveBPC() {
-		return userRepository.findBPC();
-	}
-
-	public List<Student> retrieveStudents() {
-		return userRepository.findAllStudents();
-	}
-
+    public List<Student> retrieveStudents() {
+        return userRepository.findAllStudents();
+    }
 }
