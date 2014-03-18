@@ -7,8 +7,8 @@ import javax.persistence.*;
  * @author Maxim
  */
 @javax.persistence.Entity
-public class Location implements Serializable {
-
+public class Location implements Serializable 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,9 +21,6 @@ public class Location implements Serializable {
     @JoinColumn(name = "campus_id", referencedColumnName = "id")
     private Campus campus;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId() {
         return this.id;
     }

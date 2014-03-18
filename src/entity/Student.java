@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,9 +27,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "student")
 public class Student extends User{
-    
-    private Collection<GuestRequest> guestRequests;
-    
+     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -44,6 +43,9 @@ public class Student extends User{
     @OneToOne
     @JoinColumn(name = "suggestion_id", referencedColumnName = "id")
     private Suggestion approvedSuggestion;
+    
+    @OneToMany(mappedBy = "student", targetEntity = GuestRequest.class)
+    private Collection<GuestRequest> guestRequests;
     
     @ManyToMany(mappedBy="students", cascade=CascadeType.PERSIST)
     private Collection<Promotor> promotors;

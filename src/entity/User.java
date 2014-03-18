@@ -16,9 +16,8 @@ import javax.persistence.PrePersist;
  * @author Maxim
  */
 @MappedSuperclass
-public class User {
-
-    
+public class User 
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,8 +61,6 @@ public class User {
     @OneToMany
     @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
     protected Collection<Planning> plannings;
-
-    
 
     public int getId() {
         return this.id;

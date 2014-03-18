@@ -27,7 +27,7 @@ public class Presentation implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
     
-    @OneToMany
+    @OneToMany(mappedBy = "presentation", targetEntity = GuestRequest.class)
     private Collection<GuestRequest> guestRequests;
     
     @OneToOne

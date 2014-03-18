@@ -12,12 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author Bram
- */
 @Entity
 @Table(name = "bpcoordinator")
 public class BPCoordinator extends User{
@@ -27,9 +24,11 @@ public class BPCoordinator extends User{
     @Column(name = "id")
     protected int id;
     
+    @OneToMany(mappedBy = "bpcoordinator", targetEntity = Planning.class)
     private Collection<Planning> plannings;
 
-    public BPCoordinator() {
+    public BPCoordinator() 
+    {
     }
     
 }

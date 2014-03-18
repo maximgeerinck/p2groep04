@@ -3,24 +3,21 @@ package entity;
 import java.io.*;
 import javax.persistence.*;
 
-/**
- * @author Bram
- */
-@javax.persistence.Entity
-public class Suggestion implements Serializable {
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Student student;
-
-    @OneToOne
-    @JoinColumn(name = "researchdomain_id", referencedColumnName = "id")
-    private ResearchDomain researchDomain;
-
+@Entity
+public class Suggestion implements Serializable 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+     
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "researchdomain_id", referencedColumnName = "id")
+    private ResearchDomain researchDomain;
 
     @Column(name = "subject")
     private String subject;

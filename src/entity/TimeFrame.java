@@ -8,16 +8,16 @@ import javax.persistence.*;
  * @author Bram
  */
 @javax.persistence.Entity
-public class TimeFrame implements Serializable {
-
-    @OneToMany
-    private Collection<Presentation> presentations;
-
+public class TimeFrame implements Serializable 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
+     
+    @OneToMany(mappedBy = "timeFrame", targetEntity = Presentation.class)
+    private Collection<Presentation> presentations;
+    
     @Column(name = "start_time")
     private java.sql.Time startTime;
 

@@ -19,22 +19,19 @@ import model.ScreenFactory;
 /**
  * @author Maxim
  */
-public class GraphicApplication implements Observer {
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public GraphicApplication(Stage primaryStage) {
+public class GraphicApplication
+{
+    public GraphicApplication(Stage primaryStage) 
+    {
         primaryStage.setTitle("Planning overzicht");
         
         SplitPane root = new SplitPane();
         StackPane sp1 = new StackPane();
         
-        Pane screenPlanningView = ((ViewPlanningScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_VIEW)).getPane();
+        ViewPlanningScreen screenViewPlanning = ((ViewPlanningScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_VIEW));
+        Pane screenPlanningViewPane = screenViewPlanning.getPane();
         
-        sp1.getChildren().add(screenPlanningView);
+        sp1.getChildren().add(screenPlanningViewPane);
         /* SIDEBAR */
         VBox v = new VBox();
         v.setMinWidth(350);
@@ -43,7 +40,7 @@ public class GraphicApplication implements Observer {
         
         // Presentatie toevoegen
         PresentatieToevoegenScreen presentaties = (PresentatieToevoegenScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PRESENTATIE_TOEVOEGEN);
-        presentaties.addObserver(this);
+        presentaties.addObserver(screenViewPlanning);
         TitledPane tpPresentaties = new TitledPane("Presentatie toevoegen", presentaties.getPane());
         a.getPanes().add(tpPresentaties);
         a.setExpandedPane(tpPresentaties);        
@@ -62,9 +59,4 @@ public class GraphicApplication implements Observer {
         primaryStage.setScene(new Scene(root, 1500, 900));
         primaryStage.show();
     }
-
-	
-
-	
-
 }

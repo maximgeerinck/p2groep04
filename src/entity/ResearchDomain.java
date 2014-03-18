@@ -4,19 +4,16 @@ import java.io.*;
 import java.util.*;
 import javax.persistence.*;
 
-/**
- * @author Bram
- */
-@javax.persistence.Entity
-public class ResearchDomain implements Serializable {
-
-    @OneToMany
-    private Collection<Suggestion> suggestions;
-    
+@Entity
+public class ResearchDomain implements Serializable 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    
+    @OneToMany(mappedBy = "researchDomain", targetEntity = Suggestion.class)
+    private Collection<Suggestion> suggestions;
     
     @Column(name = "name")
     private String name;

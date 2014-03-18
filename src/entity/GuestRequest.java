@@ -7,22 +7,24 @@ import javax.persistence.*;
  * @author Maxim
  */
 @Entity
-public class GuestRequest implements Serializable {
-
+public class GuestRequest implements Serializable 
+{    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
+    
+    @ManyToOne
+    @JoinColumn(name = "presentation_id", referencedColumnName = "ids")
     private Presentation presentation;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
     
     @Column(name="approved")
     private boolean approved;
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="ïd")
-    private int id;
-
     public Student getStudent() {
         return this.student;
     }

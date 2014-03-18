@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 public class Campus implements Serializable 
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,9 +20,6 @@ public class Campus implements Serializable
     @Column(name = "address")
     private String address;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId() {
         return this.id;
     }
