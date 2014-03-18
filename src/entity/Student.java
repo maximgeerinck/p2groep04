@@ -41,6 +41,10 @@ public class Student extends User{
     @OneToMany
     private Collection<Suggestion> suggestions;
     
+    @OneToOne
+    @JoinColumn(name = "suggestion_id", referencedColumnName = "id")
+    private Suggestion approvedSuggestion;
+    
     @ManyToMany(mappedBy="students", cascade=CascadeType.PERSIST)
     private Collection<Promotor> promotors;
 
@@ -51,6 +55,38 @@ public class Student extends User{
     public void setPromotors(Collection<Promotor> promotors) {
         this.promotors = promotors;
     }
+
+    public Collection<GuestRequest> getGuestRequests() {
+        return guestRequests;
+    }
+
+    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
+        this.guestRequests = guestRequests;
+    }
+
+    public Presentation getPresentation() {
+        return presentation;
+    }
+
+    public void setPresentation(Presentation presentation) {
+        this.presentation = presentation;
+    }
+
+    public Collection<Suggestion> getSuggestions() {
+        return suggestions;
+    }
+
+    public void setSuggestions(Collection<Suggestion> suggestions) {
+        this.suggestions = suggestions;
+    }
+
+    public Suggestion getApprovedSuggestion() {
+        return approvedSuggestion;
+    }
+
+    public void setApprovedSuggestion(Suggestion approvedSuggestion) {
+        this.approvedSuggestion = approvedSuggestion;
+    }    
 
     public Student() {
     }

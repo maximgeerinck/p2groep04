@@ -109,27 +109,6 @@ public class ViewPlanningScreen implements IScreen, Observer{
     }
 
     /**
-     * get the calendar for the first day of the week
-     *
-     * @param locale
-     * @param c
-     */
-    private static java.util.Calendar getFirstDayOfWeekCalendar(java.util.Locale locale, java.util.Calendar c) {
-        // result
-        int lFirstDayOfWeek = Calendar.getInstance(locale).getFirstDayOfWeek();
-        int lCurrentDayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        int lDelta = 0;
-        if (lFirstDayOfWeek <= lCurrentDayOfWeek) {
-            lDelta = -lCurrentDayOfWeek + lFirstDayOfWeek;
-        } else {
-            lDelta = -lCurrentDayOfWeek - (7 - lFirstDayOfWeek);
-        }
-        c = ((Calendar) c.clone());
-        c.add(Calendar.DATE, lDelta);
-        return c;
-    }
-
-    /**
      *
      * @param o
      * @param arg
@@ -187,10 +166,12 @@ public class ViewPlanningScreen implements IScreen, Observer{
             public void changed(ObservableValue<? extends Object> ov, Object t, Object t1) {
                 agenda.appointments().clear();
                 agenda.appointments().addAll(planningController.retrievePresentationsByResearchdomain((ResearchDomain)cbResearchDomains.getValue()));
+                
+                cbPromotor.setPromptText("Please pick a promotor");
+                cbResearchDomains.setPromptText("Please pick a researchdomain");
             }
         });
         
-        // button: shift calendar + 1 week
         CalendarTextField ctfWeekOf = new CalendarTextField();
         ctfWeekOf.setMinWidth(200);
         ctfWeekOf.calendarProperty().bindBidirectional(agenda.displayedCalendar());

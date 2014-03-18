@@ -65,10 +65,11 @@ public class PresentationRepository extends Repository
     public List<Presentation> findAllByPlanningResearchdomain(Planning findOneById, ResearchDomain researchDomain) {
         getEm().getTransaction().begin();
 
-        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl JOIN p.presentator u JOIN u.suggestions s WHERE pl.id = 1 AND s.researchDomain = :researchDomain").setParameter("researchDomain", researchDomain).getResultList();
+        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl JOIN p.presentator u JOIN u.approvedSuggestion s WHERE pl.id = 1 AND s.researchDomain = :researchDomain").setParameter("researchDomain", researchDomain).getResultList();
         getEm().getTransaction().commit();
         
         getEm().close();
+        System.out.println(presentations.size());
         
         return presentations;
     }

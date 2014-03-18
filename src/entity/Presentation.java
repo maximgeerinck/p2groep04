@@ -42,12 +42,6 @@ public class Presentation implements Serializable {
     @JoinColumn(name = "presentator_id", referencedColumnName = "id")
     private Student presentator;
 
-    @Column(name = "end_time")
-    private Timestamp endTime;
-    
-    @Column(name = "start_time")
-    private Timestamp startTime;
-    
     @OneToOne
     @JoinColumn(name = "promotor_id", referencedColumnName = "id")
     private Promotor promotor;
@@ -96,22 +90,6 @@ public class Presentation implements Serializable {
         this.date = date;
     }
 
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
-    }
-
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-
     public Collection<GuestRequest> getGuestRequests() {
         return guestRequests;
     }
@@ -149,15 +127,10 @@ public class Presentation implements Serializable {
 
     /**
      *
-     * @param startTime
-     * @param endTime
      * @param location
      */
-    public Presentation(Timestamp startTime, Timestamp endTime, Location location) {
+    public Presentation(Location location) {
         setLocation(location);
-        setEndTime(endTime);
-        setStartTime(startTime);
-
     }
 
     public Promotor getPromotor() {
@@ -175,12 +148,7 @@ public class Presentation implements Serializable {
     public void setCoPromotor(Promotor coPromotor) {
         this.coPromotor = coPromotor;
     }    
-/**
-    public String toDisplayString() {
-        // TODO - implement Presentation.toDisplayString
-        throw new UnsupportedOperationException();
-    }
-*/
+
     /**
      *
      * @param timeFrame

@@ -43,8 +43,8 @@ public class PlanningController {
             presentaties.add(new AppointmentImpl()
                     .withStartTime(cal)
                     .withEndTime(cal2)
-                    .withSummary("")
-                    .withDescription("")
+                    .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
+                    .withDescription(p.getPresentator().getApprovedSuggestion().toString())
                     .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
@@ -169,8 +169,8 @@ public class PlanningController {
             presentaties.add(new AppointmentImpl()
                     .withStartTime(cal)
                     .withEndTime(cal2)
-                    .withSummary("")
-                    .withDescription("")
+                    .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
+                    .withDescription(p.getPresentator().getApprovedSuggestion().toString())
                     .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
@@ -199,8 +199,8 @@ public class PlanningController {
             presentaties.add(new AppointmentImpl()
                     .withStartTime(cal)
                     .withEndTime(cal2)
-                    .withSummary("")
-                    .withDescription("")
+                    .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
+                    .withDescription(p.getPresentator().getApprovedSuggestion().toString())
                     .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
