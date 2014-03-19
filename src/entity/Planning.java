@@ -5,10 +5,8 @@ import java.util.*;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-public class Planning implements Serializable {
-
-    private Collection<Presentation> presentations;
-
+public class Planning implements Serializable 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -35,6 +33,9 @@ public class Planning implements Serializable {
     
     @Column(name = "visible_end")
     private java.sql.Timestamp visibleEnd;
+    
+    @OneToMany(mappedBy = "planning", targetEntity = Presentation.class)
+    private Collection<Presentation> presentations;
 
     public int getId() {
         return this.id;
