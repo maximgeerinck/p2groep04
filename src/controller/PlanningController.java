@@ -217,4 +217,20 @@ public class PlanningController {
         return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
     }
 
+    public void attachJury(Promotor promotor, Promotor coPromotor, Presentation presentation) {
+        EntityManager em = planningRepository.getEm();
+        em.getTransaction().begin();
+        
+        presentation.setPromotor(promotor);
+        presentation.setCoPromotor(coPromotor);
+        
+        em.persist(presentation);
+        em.flush();
+        em.getTransaction().commit();
+        
+        
+        
+        
+    }
+
 }
