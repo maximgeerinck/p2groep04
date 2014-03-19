@@ -31,10 +31,7 @@ public class UserRepository extends Repository
      * 
      * @param user
      */
-    public List<GuestRequest> findGuestRequestsByUser(User user) {
-            // TODO - implement UserRepository.findGuestRequestsByUser
-            throw new UnsupportedOperationException();
-    }	
+    	
 
     public BPCoordinator findBPC() 
     {

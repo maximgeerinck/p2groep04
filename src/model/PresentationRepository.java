@@ -19,10 +19,7 @@ public class PresentationRepository extends Repository
      * 
      * @param presentation
      */
-    public List<GuestRequest> findGuestRequestsByPresentation(Presentation presentation) {
-            // TODO - implement PresentationRepository.findGuestRequestsByPresentation
-            throw new UnsupportedOperationException();
-    }
+   
     
     /**
      * 

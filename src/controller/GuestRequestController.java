@@ -12,6 +12,11 @@ import entity.Student;
 import entity.User;
 import java.util.ArrayList;
 import java.util.List;
+import model.PresentationRepository;
+import model.UserRepository;
+import javax.persistence.EntityManager;
+import util.JPAUtil;
+import model.Repository;
 
 /**
  *
@@ -19,13 +24,21 @@ import java.util.List;
  */
 public class GuestRequestController {
     
+    private PresentationRepository presentationRepository = new PresentationRepository();
+    private UserRepository userRepository = new UserRepository();
+    private EntityManager em = presentationRepository.getEm();
+    
     public void approveRegistration(Presentation presentation, User guest)
     {
        List <Student> users = new ArrayList<>();
        
        users.addAll(presentation.getGuests());
        users.add((Student)guest);
+       
+       em.getTransaction().begin();
        presentation.setGuests(users);
+       em.getTransaction().commit();
+       em.close();  
     }
     
     public List<Presentation> findAllGuestPresentations(User guest)
