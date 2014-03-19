@@ -21,14 +21,18 @@ import model.ScreenFactory;
  */
 public class GraphicApplication
 {
+    private Stage primaryStage;
+    
     public GraphicApplication(Stage primaryStage) 
     {
+        this.primaryStage = primaryStage;
+        
         primaryStage.setTitle("Planning overzicht");
         
         SplitPane root = new SplitPane();
         StackPane sp1 = new StackPane();
         
-        ViewPlanningScreen screenViewPlanning = ((ViewPlanningScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_VIEW));
+        ViewPlanningScreen screenViewPlanning = ((ViewPlanningScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_VIEW, primaryStage));
         Pane screenPlanningViewPane = screenViewPlanning.getPane();
         
         sp1.getChildren().add(screenPlanningViewPane);
@@ -56,7 +60,10 @@ public class GraphicApplication
         
         root.getItems().addAll(sp1, v);
         root.setDividerPositions(0.9f, 0.6f, 0.9f);
-        primaryStage.setScene(new Scene(root, 1500, 900));
+        
+        Scene scene = new Scene(root, 1500, 900);
+        scene.getStylesheets().add("gui/screens/ViewPlanningScreen.css");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }

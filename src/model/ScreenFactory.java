@@ -1,6 +1,7 @@
 package model;
 
 import gui.screens.*;
+import javafx.stage.Stage;
 
 /**
  * @author Maxim
@@ -23,8 +24,16 @@ public class ScreenFactory {
                return new PresentatieToevoegenScreen();
            case SCREEN_PLANNING_OPSLAAN:
                return new PlanningOpslaanScreen();
+       }
+        return null;
+    }
+    
+    public static IScreen createScreen(String screenName, Stage primaryStage) 
+    {
+       switch(screenName)
+       {
            case SCREEN_PLANNING_VIEW:
-               return new ViewPlanningScreen();
+               return new ViewPlanningScreen(primaryStage);
        }
         return null;
     }
