@@ -7,14 +7,14 @@ import entity.Promotor;
 import entity.ResearchDomain;
 import entity.TimeFrame;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.List;
 import java.util.List;
 import javax.persistence.EntityManager;
 import util.JPAUtil;
 
 public class PresentationRepository extends Repository
 {
-    private Collection<Presentation> presentations;    
+    private List<Presentation> presentations;    
     /**
      * 
      * @param presentation

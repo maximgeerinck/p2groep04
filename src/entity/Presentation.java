@@ -22,14 +22,14 @@ public class Presentation implements Serializable
     private Location location;
 
     @ManyToMany(mappedBy = "presentationsAttending", cascade = CascadeType.PERSIST)
-    private Collection<Student> guests;
+    private List<Student> guests;
 
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
     
     @OneToMany(mappedBy = "presentation", targetEntity = GuestRequest.class)
-    private Collection<GuestRequest> guestRequests;
+    private List<GuestRequest> guestRequests;
     
     @OneToOne
     @JoinColumn(name = "timeframe_id", referencedColumnName = "id")
@@ -75,11 +75,11 @@ public class Presentation implements Serializable
         this.location = location;
     }
 
-    public Collection<Student> getGuests() {
+    public List<Student> getGuests() {
         return guests;
     }
 
-    public void setGuests(Collection<Student> guests) {
+    public void setGuests(List<Student> guests) {
         this.guests = guests;
     }
 
@@ -91,11 +91,11 @@ public class Presentation implements Serializable
         this.date = date;
     }
 
-    public Collection<GuestRequest> getGuestRequests() {
+    public List<GuestRequest> getGuestRequests() {
         return guestRequests;
     }
 
-    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
+    public void setGuestRequests(List<GuestRequest> guestRequests) {
         this.guestRequests = guestRequests;
     }
 

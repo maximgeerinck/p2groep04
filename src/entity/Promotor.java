@@ -35,7 +35,7 @@ public class Promotor extends User
     
     @ManyToMany()
     @JoinTable(name="user_student", joinColumns={@JoinColumn(name="promotor_id", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn(name="student_id", referencedColumnName="id")})
-    private Collection<Student> students;
+    private List<Student> students;
 
     public int getAmountOfStudents() {
         return this.amountOfStudents;
@@ -45,11 +45,11 @@ public class Promotor extends User
         this.amountOfStudents = amountOfStudents;
     }
 
-    public Collection<Student> getStudents() {
+    public List<Student> getStudents() {
         return this.students;
     }
 
-    public void setStudents(Collection<Student> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 

@@ -35,31 +35,31 @@ public class Student extends User
     private Presentation presentation;
     
     @OneToMany(mappedBy = "student", targetEntity = Suggestion.class)
-    private Collection<Suggestion> suggestions;
+    private List<Suggestion> suggestions;
     
     @OneToOne
     @JoinColumn(name = "suggestion_id", referencedColumnName = "id")
     private Suggestion approvedSuggestion;
     
     @OneToMany(mappedBy = "student", targetEntity = GuestRequest.class)
-    private Collection<GuestRequest> guestRequests;
+    private List<GuestRequest> guestRequests;
     
     @ManyToMany(mappedBy="students", cascade=CascadeType.PERSIST)
-    private Collection<Promotor> promotors;
+    private List<Promotor> promotors;
 
-    public Collection<Promotor> getPromotors() {
+    public List<Promotor> getPromotors() {
         return this.promotors;
     }
 
-    public void setPromotors(Collection<Promotor> promotors) {
+    public void setPromotors(List<Promotor> promotors) {
         this.promotors = promotors;
     }
 
-    public Collection<GuestRequest> getGuestRequests() {
+    public List<GuestRequest> getGuestRequests() {
         return guestRequests;
     }
 
-    public void setGuestRequests(Collection<GuestRequest> guestRequests) {
+    public void setGuestRequests(List<GuestRequest> guestRequests) {
         this.guestRequests = guestRequests;
     }
 
@@ -71,11 +71,11 @@ public class Student extends User
         this.presentation = presentation;
     }
 
-    public Collection<Suggestion> getSuggestions() {
+    public List<Suggestion> getSuggestions() {
         return suggestions;
     }
 
-    public void setSuggestions(Collection<Suggestion> suggestions) {
+    public void setSuggestions(List<Suggestion> suggestions) {
         this.suggestions = suggestions;
     }
 

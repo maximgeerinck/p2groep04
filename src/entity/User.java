@@ -62,11 +62,11 @@ public class User
 
     @ManyToMany
     @JoinTable(name = "presentation_guest", joinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "presentation_id", referencedColumnName = "id"))
-    protected Collection<Presentation> presentationsAttending;
+    protected List<Presentation> presentationsAttending;
 
     @OneToMany
     @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
-    protected Collection<Planning> plannings;
+    protected List<Planning> plannings;
 
     public int getId() {
         return this.id;
@@ -156,19 +156,19 @@ public class User
         this.enabled = enabled;
     }
 
-    public Collection<Presentation> getPresentationsAttending() {
+    public List<Presentation> getPresentationsAttending() {
         return this.presentationsAttending;
     }
 
-    public void setPresentationsAttending(Collection<Presentation> presentationsAttending) {
+    public void setPresentationsAttending(List<Presentation> presentationsAttending) {
         this.presentationsAttending = presentationsAttending;
     }
 
-    public Collection<Planning> getPlannings() {
+    public List<Planning> getPlannings() {
         return this.plannings;
     }
 
-    public void setPlannings(Collection<Planning> plannings) {
+    public void setPlannings(List<Planning> plannings) {
         this.plannings = plannings;
     }
 
