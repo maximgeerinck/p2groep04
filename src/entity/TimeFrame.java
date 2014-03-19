@@ -16,7 +16,7 @@ public class TimeFrame implements Serializable
     private int id;
      
     @OneToMany(mappedBy = "timeFrame", targetEntity = Presentation.class)
-    private Collection<Presentation> presentations;
+    private List<Presentation> presentations;
     
     @Column(name = "start_time")
     private java.sql.Time startTime;

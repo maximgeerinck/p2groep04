@@ -25,7 +25,7 @@ public class BPCoordinator extends User{
     protected int id;
     
     @OneToMany(mappedBy = "bpcoordinator", targetEntity = Planning.class)
-    private Collection<Planning> plannings;
+    private List<Planning> plannings;
 
     public BPCoordinator() 
     {

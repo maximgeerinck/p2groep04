@@ -5,14 +5,14 @@ import entity.GuestRequest;
 import entity.Promotor;
 import entity.Student;
 import entity.User;
-import java.util.Collection;
+import java.util.List;
 import java.util.List;
 
 
 
 public class UserRepository extends Repository
 {
-    private Collection<User> users;
+    private List<User> users;
 
     public List<Student> findAllStudents() {
        return getEm().createQuery("SELECT s FROM " + Student.class.getSimpleName() + " s").getResultList();
@@ -31,10 +31,7 @@ public class UserRepository extends Repository
      * 
      * @param user
      */
-    public List<GuestRequest> findGuestRequestsByUser(User user) {
-            // TODO - implement UserRepository.findGuestRequestsByUser
-            throw new UnsupportedOperationException();
-    }	
+    	
 
     public BPCoordinator findBPC() 
     {

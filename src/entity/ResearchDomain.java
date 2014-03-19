@@ -13,7 +13,7 @@ public class ResearchDomain implements Serializable
     private int id;
     
     @OneToMany(mappedBy = "researchDomain", targetEntity = Suggestion.class)
-    private Collection<Suggestion> suggestions;
+    private List<Suggestion> suggestions;
     
     @Column(name = "name")
     private String name;

@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import entity.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -56,5 +57,6 @@ public class UserController {
         em.getTransaction().commit();
         
     }
+    
 
 }

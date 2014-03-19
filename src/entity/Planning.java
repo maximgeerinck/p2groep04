@@ -35,7 +35,7 @@ public class Planning implements Serializable
     private java.sql.Timestamp visibleEnd;
     
     @OneToMany(mappedBy = "planning", targetEntity = Presentation.class)
-    private Collection<Presentation> presentations;
+    private List<Presentation> presentations;
 
     public int getId() {
         return this.id;
@@ -93,11 +93,11 @@ public class Planning implements Serializable
         this.visibleEnd = visibleEnd;
     }
 
-    public Collection<Presentation> getPresentations() {
+    public List<Presentation> getPresentations() {
         return presentations;
     }
 
-    public void setPresentations(Collection<Presentation> presentations) {
+    public void setPresentations(List<Presentation> presentations) {
         this.presentations = presentations;
     }
 
