@@ -23,7 +23,7 @@ public class PlanningController {
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
 
-    public PresentationProperty retrievePresentations() {
+    public AppointmentImpl[] retrievePresentations() {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
@@ -51,7 +51,7 @@ public class PlanningController {
             );
         }
 
-        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
+        return presentaties.toArray(new PresentationProperty[presentaties.size()]);
     }
 
     public Planning retrievePlanning(int id) {
@@ -160,7 +160,7 @@ public class PlanningController {
     }
 
     
-    public Agenda.Appointment[] retrievePresentationsByPromotor(Promotor promotor) {
+    public AppointmentImpl[] retrievePresentationsByPromotor(Promotor promotor) {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
@@ -178,19 +178,20 @@ public class PlanningController {
             cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
             cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
 
-            presentaties.add(new AppointmentImpl()
-                    .withStartTime(cal)
-                    .withEndTime(cal2)
-                    .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                    .withDescription(p.getPresentator().getApprovedSuggestion().toString())
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
+            presentaties.add(new PresentationProperty()
+                .withPresentation(p)
+                .withStartTime(cal)
+                .withEndTime(cal2)
+                .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
+                .withDescription(p.getPresentator().getApprovedSuggestion().toString())
+                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
 
-        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
+        return presentaties.toArray(new PresentationProperty[presentaties.size()]);
     }
 
-    public Agenda.Appointment[] retrievePresentationsByResearchdomain(ResearchDomain researchDomain) {
+    public AppointmentImpl[] retrievePresentationsByResearchdomain(ResearchDomain researchDomain) {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
@@ -208,16 +209,17 @@ public class PlanningController {
             cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
             cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
 
-            presentaties.add(new AppointmentImpl()
-                    .withStartTime(cal)
-                    .withEndTime(cal2)
-                    .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                    .withDescription(p.getPresentator().getApprovedSuggestion().toString())
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
+            presentaties.add(new PresentationProperty()
+                .withPresentation(p)
+                .withStartTime(cal)
+                .withEndTime(cal2)
+                .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
+                .withDescription(p.getPresentator().getApprovedSuggestion().toString())
+                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
 
-        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
+        return presentaties.toArray(new PresentationProperty[presentaties.size()]);
     }
 
     public void attachJury(Promotor promotor, Promotor coPromotor, Presentation presentation) {

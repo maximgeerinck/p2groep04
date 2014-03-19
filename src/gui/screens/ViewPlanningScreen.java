@@ -195,7 +195,7 @@ public class ViewPlanningScreen implements IScreen, Observer {
                 lPopup.show(primaryStage, p.x, p.y);
                 return null;
             }
-            
+          
         });
 
         agenda.appointments().addAll(planningController.retrievePresentations());
