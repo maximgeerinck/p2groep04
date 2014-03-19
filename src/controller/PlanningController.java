@@ -23,7 +23,7 @@ public class PlanningController {
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
 
-    public AppointmentImpl[] retrievePresentations() {
+    public PresentationProperty retrievePresentations() {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
@@ -41,12 +41,13 @@ public class PlanningController {
             cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
             cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
 
-            presentaties.add(new AppointmentImpl()
-                    .withStartTime(cal)
-                    .withEndTime(cal2)
-                    .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                    .withDescription(p.getPresentator().getApprovedSuggestion().toString())
-                    .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
+            presentaties.add(new PresentationProperty()
+                .withPresentation(p)
+                .withStartTime(cal)
+                .withEndTime(cal2)
+                .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
+                .withDescription(p.getPresentator().getApprovedSuggestion().toString())
+                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
 
@@ -158,6 +159,7 @@ public class PlanningController {
         throw new UnsupportedOperationException();
     }
 
+    
     public Agenda.Appointment[] retrievePresentationsByPromotor(Promotor promotor) {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
@@ -221,16 +223,16 @@ public class PlanningController {
     public void attachJury(Promotor promotor, Promotor coPromotor, Presentation presentation) {
         EntityManager em = planningRepository.getEm();
         em.getTransaction().begin();
-        
+
         presentation.setPromotor(promotor);
         presentation.setCoPromotor(coPromotor);
-        
+
         em.persist(presentation);
         em.flush();
-        em.getTransaction().commit();  
-        
+        em.getTransaction().commit();
+
         changePlanningVisibility(presentation.getPlanning(), true);
-        
+
     }
 
 }
