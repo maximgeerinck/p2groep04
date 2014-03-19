@@ -75,6 +75,7 @@ public class PlanningController {
         em.getTransaction().begin();
 
         em.remove(presentation);
+        em.flush();
         em.getTransaction().commit();
 
     }
@@ -226,10 +227,9 @@ public class PlanningController {
         
         em.persist(presentation);
         em.flush();
-        em.getTransaction().commit();
+        em.getTransaction().commit();  
         
-        
-        
+        changePlanningVisibility(presentation.getPlanning(), true);
         
     }
 
