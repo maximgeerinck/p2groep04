@@ -219,7 +219,7 @@ public class User
             transport.close();
             
         } catch (Exception exception) {
-
+            exception.printStackTrace();
         }
         
         
