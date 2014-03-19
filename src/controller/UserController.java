@@ -10,6 +10,7 @@ public class UserController {
 
     private UserRepository userRepository = new UserRepository();
     private final int MAX_AANTAL_STUDENTEN = 20;
+    
 
     public List<Promotor> retrievePromotors() {
         return userRepository.findAllPromotors();
@@ -29,6 +30,11 @@ public class UserController {
             throw new IllegalArgumentException("This promotor has reached his maximum capacity of students it may have.");
         }
 
+        if(promotor.getAmountOfStudents() == 0)
+        {
+            throw new IllegalArgumentException("There are no students.");
+        }
+        
         EntityManager em = userRepository.getEm();
         em.getTransaction().begin();
 
@@ -41,6 +47,11 @@ public class UserController {
     }
 
     public void detachPromotorFromStudent(Student student, Promotor promotor) {
+        if(promotor.getAmountOfStudents() == 0)
+        {
+            throw new IllegalArgumentException("There are no students.");
+        }
+        
         EntityManager em = userRepository.getEm();
         em.getTransaction().begin();
 
