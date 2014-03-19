@@ -36,7 +36,7 @@ public class UserControllerTest {
     }
   
     
-    @Test(expected = MaxAantalStudentenBereiktException.class)
+    @Test
     public void testPromotorHeeftAlZijnMaxAantalStudentenBereikt()
     {
        

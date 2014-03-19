@@ -25,7 +25,7 @@ public class UserController {
     public void attachPromotorToStudent(Student student, Promotor promotor) {
 
         if (promotor.getAmountOfStudents() > MAX_AANTAL_STUDENTEN) {
-            throw new IllegalArgumentException("This promotor has reached his maximum capacity of student it may have.");
+            throw new IllegalArgumentException("This promotor has reached his maximum capacity of students it may have.");
         }
 
         EntityManager em = userRepository.getEm();

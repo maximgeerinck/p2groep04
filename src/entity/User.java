@@ -1,5 +1,6 @@
 package entity;
 
+
 import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
+
+import javax.mail.internet.InternetAddress; 
+import javax.mail.internet.MimeMessage;
+import javax.mail.*;
+import javax.mail.internet.*;
 /**
  * @author Maxim
  */
@@ -179,8 +185,45 @@ public class User
         return this.lastName + " " + this.firstName;
     }
     
-    public void sendMail(){
-       
+    
+      public void sendMail() {
+
+        Properties props = new Properties();  
+        props.put("mail.smtp.host", "smtp.gmail.com");  
+        props.put("mail.smtp.auth", "true");  
+        props.put("mail.debug", "true");  
+        props.put("mail.smtp.port", 25);  
+        props.put("mail.smtp.socketFactory.port", 25);  
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.transport.protocol", "smtp");
+        Session mailSession = null;
+        
+        mailSession = Session.getInstance(props);
+        
+        try {
+
+            Transport transport = mailSession.getTransport();
+
+            MimeMessage message = new MimeMessage(mailSession);
+
+            message.setSubject("Changes planning bachelorproef");
+            message.setFrom(new InternetAddress("p2groep04@gmail.com"));
+            String to = this.email;
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            String body = "The planning for the bachelorproef has been changed, please check the planning for more information.";
+            message.setContent(body,"text/html");
+            transport.connect();
+
+            transport.sendMessage(message,message.getRecipients(Message.RecipientType.TO));
+            
+            transport.close();
+            
+        } catch (Exception exception) {
+
+        }
+        
+        
     }
+    
 
 }

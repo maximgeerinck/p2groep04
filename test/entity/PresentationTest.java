@@ -15,6 +15,7 @@ import org.junit.Test;
 public class PresentationTest {
     
     private Presentation presentation;
+    private Planning planning;
     
     public PresentationTest() {
     }
@@ -23,17 +24,17 @@ public class PresentationTest {
     public void before()
     {
         presentation = new Presentation();
-        presentation.setUser(new User());
+        presentation.setPresentator(new Student());
     }
     
     
     @Test
     public void notifyStakeholdersTest()
     {
-        presentation.notifyStakeholders();
+        presentation.notifyStakeholders(planning);
         String notification = "";
         
-        for(String n: presentation.getUser().getNotifications())
+        for(String n: presentation.getPresentator().getNotifications())
         {
             notification = n;
         }
