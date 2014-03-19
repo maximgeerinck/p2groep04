@@ -166,8 +166,8 @@ public class ViewPlanningScreen implements IScreen, Observer {
                     public void handle(MouseEvent evt)
                     {
                         userController.attachPromotorToStudent(((PresentationProperty)appointment).getPresentation().getPresentator(), (Promotor)cbPromotor.getValue());
-                        userController.attachPromotorToStudent(((PresentationProperty)appointment).getPresentation().getPresentator(), (Promotor)cbCoPromotors.getValue());
-                        System.out.println(appointment.getLocation());
+                        System.out.println(((Promotor)cbPromotor.getValue()).getLastName());
+                        //userController.attachPromotorToStudent(((PresentationProperty)appointment).getPresentation().getPresentator(), (Promotor)cbCoPromotors.getValue());
                         System.out.println("opslaan");
                     }
                 });   
