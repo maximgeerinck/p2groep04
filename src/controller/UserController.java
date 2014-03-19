@@ -35,10 +35,7 @@ public class UserController {
         student.getPromotors().add(promotor);
         promotor.getStudents().add(student);
         promotor.setAmountOfStudents(promotor.getAmountOfStudents() + 1);
-
-        em.persist(student);
-        em.persist(promotor);
-        em.flush();
+ 
         em.getTransaction().commit();
 
     }
@@ -51,9 +48,6 @@ public class UserController {
         promotor.getStudents().remove(student);
         promotor.setAmountOfStudents(promotor.getAmountOfStudents() - 1);
         
-        em.persist(student);
-        em.persist(promotor);
-        em.flush();
         em.getTransaction().commit();
         
     }

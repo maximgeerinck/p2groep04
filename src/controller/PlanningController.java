@@ -229,8 +229,7 @@ public class PlanningController {
         presentation.setPromotor(promotor);
         presentation.setCoPromotor(coPromotor);
 
-        em.persist(presentation);
-        em.flush();
+        
         em.getTransaction().commit();
 
         changePlanningVisibility(presentation.getPlanning(), true);
