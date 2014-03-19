@@ -40,4 +40,6 @@ public class UserRepository extends Repository
     {
        return (BPCoordinator)getEm().createQuery("SELECT u FROM " + BPCoordinator.class.getSimpleName()).getSingleResult();
     }
+    
+    
 }

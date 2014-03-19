@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 
@@ -51,23 +52,31 @@ public class PlanningController {
 
         return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
     }
-    
+
     public Planning retrievePlanning(int id) {
         return planningRepository.findOneById(id);
-                
+
     }
+
     /**
      *
      * @param presentation
      */
     public void removePresentation(Presentation presentation) {
-       //TODO: delete methode naar repository brengen
+        //TODO: delete methode naar repository brengen
        /* EntityManager manager = JPAUtil.getEntityManagerFactory().createEntityManager();
          manager.getTransaction().begin();
          Query q = (Query) manager.createQuery("DELETE FROM Presentation WHERE id =" + presentation.getId() + ")");
 
          manager.getTransaction().commit();
          manager.close();*/
+
+        EntityManager em = planningRepository.getEm();
+        em.getTransaction().begin();
+
+        em.remove(presentation);
+        em.getTransaction().commit();
+
     }
 
     /**
@@ -86,7 +95,7 @@ public class PlanningController {
      * @param endTime
      */
     public void registerVisibilityPeriod(Planning planning, java.sql.Timestamp startTime, java.sql.Timestamp endTime) {
-         planningRepository.changePlanningVisbilityPeriod(planning, startTime, endTime);
+        planningRepository.changePlanningVisbilityPeriod(planning, startTime, endTime);
     }
 
     public List<TimeFrame> retrieveTimeFrames() {
@@ -116,27 +125,27 @@ public class PlanningController {
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(Calendar calendar, TimeFrame timeFrame, Location lokaal, Promotor promotor, Promotor coPromotor, Student presentator) 
-    {
+    public void createPresentation(Calendar calendar, TimeFrame timeFrame, Location lokaal, Promotor promotor, Promotor coPromotor, Student presentator) {
         //check if presentation is already on this timeframe and date
-        if(presentationRepository.findExistsByCalendarTimeFrame(calendar, timeFrame))
+        if (presentationRepository.findExistsByCalendarTimeFrame(calendar, timeFrame)) {
             throw new IllegalArgumentException("Presentation already exists");
-                
+        }
+
         EntityManager em = planningRepository.getEm();
         em.getTransaction().begin();
-        
+
         Presentation presentation = new Presentation();
         presentation.setDate(new Date(calendar.getTime().getTime()));
         presentation.setTimeFrame(timeFrame);
         presentation.setPresentator(presentator);
-        presentation.setLocation(lokaal);        
+        presentation.setLocation(lokaal);
         presentation.setPlanning(retrievePlanning(1));
         presentation.setPromotor(promotor);
         presentation.setCoPromotor(coPromotor);
-        
+
         em.persist(presentation);
         em.flush();
-        em.getTransaction().commit(); 
+        em.getTransaction().commit();
     }
 
     /**
