@@ -5,7 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-public class Planning implements Serializable 
+public class Planning implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -30,9 +30,9 @@ public class UserController {
             throw new IllegalArgumentException("This promotor has reached his maximum capacity of students it may have.");
         }
 
-        if(promotor.getAmountOfStudents() == 0)
+        if(promotor == null || student == null)
         {
-            throw new IllegalArgumentException("There are no students.");
+            throw new IllegalArgumentException("One of the objects was null.");
         }
         
         EntityManager em = userRepository.getEm();
