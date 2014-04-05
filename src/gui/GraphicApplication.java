@@ -1,19 +1,10 @@
 package gui;
 
-import gui.screens.PlanningOpslaanScreen;
-import gui.screens.PresentatieToevoegenScreen;
-import gui.screens.ViewPlanningScreen;
-import java.util.Observable;
-import java.util.Observer;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import jfxtras.scene.layout.VBox;
-import model.ScreenFactory;
 
 
 /**
@@ -23,13 +14,25 @@ public class GraphicApplication
 {
     private Stage primaryStage;
     
-    public GraphicApplication(Stage primaryStage) 
+    public GraphicApplication(Stage primaryStage) throws IOException 
     {
         this.primaryStage = primaryStage;
         
-        primaryStage.setTitle("Planning overzicht");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewPlanning.fxml"));
+        loader.load();
         
-        SplitPane root = new SplitPane();
+        System.out.println("started");
+        loader.getController();
+        
+        BorderPane root = loader.getRoot();
+        Scene scene = new Scene(root);       
+        
+        primaryStage.setTitle("Planning overzicht");
+        primaryStage.setScene(scene);
+        
+        primaryStage.show();
+        
+        /*SplitPane root = new SplitPane();
         StackPane sp1 = new StackPane();
         
         ViewPlanningScreen screenViewPlanning = ((ViewPlanningScreen)ScreenFactory.createScreen(ScreenFactory.SCREEN_PLANNING_VIEW, primaryStage));
@@ -37,7 +40,7 @@ public class GraphicApplication
         
         sp1.getChildren().add(screenPlanningViewPane);
         /* SIDEBAR */
-        VBox v = new VBox();
+       /* VBox v = new VBox();
         v.setMinWidth(350);
 
         Accordion a = new Accordion();
@@ -64,6 +67,6 @@ public class GraphicApplication
         Scene scene = new Scene(root, 1500, 900);
         scene.getStylesheets().add("gui/screens/ViewPlanningScreen.css");
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show();*/
     }
 }
