@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.Planning;
 import entity.ResearchDomain;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import model.PlanningRepository;
 import model.ResearchDomainRepository;
 import org.controlsfx.control.ButtonBar;
 
@@ -40,9 +42,61 @@ public class ViewMainController {
     private GridPane gpPlannings;
 
     ResearchDomainRepository researchDomainRepository = new ResearchDomainRepository();
+    PlanningRepository planningRepository = new PlanningRepository();
     private int gpRSCurrentRow = 0;
+    private int gpPlanningCurrentRow = 0;
 
-    public void attachGridviews(final Stage stage) {
+    public void attachGridviews(final Stage stage) 
+    {
+        addPlanningsGP();
+        addResearchdomainGP();
+    }
+
+    public void addPlanningsGP() 
+    {
+        List<Planning> plannings = planningRepository.findAll();
+        for(Planning p : plannings) 
+        {
+            gpPlannings.add(new Label(Integer.toString(p.getId())), 0, gpPlanningCurrentRow);
+
+            Button btnView = new Button("View");
+            btnView.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) 
+                {
+                    try 
+                    {
+                        final Stage newStage = new Stage();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewPlanning.fxml"));
+                        loader.load();
+
+                        ViewPlanningController controller = loader.getController();
+                        if(controller != null) {
+                            controller.loadAgenda();    
+                        }                    
+
+                        BorderPane root = loader.getRoot();
+                        Scene scene = new Scene(root, 1500, 900);       
+
+                        newStage.setTitle("Planning overzicht");
+                        newStage.setScene(scene);
+
+                        newStage.show();
+                    }
+                    catch(Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+            gpPlannings.add(btnView, 1, gpRSCurrentRow);
+            gpPlanningCurrentRow++;
+        }
+    }
+    
+    public void addResearchdomainGP()
+    {
         List<ResearchDomain> researchdomains = researchDomainRepository.findAll();
         for (ResearchDomain rs : researchdomains) {
             gpResearchdomains.add(new Label(rs.getName()), 0, gpRSCurrentRow);
@@ -71,7 +125,6 @@ public class ViewMainController {
             gpRSCurrentRow++;
         }
     }
-
     public void btnRsViewHandle(ActionEvent t, final ResearchDomain currentRs) {
         try {
             //create stage

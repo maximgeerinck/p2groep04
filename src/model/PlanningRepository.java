@@ -8,7 +8,7 @@ package model;
 
 import entity.Planning;
 import java.sql.Timestamp;
-import util.JPAUtil;
+import java.util.List;
 
 /**
  *
@@ -34,5 +34,9 @@ public class PlanningRepository extends Repository
         planning.setStartTime(startTime);
         planning.setEndTime(endTime);
         getEm().getTransaction().commit();
+    }
+
+    public List<Planning> findAll() {
+       return getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p").getResultList();
     }
 }
