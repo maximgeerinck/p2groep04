@@ -1,9 +1,12 @@
 package gui;
 
+import controller.ViewMainController;
+import controller.ViewPlanningController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -13,16 +16,37 @@ import javafx.stage.Stage;
 public class GraphicApplication
 {
     private Stage primaryStage;
+    private FXMLLoader loader;
+    
+    public Pane loadMain() throws IOException {
+        
+        loader = new FXMLLoader(getClass().getResource("/resources/ViewMain.fxml"));
+        
+        loader.load();
+        
+        ViewMainController controller = loader.getController();
+        controller.attachGridviews(primaryStage);
+        
+        BorderPane root = loader.getRoot();
+        return root;
+    }
     
     public GraphicApplication(Stage primaryStage) throws IOException 
     {
         this.primaryStage = primaryStage;
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewPlanning.fxml"));
-        loader.load();
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewPlanning.fxml"));
         
-        System.out.println("started");
-        loader.getController();
+        Scene scene = new Scene(loadMain());   
+        
+        primaryStage.setTitle("p2groep04");
+        primaryStage.setScene(scene);
+        
+        primaryStage.show();
+        
+       /* System.out.println("started");
+        ViewPlanningController controller = loader.getController();
+        controller.loadAgenda();
         
         BorderPane root = loader.getRoot();
         Scene scene = new Scene(root);       
@@ -30,7 +54,7 @@ public class GraphicApplication
         primaryStage.setTitle("Planning overzicht");
         primaryStage.setScene(scene);
         
-        primaryStage.show();
+        primaryStage.show();*/
         
         /*SplitPane root = new SplitPane();
         StackPane sp1 = new StackPane();

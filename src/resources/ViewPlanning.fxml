@@ -40,6 +40,7 @@
                                         <BreadCrumbBar prefHeight="25.0" prefWidth="140.0" fx:id="breadcrumb" />
                                         <Label text="Actions:" />
                                         <Button fx:id="btnSavePlanning" mnemonicParsing="false" text="Planning Opslaan" />
+                                        <gui.controls.DatePickerControl fx:id="dpAgendaRange"/>
                                     </items>
                                 </ToolBar>
                             </top>
@@ -76,8 +77,10 @@
                                                         <Label text="Student:" GridPane.rowIndex="2" />
                                                         <Label text="Campus:" GridPane.rowIndex="3" />
                                                         <Label text="Locatie:" GridPane.rowIndex="4" />
-                                                        <TextField GridPane.columnIndex="1" />
+                                                        <DatePicker GridPane.columnIndex="1" />
                                                         <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                         <ComboBox fx:id="cbPeriode" prefHeight="25.0" prefWidth="335.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                         <Button fx:id="btnAddPresentation" mnemonicParsing="false" prefHeight="25.0" prefWidth="340.0" text="Toevoegen" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                     </children>

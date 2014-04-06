@@ -7,8 +7,10 @@
 package controller;
 
 import entity.Promotor;
+import gui.controls.DatePickerControl;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
@@ -54,11 +58,12 @@ public class ViewPlanningController
     @FXML
     private Agenda agenda;
     
+    @FXML
+    private DatePickerControl dpAgendaRange;
+    
     private PlanningController planningController = new PlanningController();
     
     public void loadAgenda() {
-        agenda = new Agenda();
-
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
 
@@ -188,7 +193,18 @@ public class ViewPlanningController
             }
           
         });*/
+        
+        //dpAgendaRange.chronologyProperty().bindBidirectional(agenda.displayedCalendar());    
+        dpAgendaRange.setOnAction(new EventHandler<ActionEvent>() {
 
-        agenda.appointments().addAll(planningController.retrievePresentations());
+            @Override
+            public void handle(ActionEvent t) {
+               //t.notify();
+            }
+        });
+        dpAgendaRange.calendarProperty().bindBidirectional(agenda.displayedCalendar());
+        Agenda.AppointmentImpl[] presentations = planningController.retrievePresentations();
+        System.out.println(presentations.length);                
+        agenda.appointments().addAll(presentations);         
     }
 }
