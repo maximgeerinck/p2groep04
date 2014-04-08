@@ -18,7 +18,7 @@ public class PlanningRepository extends Repository
 {
     public Planning findOneById(int id) 
     {
-        return (Planning)getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = 1").getSingleResult();
+        return (Planning)getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = :id").setParameter("id", id).getSingleResult();
     }
     
     public void changePlanningVisbility(Planning planning, boolean visible) 
@@ -38,5 +38,16 @@ public class PlanningRepository extends Repository
 
     public List<Planning> findAll() {
        return getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p").getResultList();
+    }
+    
+    public Planning create() 
+    {
+        getEm().getTransaction().begin();
+        Planning planning = new Planning();
+        getEm().persist(planning);
+        getEm().flush();
+        getEm().getTransaction().commit();
+        
+        return planning;
     }
 }

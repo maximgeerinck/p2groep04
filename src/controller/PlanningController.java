@@ -23,12 +23,13 @@ public class PlanningController {
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
 
-    public AppointmentImpl[] retrievePresentations() {
+    public AppointmentImpl[] retrievePresentations(int planningId) 
+    {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
 
-        List<Presentation> presentations = presentationRepository.findAllByPlanning(planningRepository.findOneById(1));
+        List<Presentation> presentations = presentationRepository.findAllByPlanning(planningRepository.findOneById(planningId));
 
         for (Presentation p : presentations) {
             cal = ((Calendar) cal.clone());
@@ -52,11 +53,6 @@ public class PlanningController {
         }
 
         return presentaties.toArray(new PresentationProperty[presentaties.size()]);
-    }
-
-    public Planning retrievePlanning(int id) {
-        return planningRepository.findOneById(id);
-
     }
 
     /**
@@ -127,9 +123,10 @@ public class PlanningController {
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(Calendar calendar, TimeFrame timeFrame, Location lokaal, Promotor promotor, Promotor coPromotor, Student presentator) {
+    public void createPresentation(Planning planning, Calendar calendar, TimeFrame timeFrame, Location lokaal, Student presentator) 
+    {
         //check if presentation is already on this timeframe and date
-        if (presentationRepository.findExistsByCalendarTimeFrame(calendar, timeFrame)) {
+        if (presentationRepository.findExistsByCalendarTimeFrame(planning, calendar, timeFrame)) {
             throw new IllegalArgumentException("Presentation already exists");
         }
 
@@ -141,9 +138,7 @@ public class PlanningController {
         presentation.setTimeFrame(timeFrame);
         presentation.setPresentator(presentator);
         presentation.setLocation(lokaal);
-        presentation.setPlanning(retrievePlanning(1));
-        presentation.setPromotor(promotor);
-        presentation.setCoPromotor(coPromotor);
+        presentation.setPlanning(planning);
 
         em.persist(presentation);
         em.flush();

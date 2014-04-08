@@ -15,11 +15,6 @@ import util.JPAUtil;
 public class PresentationRepository extends Repository
 {
     private List<Presentation> presentations;    
-    /**
-     * 
-     * @param presentation
-     */
-   
     
     /**
      * 
@@ -29,7 +24,7 @@ public class PresentationRepository extends Repository
     public List<Presentation> findAllByPlanning(Planning planning) {
         getEm().getTransaction().begin();
 
-        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1").getResultList();
+        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = :planning").setParameter("planning", planning.getId()).getResultList();
         getEm().getTransaction().commit();
         
         getEm().close();
@@ -37,10 +32,10 @@ public class PresentationRepository extends Repository
         return presentations;
     }
 
-    public Boolean findExistsByCalendarTimeFrame(Calendar calendar, TimeFrame timeFrame) {
+    public Boolean findExistsByCalendarTimeFrame(Planning planning, Calendar calendar, TimeFrame timeFrame) {
         getEm().getTransaction().begin();
 
-        Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1 AND p.timeFrame = :timeframe AND p.date = :date").setParameter("timeframe", timeFrame).setParameter("date", calendar.getTime()).getResultList().size() > 0;
+        Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = :planning AND p.timeFrame = :timeframe AND p.date = :date").setParameter("timeframe", timeFrame).setParameter("planning", planning.getId()).setParameter("date", calendar.getTime()).getResultList().size() > 0;
         getEm().getTransaction().commit();
         
         getEm().close();
@@ -48,10 +43,10 @@ public class PresentationRepository extends Repository
         return exists;
     }
 
-    public List<Presentation> findAllByPlanningPromotor(Planning findOneById, Promotor promotor) {
+    public List<Presentation> findAllByPlanningPromotor(Planning planning, Promotor promotor) {
         getEm().getTransaction().begin();
 
-        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = 1 AND p.promotor = :promotor OR p.coPromotor = :promotor").setParameter("promotor", promotor).getResultList();
+        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = :planning AND p.promotor = :promotor OR p.coPromotor = :promotor").setParameter("planning", planning.getId()).setParameter("promotor", promotor).getResultList();
         getEm().getTransaction().commit();
         
         getEm().close();
@@ -59,10 +54,10 @@ public class PresentationRepository extends Repository
         return presentations;
     }
 
-    public List<Presentation> findAllByPlanningResearchdomain(Planning findOneById, ResearchDomain researchDomain) {
+    public List<Presentation> findAllByPlanningResearchdomain(Planning planning, ResearchDomain researchDomain) {
         getEm().getTransaction().begin();
 
-        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl JOIN p.presentator u JOIN u.approvedSuggestion s WHERE pl.id = 1 AND s.researchDomain = :researchDomain").setParameter("researchDomain", researchDomain).getResultList();
+        List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl JOIN p.presentator u JOIN u.approvedSuggestion s WHERE pl.id = :planning AND s.researchDomain = :researchDomain").setParameter("planning", planning.getId()).setParameter("researchDomain", researchDomain).getResultList();
         getEm().getTransaction().commit();
         
         getEm().close();

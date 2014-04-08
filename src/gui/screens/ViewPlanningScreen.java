@@ -43,14 +43,14 @@ import javafx.util.Callback;
 import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
-import model.IScreen;
 import model.PresentationProperty;
 
 /**
  *
  * @author Maxim
  */
-public class ViewPlanningScreen implements IScreen, Observer {
+public class ViewPlanningScreen
+{
 
     private Agenda agenda;
 
@@ -198,23 +198,9 @@ public class ViewPlanningScreen implements IScreen, Observer {
           
         });
 
-        agenda.appointments().addAll(planningController.retrievePresentations());
+        //agenda.appointments().addAll(planningController.retrievePresentations());
     }
 
-    /**
-     *
-     * @param o
-     * @param arg
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        //Redraw
-        agenda.appointments().clear();
-        agenda.appointments().addAll(planningController.retrievePresentations());
-        System.out.println("Redraw calendar");
-    }
-
-    @Override
     public Pane getPane() {
         BorderPane root = new BorderPane();
 
@@ -228,7 +214,7 @@ public class ViewPlanningScreen implements IScreen, Observer {
             public void handle(ActionEvent t) {
 
                 agenda.appointments().clear();
-                agenda.appointments().addAll(planningController.retrievePresentations());
+                //agenda.appointments().addAll(planningController.retrievePresentations());
 
             }
 
@@ -281,7 +267,6 @@ public class ViewPlanningScreen implements IScreen, Observer {
         return root;
     }
 
-    @Override
     public Scene showScreen() {
         return new Scene(getPane(), 600, 600);
     }

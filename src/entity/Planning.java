@@ -13,7 +13,7 @@ public class Planning implements Serializable
     private int id;
 
     @Column(name = "visible")
-    private boolean visible;
+    private boolean visible = false;
 
     @Column(name = "start_time")
     private java.sql.Timestamp startTime;
@@ -27,12 +27,6 @@ public class Planning implements Serializable
     @ManyToOne
     @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
     private BPCoordinator bpcoordinator;
-
-    @Column(name = "visible_start")
-    private java.sql.Timestamp visibleStart;
-    
-    @Column(name = "visible_end")
-    private java.sql.Timestamp visibleEnd;
     
     @OneToMany(mappedBy = "planning", targetEntity = Presentation.class)
     private List<Presentation> presentations;
@@ -75,22 +69,6 @@ public class Planning implements Serializable
 
     public void setAllowedToView(String allowedToView) {
         this.allowedToView = allowedToView;
-    }
-
-    public java.sql.Timestamp getVisibleStart() {
-        return this.visibleStart;
-    }
-
-    public void setVisibleStart(java.sql.Timestamp visibleStart) {
-        this.visibleStart = visibleStart;
-    }
-
-    public java.sql.Timestamp getVisibleEnd() {
-        return this.visibleEnd;
-    }
-
-    public void setVisibleEnd(java.sql.Timestamp visibleEnd) {
-        this.visibleEnd = visibleEnd;
     }
 
     public List<Presentation> getPresentations() {

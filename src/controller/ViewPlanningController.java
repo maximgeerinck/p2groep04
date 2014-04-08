@@ -6,36 +6,34 @@
 
 package controller;
 
+import entity.Campus;
+import entity.Location;
+import entity.Planning;
 import entity.Promotor;
+import entity.Student;
+import entity.TimeFrame;
+import entity.User;
 import gui.controls.DatePickerControl;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.TreeMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Popup;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
+import javafx.scene.control.TextField;
 import jfxtras.scene.control.agenda.Agenda;
-import model.PresentationProperty;
+import model.CampusRepository;
+import model.LocationRepository;
+import model.TimeFrameRepository;
+import model.UserRepository;
 import org.controlsfx.control.BreadCrumbBar;
+import org.controlsfx.control.textfield.TextFields;
 
 /**
  *
@@ -61,9 +59,74 @@ public class ViewPlanningController
     @FXML
     private DatePickerControl dpAgendaRange;
     
-    private PlanningController planningController = new PlanningController();
+    @FXML
+    private ComboBox cbStudent;
     
-    public void loadAgenda() {
+    @FXML
+    private ComboBox cbLocation;
+    
+    @FXML 
+    private ComboBox cbCampus;
+    
+    @FXML
+    private DatePickerControl date;
+    
+    private Planning planning;
+    private final PlanningController planningController = new PlanningController();
+    private final TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
+    private final UserRepository userRepository = new UserRepository();
+    private final CampusRepository campusRepository = new CampusRepository();
+    private final LocationRepository locationRepository = new LocationRepository();
+    
+    public void loadControls() 
+    {
+        //load periodes
+        final ObservableList<TimeFrame> timeframes = FXCollections.observableArrayList(timeFrameRepository.findAll());
+        cbPeriode.getItems().setAll(timeframes);
+        
+        //load students
+        final ObservableList<Student> students = FXCollections.observableArrayList(userRepository.findAllStudents());
+        cbStudent.getItems().setAll(students);
+        
+        //load campus
+        final ObservableList<Campus> campuses = FXCollections.observableArrayList(campusRepository.findAll());
+        cbCampus.getItems().setAll(campuses);
+        cbCampus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Campus>(){
+
+            @Override
+            public void changed(ObservableValue<? extends Campus> ov, Campus cOld, Campus cNew) 
+            {
+                final ObservableList<Location> locations = FXCollections.observableArrayList(locationRepository.findByCampus(cNew));
+                cbLocation.getItems().setAll(locations);                
+                cbLocation.setPromptText("Choose a location please");
+                if(locations.size() == 0) {
+                    cbLocation.setPromptText("No locations found");
+                }
+            }        
+        });                        
+        
+        cbLocation.disableProperty().bind(cbCampus.getSelectionModel().selectedItemProperty().isNull());
+        cbLocation.setPromptText("Please choose a campus first");    
+        
+        //button add
+        btnAddPresentation.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                planningController.createPresentation(planning, date.getCalendar(), (TimeFrame)cbPeriode.getValue(), (Location)cbLocation.getValue(), (Student)cbStudent.getValue());
+                agenda.appointments().clear();
+                loadAgenda();
+            }
+        });
+    }
+    
+    public void loadAgenda() 
+    {
+        if(planning == null) {
+            throw new IllegalArgumentException("Planning was null, or not loaded");
+        }
+        
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
 
@@ -203,8 +266,12 @@ public class ViewPlanningController
             }
         });
         dpAgendaRange.calendarProperty().bindBidirectional(agenda.displayedCalendar());
-        Agenda.AppointmentImpl[] presentations = planningController.retrievePresentations();
-        System.out.println(presentations.length);                
+        Agenda.AppointmentImpl[] presentations = planningController.retrievePresentations(planning.getId());             
         agenda.appointments().addAll(presentations);         
+    }
+    
+    public void setPlanning(Planning planning) 
+    {
+        this.planning = planning;
     }
 }

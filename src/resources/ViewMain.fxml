@@ -43,7 +43,7 @@
 <children><Label layoutX="14.0048828125" layoutY="14.0" text="Plannings">
 <font>
 <Font name="BebasNeue" size="22.0" />
-</font></Label><Button fx:id="btnPlanningAdd" layoutX="13.0" layoutY="44.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="231.0" text="Planning aanmaken" /><ScrollPane layoutX="12.0" layoutY="79.0" prefHeight="193.0" prefWidth="725.0">
+</font></Label><Button fx:id="btnPlanningAdd" layoutX="13.0" layoutY="44.0" mnemonicParsing="false" onAction="#addPlanningHandle" prefHeight="25.0" prefWidth="231.0" text="Planning aanmaken" /><ScrollPane layoutX="12.0" layoutY="79.0" prefHeight="193.0" prefWidth="725.0">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="710.0">
 <children><GridPane fx:id="gpPlannings" hgap="10.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

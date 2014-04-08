@@ -6,11 +6,15 @@
 
 package gui.controls;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.DatePicker;
 
 /**
@@ -21,37 +25,47 @@ public class DatePickerControl extends DatePicker
 {
     private ObjectProperty<Calendar> calendar;
 
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE ;
+    private Format calendarFormatter = DateFormat.getDateInstance();
+    
     public DatePickerControl() {
         super();
         setValue(LocalDate.now());
+        calendar = new SimpleObjectProperty<Calendar>(Calendar.getInstance());
+
+        calendar.addListener(new ChangeListener<Calendar>(){
+
+            @Override
+            public void changed(ObservableValue<? extends Calendar> obs, Calendar oldValue, Calendar newValue) {
+                 System.out.println("calendar changed from "+calendarFormatter.format(oldValue.getTime())+" to "+calendarFormatter.format(newValue.getTime()));
+                LocalDate localDate = LocalDate.now()
+                    .withYear(newValue.get(Calendar.YEAR))
+                    .withMonth(newValue.get(Calendar.MONTH)+1)
+                    .withDayOfMonth(newValue.get(Calendar.DAY_OF_MONTH));
+                setValue(localDate);
+            }
+        });
+        
+        valueProperty().addListener(new ChangeListener<LocalDate>(){
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> obs, LocalDate oldValue, LocalDate newValue) {
+                System.out.println("Value changed from "+dateFormatter.format(oldValue)+" to "+dateFormatter.format(newValue));
+                Calendar cal = Calendar.getInstance();
+                cal.set(getValue().getYear(), getValue().getMonthValue()-1, getValue().getDayOfMonth());
+                calendar.set(cal);
+            }
+        
+        });
     }
 
-    /**
-     * Get the value of calendar
-     *
-     * @return the value of calendar
-     */
     public ObjectProperty<Calendar> calendarProperty() {        
-        Calendar calendar = new GregorianCalendar();
-        System.out.println("test");
-        calendar.set(getValue().getYear(), getValue().getMonthValue(), getValue().getDayOfMonth());
-        return new SimpleObjectProperty<>(calendar);
+        return calendar;
     }
 
-    /**
-     * Set the value of calendar
-     *
-     * @param calendar new value of calendar
-     */
     public void setCalendar(Calendar calendar) {
         this.calendar.set(calendar);
-        LocalDate ld = LocalDate.now();
-        ld.withYear(calendar.get(Calendar.YEAR));
-        ld.withMonth(calendar.get(Calendar.MONTH));
-        ld.withDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));        
-        setValue(ld);
     }
-    
+
     public Calendar getCalendar() {
         return calendar.get();
     }

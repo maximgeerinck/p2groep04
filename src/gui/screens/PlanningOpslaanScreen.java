@@ -19,13 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import jfxtras.scene.control.CalendarTextField;
-import model.IScreen;
 
 /**
  *
  * @author Maxim
  */
-public class PlanningOpslaanScreen implements IScreen 
+public class PlanningOpslaanScreen
 {
     
     private PlanningController planningController = new PlanningController();
@@ -33,7 +32,6 @@ public class PlanningOpslaanScreen implements IScreen
     private CalendarTextField ctStartTime;
     private CheckBox cbVisibility;
     
-    @Override
     public Pane getPane() 
     {
         GridPane root = new GridPane();        
@@ -63,7 +61,7 @@ public class PlanningOpslaanScreen implements IScreen
             @Override
             public void handle(ActionEvent t) {
                 
-                Planning planning = planningController.retrievePlanning(1);
+                /*Planning planning = planningController.retrievePlanning(1);
                 
                 // registreer visibility
                 Timestamp t1 = new Timestamp(PlanningOpslaanScreen.this.getCtStartTime().getCalendar().getTimeInMillis());
@@ -71,7 +69,7 @@ public class PlanningOpslaanScreen implements IScreen
                 planningController.registerVisibilityPeriod(planning, t1, t2);
                 
                 // registreer enabled of niet 
-                planningController.changePlanningVisibility(planning, !PlanningOpslaanScreen.this.getCbVisibility().isIndeterminate());                
+                planningController.changePlanningVisibility(planning, !PlanningOpslaanScreen.this.getCbVisibility().isIndeterminate());    */            
             }
             
         });
@@ -80,7 +78,6 @@ public class PlanningOpslaanScreen implements IScreen
         return root;
     }
 
-    @Override
     public Scene showScreen() 
     {
         return new Scene(getPane(), 600, 600);

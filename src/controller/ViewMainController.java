@@ -7,6 +7,7 @@ package controller;
 
 import entity.Planning;
 import entity.ResearchDomain;
+import java.io.IOException;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -59,6 +60,9 @@ public class ViewMainController {
         {
             gpPlannings.add(new Label(Integer.toString(p.getId())), 0, gpPlanningCurrentRow);
 
+            final Planning planning = p;
+            System.out.println(p == null);
+            
             Button btnView = new Button("View");
             btnView.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -72,7 +76,9 @@ public class ViewMainController {
 
                         ViewPlanningController controller = loader.getController();
                         if(controller != null) {
-                            controller.loadAgenda();    
+                            controller.setPlanning(planning);
+                            controller.loadAgenda(); 
+                            controller.loadControls();
                         }                    
 
                         BorderPane root = loader.getRoot();
@@ -93,6 +99,31 @@ public class ViewMainController {
             gpPlannings.add(btnView, 1, gpRSCurrentRow);
             gpPlanningCurrentRow++;
         }
+    }
+    
+    public void addPlanningHandle() throws IOException 
+    {
+        //create new planning
+        Planning planning = planningRepository.create();      
+        
+        final Stage newStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewPlanning.fxml"));
+        loader.load();
+
+        ViewPlanningController controller = loader.getController();
+        if(controller != null) 
+        {
+            controller.loadControls();  
+            controller.setPlanning(planning);
+        }  
+                        
+        BorderPane root = loader.getRoot();
+        Scene scene = new Scene(root, 1500, 900);       
+
+        newStage.setTitle("Planning overzicht");
+        newStage.setScene(scene);
+
+        newStage.show();
     }
     
     public void addResearchdomainGP()
