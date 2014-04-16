@@ -8,6 +8,7 @@ package entity;
 
 import java.util.*;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
  * @author Bram
  */
 @Entity
-@Table(name = "promotor")
+@DiscriminatorValue("Promotor")
 public class Promotor extends User
 {
     @Id

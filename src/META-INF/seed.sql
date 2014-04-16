@@ -181,23 +181,23 @@ INSERT INTO suggestion (`id`, `subject`, `researchdomain_id`) VALUES (1, "Encryp
 INSERT INTO suggestion (`id`, `subject`, `researchdomain_id`) VALUES (2, "Bloemen!", 2);
 
 # user: Bert van Vreckem - BPC
-INSERT INTO bpcoordinator (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`) VALUES (1, NOW(), "bert.vanvreckem@hogent.be", 1, "Bert", "127.0.0.1", "Van Vreckem", "test123", "privatesalt", NOW()); 
+INSERT INTO user (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `role`) VALUES (1, NOW(), "bert.vanvreckem@hogent.be", 1, "Bert", "127.0.0.1", "Van Vreckem", "test123", "privatesalt", NOW(), "BPC"); 
 # INSERT INTO user_role (`user_id`, `role_id`) VALUES (1, 1);
 
 # user: Johan Van Schoor - Promotor
-INSERT INTO promotor (`id`, `amount_of_students`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`) VALUES (1, 0, NOW(), "johan.vanschoor@hogent.be", 1, "Johan", "127.0.0.1", "Van Schoor", "test123", "privatesalt", NOW()); 
+INSERT INTO user (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `role`) VALUES (2, NOW(), "johan.vanschoor@hogent.be", 1, "Johan", "127.0.0.1", "Van Schoor", "test123", "privatesalt", NOW(), "Promotor"); 
 # INSERT INTO user_role (`user_id`, `role_id`) VALUES (2, 2);
 
 # user: Irina Malfait - Promotor
-INSERT INTO promotor (`id`, `amount_of_students`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`) VALUES (2, 0, NOW(), "irina.malfait@hogent.be", 1, "Irina", "127.0.0.1", "Malfait", "test123", "privatesalt", NOW()); 
+INSERT INTO user (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `role`) VALUES (3, NOW(), "irina.malfait@hogent.be", 1, "Irina", "127.0.0.1", "Malfait", "test123", "privatesalt", NOW(), "Promotor"); 
 # INSERT INTO user_role (`user_id`, `role_id`) VALUES (3, 2);
 
 # user: Maxim Geerinck - STUDENT
-INSERT INTO student (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `suggestion_id`) VALUES (1, NOW(), "maximgeerinck@hotmail.com", 1, "Maxim", "127.0.0.1", "Geerinck", "test123", "privatesalt", NOW(), 1); 
+INSERT INTO user (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `role`, `suggestion_id`) VALUES (4, NOW(), "maximgeerinck@hotmail.com", 1, "Maxim", "127.0.0.1", "Geerinck", "test123", "privatesalt", NOW(), "Student", 1); 
 # INSERT INTO user_role (`user_id`, `role_id`) VALUES (4, 3);
 
 # user: Logan Dupont - STUDENT
-INSERT INTO student (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `suggestion_id`) VALUES (2, NOW(), "logandupont@hotmail.com", 1, "Logan", "127.0.0.1", "Dupont", "test123", "privatesalt", NOW(), 2); 
+INSERT INTO user (`id`, `created_on`, `email`, `enabled`, `first_name`, `last_ip`, `last_name`, `password`,`salt`, `updated_on`, `role`, `suggestion_id`) VALUES (5, NOW(), "logandupont@hotmail.com", 1, "Logan", "127.0.0.1", "Dupont", "test123", "privatesalt", NOW(), "Student", 2); 
 # INSERT INTO user_role (`user_id`, `role_id`) VALUES (5, 3);
 
 # planning, door BPC

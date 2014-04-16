@@ -9,6 +9,7 @@ package entity;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,10 +22,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "student")
+@DiscriminatorValue("Student")
 public class Student extends User
-{
-     
+{ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -46,6 +46,9 @@ public class Student extends User
     
     @ManyToMany(mappedBy="students", cascade=CascadeType.PERSIST)
     private List<Promotor> promotors;
+    
+    @ManyToMany
+    private List<Presentation> presentationsAttending;
 
     public List<Promotor> getPromotors() {
         return this.promotors;

@@ -17,14 +17,21 @@ import javax.persistence.PrePersist;
 import javax.mail.internet.InternetAddress; 
 import javax.mail.internet.MimeMessage;
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 /**
  * @author Maxim
  */
-@MappedSuperclass
-public class User 
+@Entity
+@Table(name="user")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
+public abstract class User implements java.io.Serializable  
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -59,6 +66,9 @@ public class User
 
     @Column(name = "enabled")
     protected int enabled;
+    
+    @Column(name="role")
+    protected String role;
 
     @ManyToMany
     @JoinTable(name = "presentation_guest", joinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "presentation_id", referencedColumnName = "id"))
