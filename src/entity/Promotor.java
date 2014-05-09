@@ -10,13 +10,9 @@ import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 /**
  *
@@ -26,11 +22,6 @@ import javax.persistence.Table;
 @DiscriminatorValue("Promotor")
 public class Promotor extends User
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    protected int id;
-    
     @Column(name="amount_of_students")
     private int amountOfStudents = 0;
     

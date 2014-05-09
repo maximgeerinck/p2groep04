@@ -11,7 +11,9 @@ import entity.Presentation;
 import entity.Student;
 import entity.User;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import model.PresentationRepository;
 import model.UserRepository;
 import javax.persistence.EntityManager;
@@ -30,13 +32,13 @@ public class GuestRequestController {
     
     public void approveRegistration(Presentation presentation, User guest)
     {
-       List <Student> users = new ArrayList<>();
+       Set <Student> users = new HashSet();
        
-       users.addAll(presentation.getGuests());
+       users.addAll(presentation.getAttendees());
        users.add((Student)guest);
        
        em.getTransaction().begin();
-       presentation.setGuests(users);
+       presentation.setAttendees(users);
        em.getTransaction().commit();
        em.close();  
     }

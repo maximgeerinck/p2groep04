@@ -20,7 +20,18 @@ public class Location implements Serializable
     @ManyToOne(optional = false)
     @JoinColumn(name = "campus_id", referencedColumnName = "id")
     private Campus campus;
+    
+    @Column(name = "capacity")
+    private int capacity;
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+    
     public int getId() {
         return this.id;
     }
@@ -46,9 +57,10 @@ public class Location implements Serializable
         this.campus = campus;
     }
 
-    public Location(Campus campus, String classroom) {
+    public Location(Campus campus, String classroom, int capacity) {
         setCampus(campus);
         setClassroom(classroom);
+        setCapacity(capacity);
     }
 
     public Location() {
@@ -63,7 +75,8 @@ public class Location implements Serializable
      *
      * @param campus
      * @param classroom
+     * @param capacity
      */
-	
+
 
 }

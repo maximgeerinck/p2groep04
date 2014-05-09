@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PlanningRepository extends Repository
 {
-    public Planning findOneById(int id) 
+    public Planning findOneById(long id) 
     {
         return (Planning)getEm().createQuery("SELECT p FROM " + Planning.class.getSimpleName() + " p WHERE p.id = :id").setParameter("id", id).getSingleResult();
     }

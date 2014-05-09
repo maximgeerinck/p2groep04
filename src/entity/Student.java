@@ -8,47 +8,33 @@ package entity;
 
 import java.util.*;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
 @DiscriminatorValue("Student")
 public class Student extends User
 { 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    protected int id;
-    
     @OneToOne
     @JoinColumn(name = "presentation_id", referencedColumnName = "id")
     private Presentation presentation;
     
-    @OneToMany(mappedBy = "student", targetEntity = Suggestion.class)
-    private List<Suggestion> suggestions;
-    
-    @OneToOne
-    @JoinColumn(name = "suggestion_id", referencedColumnName = "id")
-    private Suggestion approvedSuggestion;
+    @OneToMany(mappedBy = "student", targetEntity = Suggestion.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Suggestion> suggestions = new HashSet<>();
     
     @OneToMany(mappedBy = "student", targetEntity = GuestRequest.class)
     private List<GuestRequest> guestRequests;
     
-    @ManyToMany(mappedBy="students", cascade=CascadeType.PERSIST)
+    @ManyToMany(mappedBy="students", cascade=CascadeType.ALL)
     private List<Promotor> promotors;
     
-    @ManyToMany
-    private List<Presentation> presentationsAttending;
+    @ManyToMany(mappedBy = "attendees")
+    private List<Presentation> presentationsAttending;    
 
     public List<Promotor> getPromotors() {
         return this.promotors;
@@ -74,22 +60,25 @@ public class Student extends User
         this.presentation = presentation;
     }
 
-    public List<Suggestion> getSuggestions() {
+    public Set<Suggestion> getSuggestions() {
         return suggestions;
     }
 
-    public void setSuggestions(List<Suggestion> suggestions) {
+    public void setSuggestions(Set<Suggestion> suggestions) {
         this.suggestions = suggestions;
     }
-
-    public Suggestion getApprovedSuggestion() {
-        return approvedSuggestion;
+    
+    
+    public Suggestion getActiveSuggestion() 
+    {
+        for(Suggestion s : suggestions) {
+            if(s.isActive()) {
+                return s;
+            }
+        }
+        return null;
     }
-
-    public void setApprovedSuggestion(Suggestion approvedSuggestion) {
-        this.approvedSuggestion = approvedSuggestion;
-    }    
-
+    
     public Student() {
     }
 }

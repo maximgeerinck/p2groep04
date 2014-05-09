@@ -1,9 +1,9 @@
 package entity;
 
 import java.io.*;
-import java.sql.Timestamp;
 import java.util.*;
 import javax.persistence.*;
+
 
 @Entity
 public class Presentation implements Serializable 
@@ -11,7 +11,7 @@ public class Presentation implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "editable")
     private transient boolean editable;
@@ -20,9 +20,12 @@ public class Presentation implements Serializable
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
-    @ManyToMany(mappedBy = "presentationsAttending", cascade = CascadeType.PERSIST)
-    private List<Student> guests;
-
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "presentation_attendees",
+            joinColumns = {@JoinColumn(name = "presentation_id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id")})
+    private Set<Student> attendees = new HashSet<>();
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -49,12 +52,15 @@ public class Presentation implements Serializable
     @OneToOne
     @JoinColumn(name = "copromotor_id", referencedColumnName = "id")
     private Promotor coPromotor;
+    
+    //@ManyToMany(mappedBy = "researchDomains")
+    //private List<Presentation> presentations;
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     
@@ -74,12 +80,12 @@ public class Presentation implements Serializable
         this.location = location;
     }
 
-    public List<Student> getGuests() {
-        return guests;
+    public Set<Student> getAttendees() {
+        return attendees;
     }
 
-    public void setGuests(List<Student> guests) {
-        this.guests = guests;
+    public void setAttendees(Set<Student> attendees) {
+        this.attendees = attendees;
     }
 
     public Date getDate() {
@@ -148,7 +154,7 @@ public class Presentation implements Serializable
     public void setCoPromotor(Promotor coPromotor) {
         this.coPromotor = coPromotor;
     }    
-
+    
     /**
      *
      * @param timeFrame
@@ -169,13 +175,13 @@ public class Presentation implements Serializable
          {
             
             users.add(p.getPresentator());
-            users.addAll(p.getGuests()); 
+            users.addAll(p.getAttendees()); 
             
          }
          
          for(User u: users)
          {
-             u.sendMail();
+            // u.sendMail();
          }
          
              

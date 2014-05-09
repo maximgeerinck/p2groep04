@@ -13,9 +13,10 @@ import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("BPC")
-public class BPCoordinator extends User {
-    @OneToMany(mappedBy = "bpcoordinator", targetEntity = Planning.class)
-    private List<Planning> plannings;
+public class BPCoordinator extends User 
+{
+    /*@OneToMany(mappedBy = "bpcoordinator", targetEntity = Planning.class)
+    private List<Planning> plannings;*/
 
     public BPCoordinator() 
     {

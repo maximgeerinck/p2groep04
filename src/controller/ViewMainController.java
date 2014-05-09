@@ -58,7 +58,7 @@ public class ViewMainController {
         List<Planning> plannings = planningRepository.findAll();
         for(Planning p : plannings) 
         {
-            gpPlannings.add(new Label(Integer.toString(p.getId())), 0, gpPlanningCurrentRow);
+            gpPlannings.add(new Label(Long.toString(p.getId())), 0, gpPlanningCurrentRow);
 
             final Planning planning = p;
             System.out.println(p == null);

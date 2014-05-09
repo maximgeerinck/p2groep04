@@ -12,7 +12,10 @@ public class ResearchDomain implements Serializable
     @Column(name = "id")
     private int id;
     
-    @OneToMany(mappedBy = "researchDomain", targetEntity = Suggestion.class)
+    //@OneToMany(mappedBy = "researchDomain", targetEntity = Suggestion.class)
+    //private List<Suggestion> suggestions;
+    
+    @ManyToMany(mappedBy = "researchDomains")
     private List<Suggestion> suggestions;
     
     @Column(name = "name")

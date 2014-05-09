@@ -23,7 +23,7 @@ public class PlanningController {
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
 
-    public AppointmentImpl[] retrievePresentations(int planningId) 
+    public AppointmentImpl[] retrievePresentations(long planningId) 
     {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
@@ -47,7 +47,7 @@ public class PlanningController {
                 .withStartTime(cal)
                 .withEndTime(cal2)
                 .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                .withDescription(p.getPresentator().getApprovedSuggestion().toString())
+                .withDescription(p.getPresentator().getActiveSuggestion().toString())
                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
@@ -178,7 +178,7 @@ public class PlanningController {
                 .withStartTime(cal)
                 .withEndTime(cal2)
                 .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                .withDescription(p.getPresentator().getApprovedSuggestion().toString())
+                .withDescription(p.getPresentator().getActiveSuggestion().toString())
                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }
@@ -209,7 +209,7 @@ public class PlanningController {
                 .withStartTime(cal)
                 .withEndTime(cal2)
                 .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                .withDescription(p.getPresentator().getApprovedSuggestion().toString())
+                .withDescription(p.getPresentator().getActiveSuggestion().toString())
                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
             );
         }

@@ -10,7 +10,7 @@ public class Planning implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "visible")
     private boolean visible = false;
@@ -28,14 +28,14 @@ public class Planning implements Serializable
     @JoinColumn(name = "bpcoordinator_id", referencedColumnName = "id")
     private BPCoordinator bpcoordinator;
     
-    @OneToMany(mappedBy = "planning", targetEntity = Presentation.class)
-    private List<Presentation> presentations;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "planning", targetEntity = Presentation.class)
+    private Set<Presentation> presentations;
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,11 +71,11 @@ public class Planning implements Serializable
         this.allowedToView = allowedToView;
     }
 
-    public List<Presentation> getPresentations() {
+    public Set<Presentation> getPresentations() {
         return presentations;
     }
 
-    public void setPresentations(List<Presentation> presentations) {
+    public void setPresentations(Set<Presentation> presentations) {
         this.presentations = presentations;
     }
 

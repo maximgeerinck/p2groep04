@@ -15,7 +15,7 @@ public class GuestRequest implements Serializable
     private int id;
     
     @ManyToOne
-    @JoinColumn(name = "presentation_id", referencedColumnName = "ids")
+    @JoinColumn(name = "presentation_id")
     private Presentation presentation;
     
     @ManyToOne
@@ -26,13 +26,13 @@ public class GuestRequest implements Serializable
     private boolean approved;
     
     public Student getStudent() {
-        return this.student;
+        return student;
     }
 
     public void setStudent(Student student) {
         this.student = student;
     }
-
+    
     public boolean isApproved() {
             return this.approved;
     }
@@ -48,7 +48,15 @@ public class GuestRequest implements Serializable
     public void setId(int id) {
             this.id = id;
     }
+    
+    public Presentation getPresentation() {
+        return presentation;
+    }
 
+    public void setPresentation(Presentation presentation) {
+        this.presentation = presentation;
+    }
+    
     public GuestRequest() {}
 
 }
