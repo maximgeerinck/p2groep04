@@ -1,16 +1,14 @@
 package model;
 
-import entity.GuestRequest;
+import entity.Location;
 import entity.Planning;
 import entity.Presentation;
 import entity.Promotor;
 import entity.ResearchDomain;
+import entity.Student;
 import entity.TimeFrame;
 import java.util.Calendar;
 import java.util.List;
-import java.util.List;
-import javax.persistence.EntityManager;
-import util.JPAUtil;
 
 public class PresentationRepository extends Repository
 {
@@ -36,6 +34,28 @@ public class PresentationRepository extends Repository
         getEm().getTransaction().begin();
 
         Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl = :planning AND p.timeFrame = :timeframe AND p.date = :date").setParameter("timeframe", timeFrame).setParameter("planning", planning).setParameter("date", calendar.getTime()).getResultList().size() > 0;
+        getEm().getTransaction().commit();
+        
+        getEm().close();
+        
+        return exists;
+    }
+    
+    public Boolean findPresentationDuplicate(Planning planning, Calendar calendar, TimeFrame timeFrame, Location location) {
+        getEm().getTransaction().begin();
+
+        Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl = :planning AND p.timeFrame = :timeframe AND p.date = :date AND p.location = :location").setParameter("timeframe", timeFrame).setParameter("planning", planning).setParameter("date", calendar.getTime()).setParameter("location", location).getResultList().size() > 0;
+        getEm().getTransaction().commit();
+        
+        getEm().close();
+        
+        return exists;
+    }
+    
+    public Boolean findPersonPresentation(Planning planning, Student presentator) {
+        getEm().getTransaction().begin();
+        
+        Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl = :planning AND p.presentator = :presentator").setParameter("planning", planning).setParameter("presentator", presentator).getResultList().size() > 0;
         getEm().getTransaction().commit();
         
         getEm().close();

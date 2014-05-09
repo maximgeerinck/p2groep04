@@ -2,13 +2,14 @@ package controller;
 
 import model.*;
 import entity.*;
+import exceptions.DuplicateEntryException;
+import exceptions.PersonHasPresentationException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 
@@ -123,13 +124,21 @@ public class PlanningController {
      * @param onderwerp
      * @param tijdstip
      */
-    public void createPresentation(Planning planning, Calendar calendar, TimeFrame timeFrame, Location lokaal, Student presentator) 
+    public void createPresentation(Planning planning, Calendar calendar, TimeFrame timeFrame, Location lokaal, Student presentator) throws DuplicateEntryException, PersonHasPresentationException 
     {
         //check if presentation is already on this timeframe and date
-        if (presentationRepository.findExistsByCalendarTimeFrame(planning, calendar, timeFrame)) {
-            throw new IllegalArgumentException("Presentation already exists");
+        //if (presentationRepository.findExistsByCalendarTimeFrame(planning, calendar, timeFrame)) {
+           // throw new IllegalArgumentException("Presentation already exists");
+       // }
+        
+        if(presentationRepository.findPresentationDuplicate(planning, calendar, timeFrame, lokaal)){
+            throw new DuplicateEntryException("There is another presentation on that place and time.");
         }
-
+        
+        if(presentationRepository.findPersonPresentation(planning, presentator)){
+            throw new PersonHasPresentationException("This student already has a presentation.");
+        }
+        
         EntityManager em = planningRepository.getEm();
         em.getTransaction().begin();
 

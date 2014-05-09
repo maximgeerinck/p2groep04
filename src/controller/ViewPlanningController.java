@@ -9,14 +9,16 @@ package controller;
 import entity.Campus;
 import entity.Location;
 import entity.Planning;
-import entity.Promotor;
 import entity.Student;
 import entity.TimeFrame;
-import entity.User;
+import exceptions.DuplicateEntryException;
+import exceptions.PersonHasPresentationException;
 import gui.controls.DatePickerControl;
-import java.util.Calendar;
+import java.awt.Desktop.Action;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,14 +28,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import jfxtras.scene.control.agenda.Agenda;
 import model.CampusRepository;
 import model.LocationRepository;
 import model.TimeFrameRepository;
 import model.UserRepository;
 import org.controlsfx.control.BreadCrumbBar;
-import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -114,7 +115,25 @@ public class ViewPlanningController
             @Override
             public void handle(ActionEvent event) 
             {
-                planningController.createPresentation(planning, date.getCalendar(), (TimeFrame)cbPeriode.getValue(), (Location)cbLocation.getValue(), (Student)cbStudent.getValue());
+                try {
+                    planningController.createPresentation(planning, date.getCalendar(), (TimeFrame)cbPeriode.getValue(), (Location)cbLocation.getValue(), (Student)cbStudent.getValue());
+                } catch (DuplicateEntryException ex) {
+                    //Logger.getLogger(ViewPlanningController.class.getName()).log(Level.SEVERE, null, ex);
+                    org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Presentations")
+                    .masthead(null)
+                    .message( "There is a presentation planned on that time and place.")
+                    .lightweight()
+                    .showWarning();
+                } catch (PersonHasPresentationException ex) {
+                    //Logger.getLogger(ViewPlanningController.class.getName()).log(Level.SEVERE, null, ex);
+                    org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Presentations")
+                    .masthead(null)
+                    .message( "This person already has a presentation scheduled.")
+                    .lightweight()
+                    .showWarning();
+                }
                 agenda.appointments().clear();
                 loadAgenda();
             }
