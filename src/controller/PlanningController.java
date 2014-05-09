@@ -93,7 +93,7 @@ public class PlanningController {
      * @param startTime
      * @param endTime
      */
-    public void registerVisibilityPeriod(Planning planning, java.sql.Timestamp startTime, java.sql.Timestamp endTime) {
+    public void registerVisibilityPeriod(Planning planning, Calendar startTime, Calendar endTime) {
         planningRepository.changePlanningVisbilityPeriod(planning, startTime, endTime);
     }
 

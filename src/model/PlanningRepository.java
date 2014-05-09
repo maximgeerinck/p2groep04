@@ -8,6 +8,7 @@ package model;
 
 import entity.Planning;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -28,11 +29,11 @@ public class PlanningRepository extends Repository
         getEm().getTransaction().commit();
     }
     
-    public void changePlanningVisbilityPeriod(Planning planning, Timestamp startTime, Timestamp endTime)
+    public void changePlanningVisbilityPeriod(Planning planning, Calendar startTime, Calendar endTime)
     {
         getEm().getTransaction().begin();
-        planning.setStartTime(startTime);
-        planning.setEndTime(endTime);
+        planning.setStartTime(new Timestamp(startTime.getTime().getTime()));
+        planning.setEndTime(new Timestamp(endTime.getTime().getTime()));
         getEm().getTransaction().commit();
     }
 

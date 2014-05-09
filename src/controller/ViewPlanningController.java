@@ -79,6 +79,22 @@ public class ViewPlanningController
     @FXML
     private DatePickerControl visiDate;
     
+    
+    /* PLANNING VISIBILITY */
+    
+    @FXML
+    private CheckBox cbVisible;
+    
+    @FXML
+    private DatePickerControl dpVisibleStart;
+    
+    @FXML 
+    private DatePickerControl dpVisibleEnd;
+    
+    @FXML
+    private Button btnMakeVisible;
+    
+    
     private Planning planning;
     private final PlanningController planningController = new PlanningController();
     private final TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
@@ -144,6 +160,36 @@ public class ViewPlanningController
                 agenda.appointments().clear();
                 loadAgenda();
             }
+        });
+        
+        //button make visible
+        btnMakeVisible.setOnAction(new EventHandler<ActionEvent>(){
+
+            @Override
+            public void handle(ActionEvent t) {
+                try 
+                {
+                    planningController.changePlanningVisibility(planning, cbVisible.selectedProperty().get());
+                    planningController.registerVisibilityPeriod(planning, dpVisibleStart.getCalendar(), dpVisibleEnd.getCalendar());
+                    
+                    org.controlsfx.control.action.Action response = Dialogs.create()
+                        .title("Planning")
+                        .masthead(null)
+                        .message( "De planning werd zichtbaar gemaakt")
+                        .lightweight()
+                        .showWarning();
+                } 
+                catch(Exception ex) 
+                {
+                    org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Planning")
+                    .masthead(null)
+                    .message( ex.getMessage() )
+                    .lightweight()
+                    .showWarning();
+                }
+            }
+            
         });
     }
     

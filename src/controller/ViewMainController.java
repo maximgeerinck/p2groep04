@@ -40,6 +40,9 @@ public class ViewMainController {
     private GridPane gpResearchdomains;
 
     @FXML
+    private Button btnAssignPromotor;
+     
+    @FXML
     private GridPane gpPlannings;
 
     ResearchDomainRepository researchDomainRepository = new ResearchDomainRepository();
@@ -52,6 +55,29 @@ public class ViewMainController {
         addPlanningsGP();
         addResearchdomainGP();
     }
+    
+    @FXML
+    void assignPromotorHandle(ActionEvent event) throws IOException 
+    {
+        final Stage newStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewAssignPromotor.fxml"));
+        loader.load();
+
+        ViewAssignPromotorController controller = loader.getController();
+        if(controller != null) 
+        {
+            controller.loadControls();  
+        }  
+                        
+        BorderPane root = loader.getRoot();
+        Scene scene = new Scene(root, 600, 400);       
+
+        newStage.setTitle("Promotor toekennen");
+        newStage.setScene(scene);
+
+        newStage.show();
+    }
+    
 
     public void addPlanningsGP() 
     {
