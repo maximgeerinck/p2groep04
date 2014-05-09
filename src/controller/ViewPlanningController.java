@@ -14,11 +14,8 @@ import entity.TimeFrame;
 import exceptions.DuplicateEntryException;
 import exceptions.PersonHasPresentationException;
 import gui.controls.DatePickerControl;
-import java.awt.Desktop.Action;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import jfxtras.scene.control.agenda.Agenda;
 import model.CampusRepository;
@@ -71,6 +69,15 @@ public class ViewPlanningController
     
     @FXML
     private DatePickerControl date;
+    
+    @FXML
+    private Button btnSaveSettings;
+    
+    @FXML
+    private CheckBox chbZichtbaar;
+    
+    @FXML
+    private DatePickerControl visiDate;
     
     private Planning planning;
     private final PlanningController planningController = new PlanningController();
