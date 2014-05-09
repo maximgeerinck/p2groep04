@@ -266,7 +266,7 @@ public class ViewPlanningController
             }
         });
         dpAgendaRange.calendarProperty().bindBidirectional(agenda.displayedCalendar());
-        Agenda.AppointmentImpl[] presentations = planningController.retrievePresentations(planning.getId());             
+        Agenda.AppointmentImpl[] presentations = planningController.retrievePresentations(planning);             
         agenda.appointments().addAll(presentations);         
     }
     

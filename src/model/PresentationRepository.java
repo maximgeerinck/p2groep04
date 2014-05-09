@@ -35,7 +35,7 @@ public class PresentationRepository extends Repository
     public Boolean findExistsByCalendarTimeFrame(Planning planning, Calendar calendar, TimeFrame timeFrame) {
         getEm().getTransaction().begin();
 
-        Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl.id = :planning AND p.timeFrame = :timeframe AND p.date = :date").setParameter("timeframe", timeFrame).setParameter("planning", planning.getId()).setParameter("date", calendar.getTime()).getResultList().size() > 0;
+        Boolean exists = getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl WHERE pl = :planning AND p.timeFrame = :timeframe AND p.date = :date").setParameter("timeframe", timeFrame).setParameter("planning", planning).setParameter("date", calendar.getTime()).getResultList().size() > 0;
         getEm().getTransaction().commit();
         
         getEm().close();

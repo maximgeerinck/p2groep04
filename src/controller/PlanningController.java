@@ -23,13 +23,13 @@ public class PlanningController {
     private LocationRepository locationRepository = new LocationRepository();
     private PlanningRepository planningRepository = new PlanningRepository();
 
-    public AppointmentImpl[] retrievePresentations(long planningId) 
+    public AppointmentImpl[] retrievePresentations(Planning planning) 
     {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
 
-        List<Presentation> presentations = presentationRepository.findAllByPlanning(planningRepository.findOneById(planningId));
+        List<Presentation> presentations = presentationRepository.findAllByPlanning(planning);
 
         for (Presentation p : presentations) {
             cal = ((Calendar) cal.clone());
