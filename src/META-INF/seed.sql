@@ -205,3 +205,6 @@ INSERT INTO planning (`id`, `allowed_to_view`, `start_time`, `end_time`, `visibl
 INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `presentator_id`, `date`) VALUES (1, 1, 1, 1, 4, CURDATE());
 INSERT INTO presentation (`id`, `location_id`, `planning_id`, `timeframe_id`, `presentator_id`, `date`) VALUES (2, 1, 1, 4, 5, CURDATE() + INTERVAL 1 DAY);
 
+INSERT INTO guestrequest (`id`, `approved`, `presentation_id`, `student_id`) VALUES (1, 0, 1, 4);
+INSERT INTO guestrequest (`id`, `approved`, `presentation_id`, `student_id`) VALUES (2, 0, 1, 5);
+INSERT INTO guestrequest (`id`, `approved`, `presentation_id`, `student_id`) VALUES (3, 0, 2, 4);

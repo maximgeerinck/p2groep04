@@ -78,6 +78,28 @@ public class ViewMainController {
         newStage.show();
     }
     
+    @FXML
+    void grHandle(ActionEvent event) throws IOException
+    {
+        final Stage newStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewRegisterGuest.fxml"));
+        loader.load();
+
+        ViewRegisterGuest controller = loader.getController();
+        if(controller != null) 
+        {
+            controller.loadControls();  
+        }  
+                        
+        BorderPane root = loader.getRoot();
+        Scene scene = new Scene(root, 600, 400);       
+
+        newStage.setTitle("Registreer guests");
+        newStage.setScene(scene);
+
+        newStage.show();
+    }
+    
 
     public void addPlanningsGP() 
     {

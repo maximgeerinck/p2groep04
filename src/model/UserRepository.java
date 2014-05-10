@@ -60,7 +60,5 @@ public class UserRepository extends Repository
         getEm().getTransaction().begin();
         promotor.getStudents().remove(student);
         getEm().getTransaction().commit();               
-    }
-    
-    
+    } 
 }
