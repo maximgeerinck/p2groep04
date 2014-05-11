@@ -131,7 +131,8 @@ public class ViewMainController {
 
                         BorderPane root = loader.getRoot();
                         Scene scene = new Scene(root, 1500, 900);       
-
+                        scene.getStylesheets().add("resources/agenda/skin/agenda.css");
+                        
                         newStage.setTitle("Planning overzicht");
                         newStage.setScene(scene);
 
@@ -167,7 +168,8 @@ public class ViewMainController {
                         
         BorderPane root = loader.getRoot();
         Scene scene = new Scene(root, 1500, 900);       
-
+        scene.getStylesheets().add("resources/agenda/skin/agenda.css");
+        
         newStage.setTitle("Planning overzicht");
         newStage.setScene(scene);
 

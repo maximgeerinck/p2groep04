@@ -10,8 +10,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
-import jfxtras.scene.control.agenda.Agenda;
-import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
+import agenda.Agenda;
+import agenda.Agenda.AppointmentImpl;
 
 /**
  * import util.JPAUtil;
@@ -43,7 +43,7 @@ public class PlanningController {
             cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
             cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
 
-            presentaties.add(new PresentationProperty()
+            presentaties.add(new AppointmentImpl()
                 .withPresentation(p)
                 .withStartTime(cal)
                 .withEndTime(cal2)
@@ -53,7 +53,7 @@ public class PlanningController {
             );
         }
 
-        return presentaties.toArray(new PresentationProperty[presentaties.size()]);
+        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
     }
 
     /**
@@ -180,7 +180,7 @@ public class PlanningController {
             cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
             cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
 
-            presentaties.add(new PresentationProperty()
+            presentaties.add(new AppointmentImpl()
                 .withPresentation(p)
                 .withStartTime(cal)
                 .withEndTime(cal2)
@@ -190,7 +190,7 @@ public class PlanningController {
             );
         }
 
-        return presentaties.toArray(new PresentationProperty[presentaties.size()]);
+        return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
     }
 
     public void attachJury(Promotor promotor, Promotor coPromotor, Presentation presentation) {

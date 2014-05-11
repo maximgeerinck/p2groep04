@@ -5,6 +5,7 @@
  */
 package controller;
 
+import agenda.AgendaWeekSkin;
 import entity.Campus;
 import entity.Location;
 import entity.Planning;
@@ -28,8 +29,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import jfxtras.scene.control.agenda.Agenda;
-import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
+import agenda.Agenda;
+import agenda.Agenda.AppointmentImpl;
 import model.CampusRepository;
 import model.LocationRepository;
 import model.PresentationRepository;
@@ -190,7 +191,6 @@ public class ViewPlanningController {
             }
             
         });
-
     }
 
     @FXML
@@ -255,7 +255,7 @@ public class ViewPlanningController {
         if (planning == null) {
             throw new IllegalArgumentException("Planning was null, or not loaded");
         }
-
+        
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
 
