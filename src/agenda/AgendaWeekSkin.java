@@ -1612,7 +1612,8 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
     /*
      * 
      */
-    private void showMenu(MouseEvent evt, final AbstractAppointmentPane abstractAppointmentPane) {
+    private void showMenu(MouseEvent evt, final AbstractAppointmentPane abstractAppointmentPane) 
+    {
         // has the client done his own popup?
         Callback<Appointment, Void> lEditCallback = getSkinnable().getEditAppointmentCallback();
         if (lEditCallback != null) {
@@ -1649,7 +1650,6 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
             });
             lBorderPane.setRight(lImageView);
         }
-
         // initial layout
         VBox lMenuVBox = new VBox(padding);
         lBorderPane.setCenter(lMenuVBox);
@@ -1658,49 +1658,52 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
         lMenuVBox.getChildren().add(new Text("Periode:"));
         
         final ComboBox cbTimeframes = new ComboBox();
+        cbTimeframes.setMaxWidth(Double.MAX_VALUE);
         cbTimeframes.setItems(FXCollections.observableArrayList(timeFrameRepository.findAll()));
         cbTimeframes.setPromptText("Kies een periode");
         lMenuVBox.getChildren().add(cbTimeframes);
+        
+        if(abstractAppointmentPane.appointment.getPresentation().getLocation().getCampus() != null) {
+            System.out.println("timeframe gevonden");
+            cbTimeframes.setValue(abstractAppointmentPane.appointment.getPresentation().getTimeFrame());
+        }
+        
         //abstractAppointmentPane.appointment.setEndTime(newValue);   
+        
 
 
         // summary
         lMenuVBox.getChildren().add(new Text("Presentator:"));
-        TextField lSummaryTextField = new TextField();
-        lSummaryTextField.setText(abstractAppointmentPane.appointment.getSummary());
-        lSummaryTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
-                abstractAppointmentPane.appointment.setSummary(newValue);
-                // refresh is done upon popup close
-            }
-        });
-        lMenuVBox.getChildren().add(lSummaryTextField);
+        ComboBox cbPresentator = new ComboBox();
+        cbPresentator.setMaxWidth(Double.MAX_VALUE);
+        cbPresentator.setItems(FXCollections.observableArrayList(userRepository.findAllStudents()));
+        if(abstractAppointmentPane.appointment.getPresentation().getPresentator() != null) {
+            cbPresentator.setValue(abstractAppointmentPane.appointment.getPresentation().getPresentator());
+        }
+        
+        lMenuVBox.getChildren().add(cbPresentator);
 
+        // location
+        final ComboBox cbLocations = new ComboBox();
+        cbLocations.setMaxWidth(Double.MAX_VALUE);
+        
         // campus
         lMenuVBox.getChildren().add(new Text("Campus:"));
-        /*TextField lLocationTextField = new TextField();
-        lLocationTextField.setText(abstractAppointmentPane.appointment.getLocation() == null ? "" : abstractAppointmentPane.appointment.getLocation());
-        lLocationTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
-                abstractAppointmentPane.appointment.setLocation(newValue);
-                // refresh is done upon popup close
-            }
-        });
-        lMenuVBox.getChildren().add(lLocationTextField);*/
+
         ComboBox cbCampuses = new ComboBox();
+        cbCampuses.setMaxWidth(Double.MAX_VALUE);
         cbCampuses.setItems(FXCollections.observableArrayList(campusRepository.findAll()));
         cbCampuses.setPromptText("Kies een campus");
         lMenuVBox.getChildren().add(cbCampuses);
         
-        if(abstractAppointmentPane.appointment.getLocation() != null) {
+        if(abstractAppointmentPane.appointment.getPresentation().getLocation() != null) {
             
+            Location loc = abstractAppointmentPane.appointment.getPresentation().getLocation();
+            cbCampuses.setValue(loc.getCampus());
+
+            cbLocations.setItems(FXCollections.observableArrayList(locationRepository.findByCampus(loc.getCampus())));
+            cbLocations.setValue(abstractAppointmentPane.appointment.getPresentation().getLocation());
         }
-        
-        // location
-        final ComboBox cbLocations = new ComboBox();
-        lMenuVBox.getChildren().add(cbLocations);
         
         cbCampuses.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Campus>() {
 
@@ -1714,6 +1717,8 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
                 }
             }
         });
+        
+        lMenuVBox.getChildren().add(cbLocations);
 
         cbLocations.disableProperty().bind(cbCampuses.getSelectionModel().selectedItemProperty().isNull());
         cbLocations.setPromptText("Gelieve eerst een campus te kiezen");
