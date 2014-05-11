@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import org.controlsfx.control.*?>
 <?import jfxtras.scene.control.agenda.*?>
 
-<BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewPlanningController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewPlanningController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -29,7 +31,7 @@
         </MenuBar>
     </top>
     <center>
-        <SplitPane dividerPositions="0.6839464882943144" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.6839464882943144" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="800.0" minWidth="1500.0" BorderPane.alignment="CENTER">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
@@ -51,13 +53,42 @@
                         </BorderPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="150.0" minWidth="0.0">
                     <children>
-                        <Accordion layoutX="-62.0" layoutY="-16.5" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane hgap="10.0" layoutY="49.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="122.0" prefWidth="470.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="111.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="Promotor:" />
+                                <ComboBox fx:id="cbFilterPromotor" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Kies een promotor" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
+                                </ComboBox>
+                                <ComboBox fx:id="cbFilterCoPromotor" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Kies een Co-Promotor" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                                <ComboBox fx:id="cbFilterResearchDomain" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Kies een onderzoeksdomein" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                                <Label text="Co-Promotor:" GridPane.rowIndex="1" />
+                                <Label text="Onderzoeksdomein:" GridPane.rowIndex="2" />
+                            </children>
+                            <opaqueInsets>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </GridPane>
+                        <Accordion layoutX="-62.0" layoutY="-16.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="195.0">
                             <panes>
-                                <TitledPane animated="false" text="Presentatie toevoegen">
+                                <TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" text="Presentatie toevoegen">
                                     <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="257.0" prefWidth="468.0">
+                                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0">
                                             <children>
                                                 <GridPane hgap="10.0" layoutX="-26.0" layoutY="-6.0" vgap="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                     <columnConstraints>
@@ -79,22 +110,22 @@
                                                         <Label text="Campus:" GridPane.rowIndex="3" />
                                                         <Label text="Locatie:" GridPane.rowIndex="4" />
                                                         <gui.controls.DatePickerControl fx:id="date" GridPane.columnIndex="1" />
-                                                        <ComboBox fx:id="cbStudent" prefHeight="25.0" prefWidth="335.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                        <ComboBox fx:id="cbCampus" prefHeight="25.0" prefWidth="335.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                        <ComboBox fx:id="cbLocation" prefHeight="25.0" prefWidth="335.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                        <ComboBox fx:id="cbPeriode" prefHeight="25.0" prefWidth="335.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                        <Button fx:id="btnAddPresentation" mnemonicParsing="false" prefHeight="25.0" prefWidth="340.0" text="Toevoegen" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                        <ComboBox fx:id="cbStudent" prefHeight="25.0" prefWidth="335.0" promptText="Kies een student" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <ComboBox fx:id="cbCampus" prefHeight="25.0" prefWidth="335.0" promptText="Kies een campus" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                        <ComboBox fx:id="cbLocation" prefHeight="25.0" prefWidth="335.0" promptText="Kies een locatie" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                        <ComboBox fx:id="cbPeriode" prefHeight="25.0" prefWidth="335.0" promptText="Kies een periode" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <Button fx:id="btnAddPresentation" mnemonicParsing="false" onAction="#addPresentationHandle" prefHeight="25.0" prefWidth="340.0" text="Toevoegen" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                     </children>
                                                 </GridPane>
                                             </children>
                                         </AnchorPane>
                                     </content>
                                 </TitledPane>
-                                <TitledPane animated="false" text="Planning instellingen">
+                                <TitledPane expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" text="Planning instellingen">
                                     <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                             <children>
-                                                  <GridPane hgap="10.0" layoutX="-26.0" layoutY="-6.0" vgap="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                <GridPane hgap="10.0" layoutX="-26.0" layoutY="-6.0" vgap="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                     <columnConstraints>
                                                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="82.00000762939453" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="338.99999237060547" minWidth="10.0" prefWidth="335.99999237060547" />
@@ -106,14 +137,14 @@
                                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <children>
-                                                        <Label text="Zichtbaar:" GridPane.rowIndex="0"/>
+                                                        <Label text="Zichtbaar:" GridPane.rowIndex="0" />
                                                         <Label text="Start:" GridPane.rowIndex="1" />
                                                         <Label text="Einde:" GridPane.rowIndex="2" />
-                                                        <CheckBox fx:id="cbVisible" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" />
-                                                        <gui.controls.DatePickerControl fx:id="dpVisibleStart" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                                                        <gui.controls.DatePickerControl fx:id="dpVisibleEnd" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                                        <CheckBox fx:id="cbVisible" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                                        <gui.controls.DatePickerControl fx:id="dpVisibleStart" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <gui.controls.DatePickerControl fx:id="dpVisibleEnd" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                         
-                                                        <Button fx:id="btnMakeVisible" mnemonicParsing="false" text="Verander zichtbaarheid" prefHeight="25.0" prefWidth="340.0" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                                        <Button fx:id="btnMakeVisible" mnemonicParsing="false" onAction="#makeVisibleHandle" prefHeight="25.0" prefWidth="340.0" text="Verander zichtbaarheid" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                     </children>
                                                 </GridPane>   
                                             </children>
@@ -123,6 +154,11 @@
                                 
                             </panes>
                         </Accordion>
+                        <Label layoutX="14.0" layoutY="14.0" text="Filter">
+                            <font>
+                                <Font size="22.0" />
+                            </font>
+                        </Label><Button fx:id="btnFilterReset" layoutX="354.0" layoutY="18.0" mnemonicParsing="false" onAction="#filterResetHandle" prefHeight="25.0" prefWidth="102.0" text="Reset filter" />
                     </children>
                 </AnchorPane>
             </items>

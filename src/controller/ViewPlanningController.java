@@ -3,32 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import entity.Campus;
 import entity.Location;
 import entity.Planning;
+import entity.Presentation;
+import entity.Promotor;
+import entity.ResearchDomain;
 import entity.Student;
 import entity.TimeFrame;
 import exceptions.DuplicateEntryException;
 import exceptions.PersonHasPresentationException;
 import gui.controls.DatePickerControl;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import jfxtras.scene.control.agenda.Agenda;
+import jfxtras.scene.control.agenda.Agenda.AppointmentImpl;
 import model.CampusRepository;
 import model.LocationRepository;
+import model.PresentationRepository;
+import model.ResearchDomainRepository;
 import model.TimeFrameRepository;
 import model.UserRepository;
 import org.controlsfx.control.BreadCrumbBar;
@@ -38,167 +43,219 @@ import org.controlsfx.dialog.Dialogs;
  *
  * @author Maxim
  */
-public class ViewPlanningController 
-{
+public class ViewPlanningController {
+
     @FXML
     private Button btnSavePlanning;
-    
+
     @FXML
     private ComboBox cbPeriode;
-    
+
     @FXML
     private Button btnAddPresentation;
-    
+
     @FXML
     private BreadCrumbBar breadcrumb;
-    
+
     @FXML
     private Agenda agenda;
-    
+
     @FXML
     private DatePickerControl dpAgendaRange;
-    
+
     @FXML
     private ComboBox cbStudent;
-    
+
     @FXML
     private ComboBox cbLocation;
-    
-    @FXML 
+
+    @FXML
     private ComboBox cbCampus;
-    
+
     @FXML
     private DatePickerControl date;
-    
+
     @FXML
     private Button btnSaveSettings;
-    
+
     @FXML
     private CheckBox chbZichtbaar;
-    
+
     @FXML
     private DatePickerControl visiDate;
-    
-    
+
     /* PLANNING VISIBILITY */
-    
     @FXML
     private CheckBox cbVisible;
-    
+
     @FXML
     private DatePickerControl dpVisibleStart;
-    
-    @FXML 
+
+    @FXML
     private DatePickerControl dpVisibleEnd;
-    
+
     @FXML
     private Button btnMakeVisible;
+
+    /* FILTER */
+    @FXML
+    private ComboBox cbFilterPromotor;
+
+    @FXML
+    private ComboBox cbFilterCoPromotor;
+
+    @FXML
+    private ComboBox cbFilterResearchDomain;
     
-    
+    @FXML
+    private Button btnFilterReset;
+
     private Planning planning;
     private final PlanningController planningController = new PlanningController();
+    private final PresentationRepository presentationRepository = new PresentationRepository();
     private final TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
     private final UserRepository userRepository = new UserRepository();
     private final CampusRepository campusRepository = new CampusRepository();
     private final LocationRepository locationRepository = new LocationRepository();
+    private final ResearchDomainRepository researchDomainRepository = new ResearchDomainRepository();
     
-    public void loadControls() 
-    {
+    private ObservableList<TimeFrame> timeframes = FXCollections.observableArrayList();
+    private ObservableList<Student> students = FXCollections.observableArrayList();
+    private ObservableList<Campus> campuses = FXCollections.observableArrayList();
+    private ObservableList<Promotor> promotors = FXCollections.observableArrayList();
+    
+    private AppointmentImpl[] cacheAllPresentations;        
+    
+    public void loadControls() {
+                
         //load periodes
-        final ObservableList<TimeFrame> timeframes = FXCollections.observableArrayList(timeFrameRepository.findAll());
+        timeframes.setAll(timeFrameRepository.findAll());
+        students.setAll(userRepository.findAllStudents());
+        campuses.setAll(campusRepository.findAll());
+        promotors.setAll(userRepository.findAllPromotors());
+        
         cbPeriode.getItems().setAll(timeframes);
-        
-        //load students
-        final ObservableList<Student> students = FXCollections.observableArrayList(userRepository.findAllStudents());
         cbStudent.getItems().setAll(students);
-        
-        //load campus
-        final ObservableList<Campus> campuses = FXCollections.observableArrayList(campusRepository.findAll());
         cbCampus.getItems().setAll(campuses);
-        cbCampus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Campus>(){
+        cbFilterPromotor.setItems(promotors);
+        cbFilterCoPromotor.setItems(promotors);
+        cbFilterResearchDomain.setItems(FXCollections.observableArrayList(researchDomainRepository.findAll()));                
+
+        cbCampus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Campus>() {
 
             @Override
-            public void changed(ObservableValue<? extends Campus> ov, Campus cOld, Campus cNew) 
-            {
+            public void changed(ObservableValue<? extends Campus> ov, Campus cOld, Campus cNew) {
                 final ObservableList<Location> locations = FXCollections.observableArrayList(locationRepository.findByCampus(cNew));
-                cbLocation.getItems().setAll(locations);                
+                cbLocation.getItems().setAll(locations);
                 cbLocation.setPromptText("Choose a location please");
-                if(locations.size() == 0) {
+                if (locations.size() == 0) {
                     cbLocation.setPromptText("No locations found");
                 }
-            }        
-        });                        
-        
-        cbLocation.disableProperty().bind(cbCampus.getSelectionModel().selectedItemProperty().isNull());
-        cbLocation.setPromptText("Please choose a campus first");    
-        
-        //button add
-        btnAddPresentation.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                try {
-                    planningController.createPresentation(planning, date.getCalendar(), (TimeFrame)cbPeriode.getValue(), (Location)cbLocation.getValue(), (Student)cbStudent.getValue());
-                } catch (DuplicateEntryException ex) {
-                    //Logger.getLogger(ViewPlanningController.class.getName()).log(Level.SEVERE, null, ex);
-                    org.controlsfx.control.action.Action response = Dialogs.create()
-                    .title("Presentations")
-                    .masthead(null)
-                    .message( "There is a presentation planned on that time and place.")
-                    .lightweight()
-                    .showWarning();
-                } catch (PersonHasPresentationException ex) {
-                    //Logger.getLogger(ViewPlanningController.class.getName()).log(Level.SEVERE, null, ex);
-                    org.controlsfx.control.action.Action response = Dialogs.create()
-                    .title("Presentations")
-                    .masthead(null)
-                    .message( "This person already has a presentation scheduled.")
-                    .lightweight()
-                    .showWarning();
-                }
-                agenda.appointments().clear();
-                loadAgenda();
             }
         });
+
+        cbLocation.disableProperty().bind(cbCampus.getSelectionModel().selectedItemProperty().isNull());
+        cbLocation.setPromptText("Please choose a campus first");
         
-        //button make visible
-        btnMakeVisible.setOnAction(new EventHandler<ActionEvent>(){
+        /* FILTER */
+        cbFilterPromotor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Promotor>(){
 
             @Override
-            public void handle(ActionEvent t) {
-                try 
-                {
-                    planningController.changePlanningVisibility(planning, cbVisible.selectedProperty().get());
-                    planningController.registerVisibilityPeriod(planning, dpVisibleStart.getCalendar(), dpVisibleEnd.getCalendar());
-                    
-                    org.controlsfx.control.action.Action response = Dialogs.create()
-                        .title("Planning")
-                        .masthead(null)
-                        .message( "De planning werd zichtbaar gemaakt")
-                        .lightweight()
-                        .showWarning();
-                } 
-                catch(Exception ex) 
-                {
-                    org.controlsfx.control.action.Action response = Dialogs.create()
-                    .title("Planning")
-                    .masthead(null)
-                    .message( ex.getMessage() )
-                    .lightweight()
-                    .showWarning();
-                }
+            public void changed(ObservableValue<? extends Promotor> ov, Promotor pOld, Promotor pNew) 
+            {
+                List<Presentation> presentations = presentationRepository.findAllByPlanningPromotor(planning, pNew);
+                agenda.appointments().setAll(planningController.retrievePresentations(presentations));
             }
             
         });
+        
+        cbFilterCoPromotor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Promotor>(){
+
+            @Override
+            public void changed(ObservableValue<? extends Promotor> ov, Promotor pOld, Promotor pNew) 
+            {
+                List<Presentation> presentations = presentationRepository.findAllByPlanningPromotor(planning, pNew);
+                agenda.appointments().setAll(planningController.retrievePresentations(presentations));
+            }
+            
+        });
+        
+        cbFilterResearchDomain.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ResearchDomain>(){
+
+            @Override
+            public void changed(ObservableValue<? extends ResearchDomain> ov, ResearchDomain rOld, ResearchDomain rNew) 
+            {
+                List<Presentation> presentations = presentationRepository.findAllByPlanningResearchdomain(planning, rNew);
+                agenda.appointments().setAll(planningController.retrievePresentations(presentations));
+            }
+            
+        });
+
+    }
+
+    @FXML
+    void filterResetHandle()
+    {
+        agenda.appointments().setAll(cacheAllPresentations);
+        
+        //reset comboboxes
+
     }
     
-    public void loadAgenda() 
+    @FXML
+    void addPresentationHandle() 
     {
-        if(planning == null) {
+        try {
+            planningController.createPresentation(planning, date.getCalendar(), (TimeFrame) cbPeriode.getValue(), (Location) cbLocation.getValue(), (Student) cbStudent.getValue());
+        } catch (DuplicateEntryException ex) {
+            //Logger.getLogger(ViewPlanningController.class.getName()).log(Level.SEVERE, null, ex);
+            org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Presentations")
+                    .masthead(null)
+                    .message("There is a presentation planned on that time and place.")
+                    .lightweight()
+                    .showWarning();
+        } catch (PersonHasPresentationException ex) {
+            //Logger.getLogger(ViewPlanningController.class.getName()).log(Level.SEVERE, null, ex);
+            org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Presentations")
+                    .masthead(null)
+                    .message("This person already has a presentation scheduled.")
+                    .lightweight()
+                    .showWarning();
+        }
+        agenda.appointments().clear();
+        loadAgenda();
+    }
+
+    @FXML
+    void makeVisibleHandle() 
+    {
+        try {
+            planningController.changePlanningVisibility(planning, cbVisible.selectedProperty().get());
+            planningController.registerVisibilityPeriod(planning, dpVisibleStart.getCalendar(), dpVisibleEnd.getCalendar());
+
+            org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Planning")
+                    .masthead(null)
+                    .message("De planning werd zichtbaar gemaakt")
+                    .lightweight()
+                    .showWarning();
+        } catch (Exception ex) {
+            org.controlsfx.control.action.Action response = Dialogs.create()
+                    .title("Planning")
+                    .masthead(null)
+                    .message(ex.getMessage())
+                    .lightweight()
+                    .showWarning();
+        }
+    }
+
+    public void loadAgenda() {
+        if (planning == null) {
             throw new IllegalArgumentException("Planning was null, or not loaded");
         }
-        
+
         // setup appointment groups
         final Map<String, Agenda.AppointmentGroup> lAppointmentGroupMap = new TreeMap<String, Agenda.AppointmentGroup>();
 
@@ -234,116 +291,12 @@ public class ViewPlanningController
             agenda.appointmentGroups().add(lAppointmentGroup);
         }
 
-
-        /*final Popup lPopup = new Popup();
-        agenda.editAppointmentCallbackProperty().set(new Callback<Agenda.Appointment, Void>() {
-            @Override
-            public Void call(final Agenda.Appointment appointment) {
-                
-                //border layour wrapper
-                BorderPane borderPane = new BorderPane();
-                
-                // gridpane -> contains popup view
-                GridPane gridPane = new GridPane();
-                gridPane.getStyleClass().add(getAgenda().getClass().getSimpleName() + "Popup");
-                
-                lPopup.setAutoFix(true);
-                lPopup.setAutoHide(true);
-                lPopup.setHideOnEscape(true);
-                lPopup.setOnHidden(new EventHandler<WindowEvent>()
-                {
-                    @Override
-                    public void handle(WindowEvent t) {
-                        //todo
-                    }
-                });
-
-                List<Promotor> promotors = userController.retrievePromotors();
-                final ObservableList<Promotor> dataPromotors = observableArrayList(promotors.toArray(new Promotor[promotors.size()]));
-                final ComboBox cbPromotor = new ComboBox(dataPromotors);
-                cbPromotor.setPromptText("Please pick a promotor");
-                gridPane.addRow(1, new Label("Promotor :"), cbPromotor);
-                cbPromotor.valueProperty().addListener(new ChangeListener<Object>() {
-
-                    @Override
-                    public void changed(ObservableValue<? extends Object> ov, Object t, Object t1) {
-
-                        // co-promotor
-                        List<Promotor> coPromotors = new ArrayList<>();
-                        // get already picked promotor if any
-                        Promotor currentPromotor = ((Promotor)(cbPromotor.getSelectionModel().getSelectedItem()));
-                        if(currentPromotor != null) {
-                           for(Promotor u : (List<Promotor>)cbPromotor.getItems()) 
-                           {
-                               if(u.getId() != currentPromotor.getId()) {
-                                   coPromotors.add(u);
-                               }
-                           } 
-                        }
-                        final ObservableList<Promotor> dataCoPromotors = observableArrayList(coPromotors.toArray(new Promotor[coPromotors.size()]));
-                        cbCoPromotors.getItems().setAll(dataCoPromotors);
-                        cbCoPromotors.setPromptText("Please choose a co-promotor");
-                    }
-                });
-
-                //Co-Promotors
-                cbCoPromotors.setPromptText("Kies een co-promotor");
-                gridPane.addRow(2, new Label("Co-Promotor :"), cbCoPromotors);
-                
-                // save
-                Button btnSave = new Button("Save");
-                btnSave.setOnMouseClicked(new EventHandler<MouseEvent>()
-                {
-                    public void handle(MouseEvent evt)
-                    {
-                        userController.attachPromotorToStudent(((PresentationProperty)appointment).getPresentation().getPresentator(), (Promotor)cbPromotor.getValue());
-                        System.out.println(((Promotor)cbPromotor.getValue()).getLastName());
-                        //userController.attachPromotorToStudent(((PresentationProperty)appointment).getPresentation().getPresentator(), (Promotor)cbCoPromotors.getValue());
-                        System.out.println("opslaan");
-                    }
-                });   
-                gridPane.addRow(3, btnSave);
-
-                 //toolbar
-                Button btnClose = new Button("X");
-                btnClose.setOnMouseClicked(new EventHandler<MouseEvent>()
-                {
-                    public void handle(MouseEvent evt)
-                    {
-                        lPopup.hide();
-                    }
-                });     
-                btnClose.getStyleClass().add("close-icon");
-                ToolBar toolbar = new ToolBar(btnClose);
-                
-                // add to borderpane
-                borderPane.setTop(toolbar);
-                borderPane.setCenter(gridPane);
-                lPopup.getContent().add(borderPane);
-                // get mouse cursor
-                Point p = MouseInfo.getPointerInfo().getLocation();
-                
-                lPopup.show(primaryStage, p.x, p.y);
-                return null;
-            }
-          
-        });*/
-        
-        //dpAgendaRange.chronologyProperty().bindBidirectional(agenda.displayedCalendar());    
-        dpAgendaRange.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent t) {
-               //t.notify();
-            }
-        });
         dpAgendaRange.calendarProperty().bindBidirectional(agenda.displayedCalendar());
-        Agenda.AppointmentImpl[] presentations = planningController.retrievePresentations(planning);             
-        agenda.appointments().addAll(presentations);         
+        cacheAllPresentations = planningController.retrievePresentations(planning);
+        agenda.appointments().addAll(cacheAllPresentations);
     }
-    
-    public void setPlanning(Planning planning) 
-    {
+
+    public void setPlanning(Planning planning) {
         this.planning = planning;
     }
 }

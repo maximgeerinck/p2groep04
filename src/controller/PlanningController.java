@@ -162,46 +162,13 @@ public class PlanningController {
         // TODO - implement PlanningController.notifyStakeHolders
         throw new UnsupportedOperationException();
     }
-
     
-    public AppointmentImpl[] retrievePresentationsByPromotor(Promotor promotor) {
+    public AppointmentImpl[] retrievePresentations(List<Presentation> presentations) 
+    {
         List<AppointmentImpl> presentaties = new ArrayList();
         Calendar cal = GregorianCalendar.getInstance();
         Calendar cal2 = GregorianCalendar.getInstance();
-
-        List<Presentation> presentations = presentationRepository.findAllByPlanningPromotor(planningRepository.findOneById(1), promotor);
-
-        for (Presentation p : presentations) {
-            cal = ((Calendar) cal.clone());
-            cal.setTime(p.getDate());
-            cal.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getStartTime().getHours());
-            cal.set(Calendar.MINUTE, p.getTimeFrame().getStartTime().getMinutes());
-
-            cal2 = ((Calendar) cal2.clone());
-            cal2.setTime(p.getDate());
-            cal2.set(Calendar.HOUR_OF_DAY, p.getTimeFrame().getEndTime().getHours());
-            cal2.set(Calendar.MINUTE, p.getTimeFrame().getEndTime().getMinutes());
-
-            presentaties.add(new PresentationProperty()
-                .withPresentation(p)
-                .withStartTime(cal)
-                .withEndTime(cal2)
-                .withSummary(p.getPresentator().getFirstName() + " " + p.getPresentator().getLastName())
-                .withDescription(p.getPresentator().getActiveSuggestion().toString())
-                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group15"))
-            );
-        }
-
-        return presentaties.toArray(new PresentationProperty[presentaties.size()]);
-    }
-
-    public AppointmentImpl[] retrievePresentationsByResearchdomain(ResearchDomain researchDomain) {
-        List<AppointmentImpl> presentaties = new ArrayList();
-        Calendar cal = GregorianCalendar.getInstance();
-        Calendar cal2 = GregorianCalendar.getInstance();
-
-        List<Presentation> presentations = presentationRepository.findAllByPlanningResearchdomain(planningRepository.findOneById(1), researchDomain);
-
+        
         for (Presentation p : presentations) {
             cal = ((Calendar) cal.clone());
             cal.setTime(p.getDate());
