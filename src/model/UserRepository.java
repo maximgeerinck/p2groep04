@@ -2,6 +2,7 @@ package model;
 
 import entity.BPCoordinator;
 import entity.GuestRequest;
+import entity.Presentation;
 import entity.Promotor;
 import entity.Student;
 import entity.User;
@@ -61,4 +62,10 @@ public class UserRepository extends Repository
         promotor.getStudents().remove(student);
         getEm().getTransaction().commit();               
     } 
+
+    public void changePresentator(Presentation presentation, Student student) {
+        getEm().getTransaction().begin();
+        presentation.setPresentator(student);
+        getEm().getTransaction().commit();
+    }
 }

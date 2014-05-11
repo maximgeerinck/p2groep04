@@ -8,6 +8,7 @@ package model;
 
 import entity.Campus;
 import entity.Location;
+import entity.Presentation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,5 +23,11 @@ public class LocationRepository extends Repository
             return new ArrayList<Location>();
         }
         return getEm().createQuery("SELECT l FROM " + Location.class.getSimpleName() + " l JOIN l.campus c WHERE c.id = :id").setParameter("id", campus.getId()).getResultList();
+    }
+
+    public void changeLocation(Presentation presentation, Location location) {
+        getEm().getTransaction().begin();
+        presentation.setLocation(location);
+        getEm().getTransaction().commit();
     }
 }

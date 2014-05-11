@@ -35,9 +35,13 @@ package agenda;
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import controller.PresentationController;
+import agenda.Agenda.Appointment;
 import controller.PlanningController;
 import entity.Campus;
 import entity.Location;
+import entity.Student;
+import entity.TimeFrame;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,20 +64,15 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.ScrollPaneBuilder;
 import javafx.scene.control.SkinBase;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -86,10 +85,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import jfxtras.animation.Timer;
-import jfxtras.scene.control.CalendarTextField;
 import jfxtras.scene.control.ImageViewButton;
-import agenda.Agenda;
-import agenda.Agenda.Appointment;
 import jfxtras.util.NodeUtil;
 import model.CampusRepository;
 import model.LocationRepository;
@@ -109,6 +105,10 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
     private final CampusRepository campusRepository = new CampusRepository();
     private final LocationRepository locationRepository = new LocationRepository();
     private final ResearchDomainRepository researchDomainRepository = new ResearchDomainRepository();
+    
+    private final PlanningController planningController = new PlanningController();
+    private final PresentationController presentationController = new PresentationController();
+    
 	// ==================================================================================================================
     // CONSTRUCTOR
     /**
@@ -1667,12 +1667,8 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
             System.out.println("timeframe gevonden");
             cbTimeframes.setValue(abstractAppointmentPane.appointment.getPresentation().getTimeFrame());
         }
-        
-        //abstractAppointmentPane.appointment.setEndTime(newValue);   
-        
 
-
-        // summary
+        /* PRESENTATOR */
         lMenuVBox.getChildren().add(new Text("Presentator:"));
         ComboBox cbPresentator = new ComboBox();
         cbPresentator.setMaxWidth(Double.MAX_VALUE);
@@ -1683,11 +1679,11 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
         
         lMenuVBox.getChildren().add(cbPresentator);
 
-        // location
+        /* LOCATION */
         final ComboBox cbLocations = new ComboBox();
         cbLocations.setMaxWidth(Double.MAX_VALUE);
         
-        // campus
+        /* CAMPUS */
         lMenuVBox.getChildren().add(new Text("Campus:"));
 
         ComboBox cbCampuses = new ComboBox();
@@ -1723,7 +1719,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
         cbLocations.disableProperty().bind(cbCampuses.getSelectionModel().selectedItemProperty().isNull());
         cbLocations.setPromptText("Gelieve eerst een campus te kiezen");
 
-        // actions
+        /* ACTIONS */
         lMenuVBox.getChildren().add(new Text("Acties:"));  // TODO: internationalize
         HBox lHBox = new HBox();
         lMenuVBox.getChildren().add(lHBox);
@@ -1736,6 +1732,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
             lImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent evt) {
+                    presentationController.deletePresentation(abstractAppointmentPane.appointment.getPresentation());
                     lPopup.hide();
                     getSkinnable().appointments().remove(abstractAppointmentPane.appointment);
                     // refresh is done via the collection events
@@ -1798,6 +1795,34 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
                 }
             });
         }*/
+        
+        /* EVENTS */
+        cbPresentator.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Student>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Student> ov, Student t, Student t1) {
+                presentationController.changePresentator(abstractAppointmentPane.appointment.getPresentation(), t1);
+            }
+        
+        });
+        
+        cbTimeframes.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TimeFrame>() {
+
+            @Override
+            public void changed(ObservableValue<? extends TimeFrame> ov, TimeFrame t, TimeFrame t1) {
+                presentationController.changeTimeframe(abstractAppointmentPane.appointment.getPresentation(), t1);
+            }
+        
+        });
+        
+        cbLocations.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Location>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Location> ov, Location t, Location t1) {
+                presentationController.changeLocation(abstractAppointmentPane.appointment.getPresentation(), t1);
+            }
+        
+        });
 
         // show it just below the menu icon
         lPopup.show(abstractAppointmentPane, NodeUtil.screenX(abstractAppointmentPane), NodeUtil.screenY(abstractAppointmentPane.menuIcon) + abstractAppointmentPane.menuIcon.getHeight());

@@ -30,7 +30,7 @@ public class Presentation implements Serializable
     @Temporal(TemporalType.DATE)
     private Date date;
     
-    @OneToMany(mappedBy = "presentation", targetEntity = GuestRequest.class)
+    @OneToMany(mappedBy = "presentation", targetEntity = GuestRequest.class, cascade = CascadeType.ALL)
     private List<GuestRequest> guestRequests;
     
     @OneToOne
