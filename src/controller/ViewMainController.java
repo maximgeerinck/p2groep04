@@ -41,6 +41,9 @@ public class ViewMainController {
 
     @FXML
     private Button btnAssignPromotor;
+    
+    @FXML
+    private Button btnAssignJury;
      
     @FXML
     private GridPane gpPlannings;
@@ -73,6 +76,28 @@ public class ViewMainController {
         Scene scene = new Scene(root, 600, 400);       
 
         newStage.setTitle("Promotor toekennen");
+        newStage.setScene(scene);
+
+        newStage.show();
+    }
+    
+    @FXML
+    void assignJuryHandle(ActionEvent event) throws IOException 
+    {
+        final Stage newStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewAssignJury.fxml"));
+        loader.load();
+
+        ViewAssignJuryController controller = loader.getController();
+        if(controller != null) 
+        {
+            controller.loadControls();  
+        }  
+                        
+        BorderPane root = loader.getRoot();
+        Scene scene = new Scene(root, 600, 400);       
+
+        newStage.setTitle("Jurylid toekennen");
         newStage.setScene(scene);
 
         newStage.show();

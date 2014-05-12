@@ -53,6 +53,8 @@ public class Presentation implements Serializable
     @JoinColumn(name = "copromotor_id", referencedColumnName = "id")
     private Promotor coPromotor;
     
+    private Promotor juryLid;
+    
     //@ManyToMany(mappedBy = "researchDomains")
     //private List<Presentation> presentations;
 
@@ -154,6 +156,16 @@ public class Presentation implements Serializable
     public void setCoPromotor(Promotor coPromotor) {
         this.coPromotor = coPromotor;
     }    
+
+    public Promotor getJuryLid() {
+        return juryLid;
+    }
+
+    public void setJuryLid(Promotor juryLid) {
+        this.juryLid = juryLid;
+    }
+    
+    
     
     /**
      *

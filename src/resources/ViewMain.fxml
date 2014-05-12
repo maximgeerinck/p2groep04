@@ -109,7 +109,8 @@
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                             <children>
                                 <Button fx:id="btnAssignPromotor" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#assignPromotorHandle" prefHeight="25.0" prefWidth="302.0" text="Promotor toekennen" />
-                                <Button fx:id="btnViewGR" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#grHandle" prefHeight="25.0" prefWidth="302.0" text="Guest beheren" />
+                                <Button fx:id="btnAssignJury" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#assignJuryHandle" prefHeight="25.0" prefWidth="302.0" text="Jurylid toekennen" />
+                                <Button fx:id="btnViewGR" layoutX="14.0" layoutY="76.0" mnemonicParsing="false" onAction="#grHandle" prefHeight="25.0" prefWidth="302.0" text="Guest beheren" />
                             </children>
                         </AnchorPane>
                     </children>

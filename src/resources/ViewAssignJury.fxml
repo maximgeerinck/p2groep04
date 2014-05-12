@@ -8,7 +8,7 @@
     <center>
         <HBox prefHeight="400.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <children>
-                <ListView fx:id="lvStudents" prefHeight="400.0" prefWidth="250.0" />
+                <ListView fx:id="lvPresentation" prefHeight="400.0" prefWidth="250.0" />
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <Button fx:id="btnAssign" layoutX="60.0" layoutY="134.0" mnemonicParsing="false" onAction="#addHandle" text="&gt;" />

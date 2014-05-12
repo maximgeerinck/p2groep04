@@ -1,11 +1,10 @@
 package controller;
 
-import entity.Campus;
-import entity.Location;
 import entity.Promotor;
 import entity.Student;
-import exceptions.CapacityReachedException;
-import java.util.List;
+import exceptions.InvalidJuryMemberException;
+import java.util.ArrayList;
+import java.util.Collection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import model.PresentationRepository;
 import model.UserRepository;
 
 /**
@@ -24,10 +24,10 @@ import model.UserRepository;
 public class ViewAssignJuryController {
 
     @FXML
-    private ListView<Student> lvStudents;
+    private ListView<Student> lvPresentation;
 
     @FXML
-    private ListView<Student> lvPromotorStudents;
+    private ListView<Student> lvJuryPresentation;
 
     @FXML
     private Button btnAssign;
@@ -38,61 +38,72 @@ public class ViewAssignJuryController {
     @FXML
     private ComboBox<Promotor> cbPromotor;
     
-    private final UserRepository userRepository = new UserRepository();
     
-    private ObservableList<Student> assignedStudents = FXCollections.observableArrayList();
-    private ObservableList<Student> nonAssignedStudents = FXCollections.observableArrayList();
+    private final UserRepository userRepository = new UserRepository();
+    private final PresentationRepository presentationRepository = new PresentationRepository();
+    private PlanningController planningController = new PlanningController();
+    
+    private ObservableList<Student> assignedPresentations = FXCollections.observableArrayList();
+    private ObservableList<Student> nonAssignedPresentations = FXCollections.observableArrayList();
+    
     
     @FXML
-    void addHandle(ActionEvent event) throws CapacityReachedException
+    void addHandle(ActionEvent event) throws InvalidJuryMemberException
     {
         if(cbPromotor.getValue() == null || !(cbPromotor.getValue() instanceof Promotor)) {
             throw new IllegalArgumentException();
         }
         
-        Student selected = (Student)lvStudents.getSelectionModel().getSelectedItem();
-        Promotor promotor = (Promotor)cbPromotor.getValue();
+        Student selected = (Student)lvPresentation.getSelectionModel().getSelectedItem();
+        Promotor jury = (Promotor)cbPromotor.getValue();
         
-        if(promotor.getStudents().size() >= 20) {
-            throw new CapacityReachedException("Promotor heeft al 20 studenten");
+        
+        if(selected.getPresentation().getPromotor().equals(jury) || selected.getPresentation().getCoPromotor().equals(jury))
+        {
+            throw new InvalidJuryMemberException("The selected promotor can't be a jurymember for this student.");
         }
         
         if(selected != null) {
-            lvStudents.getSelectionModel().clearSelection();
+            lvPresentation.getSelectionModel().clearSelection();
             
-            assignedStudents.add(selected);
-            userRepository.assignStudent(selected, cbPromotor.getValue());
+            assignedPresentations.add(selected);
             
-            nonAssignedStudents.remove(selected);            
+            planningController.attachJury(selected.getPresentation().getPromotor(), selected.getPresentation().getCoPromotor(), jury, selected.getPresentation());
+            
+            nonAssignedPresentations.remove(selected);            
         }
     }
 
     @FXML
     void removeHandle(ActionEvent event) 
     {
-        Student selected = (Student)lvPromotorStudents.getSelectionModel().getSelectedItem();
+        Student selected = (Student)lvPresentation.getSelectionModel().getSelectedItem();
         if(cbPromotor.getValue() == null || !(cbPromotor.getValue() instanceof Promotor)) {
             throw new IllegalArgumentException();
         }
         if(selected != null) {
-            lvStudents.getSelectionModel().clearSelection();
-            nonAssignedStudents.add(selected);               
-            assignedStudents.remove(selected);  
-            userRepository.unassignStudent(selected, cbPromotor.getValue());
+            lvPresentation.getSelectionModel().clearSelection();
+            nonAssignedPresentations.add(selected);               
+            assignedPresentations.remove(selected);  
+            
+            selected.getPresentation().setJuryLid(null);
         }
     }
 
     public void loadControls() 
     {
         //list views vullen
-        nonAssignedStudents = FXCollections.observableArrayList(userRepository.findAllNonAssignedStudents());
+        nonAssignedPresentations = FXCollections.observableArrayList(userRepository.findAllStudents());
 
-        lvStudents.setItems(nonAssignedStudents);
-        lvPromotorStudents.setItems(assignedStudents);
+        lvPresentation.setItems(nonAssignedPresentations);
+        //lvJuryPresentation.setItems(assignedPresentations);
         
-        lvStudents.disableProperty().bind(cbPromotor.getSelectionModel().selectedIndexProperty().isNotEqualTo(0));
-        btnAssign.disableProperty().bind(lvPromotorStudents.getSelectionModel().selectedItemProperty().isNotNull());
-        btnRemove.disableProperty().bind(lvStudents.getSelectionModel().selectedItemProperty().isNotNull());
+        
+        
+        
+        //lvPresentation.disableProperty().bind(cbPromotor.getSelectionModel().selectedIndexProperty().isNotEqualTo(0));
+        //btnAssign.disableProperty().bind(lvJuryPresentation.getSelectionModel().selectedItemProperty().isNotNull());
+        //btnRemove.disableProperty().bind(lvPresentation.getSelectionModel().selectedItemProperty().isNotNull());
         
         //combobox vullen
         cbPromotor.setItems(FXCollections.observableArrayList(userRepository.findAllPromotors()));
@@ -103,7 +114,9 @@ public class ViewAssignJuryController {
             {
                 if(pNew != null) {
                     //load this promotor his assigned students
-                    assignedStudents.setAll(userRepository.findStudentByPromotor(pNew));
+                    Student testStudent = new Student();
+                    testStudent.setFirstName("test");
+                    assignedPresentations.set(0, testStudent);
                 }                
             }        
         });   

@@ -79,11 +79,7 @@ public class ViewPlanningController {
     @FXML
     private Button btnSaveSettings;
 
-    @FXML
-    private CheckBox chbZichtbaar;
-
-    @FXML
-    private DatePickerControl visiDate;
+    
 
     /* PLANNING VISIBILITY */
     @FXML

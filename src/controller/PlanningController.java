@@ -193,14 +193,14 @@ public class PlanningController {
         return presentaties.toArray(new AppointmentImpl[presentaties.size()]);
     }
 
-    public void attachJury(Promotor promotor, Promotor coPromotor, Presentation presentation) {
+    public void attachJury(Promotor promotor, Promotor coPromotor, Promotor jury, Presentation presentation) {
         EntityManager em = planningRepository.getEm();
         em.getTransaction().begin();
 
         presentation.setPromotor(promotor);
         presentation.setCoPromotor(coPromotor);
+        presentation.setJuryLid(jury);
 
-        
         em.getTransaction().commit();
 
         changePlanningVisibility(presentation.getPlanning(), true);
