@@ -90,7 +90,7 @@ public class ViewAssignPromotorController {
         lvStudents.setItems(nonAssignedStudents);
         lvPromotorStudents.setItems(assignedStudents);
         
-        lvStudents.disableProperty().bind(cbPromotor.getSelectionModel().selectedIndexProperty().isNotEqualTo(0));
+        lvStudents.disableProperty().bind(cbPromotor.getSelectionModel().selectedItemProperty().isNull());
         btnAssign.disableProperty().bind(lvPromotorStudents.getSelectionModel().selectedItemProperty().isNotNull());
         btnRemove.disableProperty().bind(lvStudents.getSelectionModel().selectedItemProperty().isNotNull());
         
