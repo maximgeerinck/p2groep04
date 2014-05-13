@@ -15,7 +15,7 @@
                         <Button fx:id="btnRemove" layoutX="60.0" layoutY="165.0" mnemonicParsing="false" onAction="#removeHandle" text="&lt;" />
                     </children>
                 </AnchorPane>
-                <ListView fx:id="lvPromotorStudents" prefHeight="400.0" prefWidth="250.0" />
+                <ListView fx:id="lvJuryPresentation" prefHeight="400.0" prefWidth="250.0" />
             </children>
         </HBox>
     </center>

@@ -49,6 +49,17 @@ public class UserRepository extends Repository
         return getEm().createQuery("SELECT s FROM Student s LEFT JOIN s.promotors p GROUP BY s HAVING COUNT(p) = 0").getResultList();
     }
     
+    public List<Student> findAllNonAssignedStudentsJury() 
+    {
+        return getEm().createQuery("SELECT s FROM Presentation p INNER JOIN Student s WHERE p.juryLid IS NULL").getResultList();
+    }
+    
+    public List<Student> findAssignedStudentsJury(Promotor jury) 
+    {
+        return getEm().createQuery("SELECT s FROM Presentation p JOIN Student s WHERE p.juryLid.id = :jury").setParameter("jury", jury.getId()).getResultList();
+        
+    }
+    
     public void assignStudent(Student student, Promotor promotor) 
     {
         getEm().getTransaction().begin();

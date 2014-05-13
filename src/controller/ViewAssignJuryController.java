@@ -93,17 +93,15 @@ public class ViewAssignJuryController {
     public void loadControls() 
     {
         //list views vullen
-        nonAssignedPresentations = FXCollections.observableArrayList(userRepository.findAllStudents());
+        nonAssignedPresentations = FXCollections.observableArrayList(userRepository.findAllNonAssignedStudentsJury());
 
         lvPresentation.setItems(nonAssignedPresentations);
-        //lvJuryPresentation.setItems(assignedPresentations);
+        lvJuryPresentation.setItems(assignedPresentations);
         
         
-        
-        
-        //lvPresentation.disableProperty().bind(cbPromotor.getSelectionModel().selectedIndexProperty().isNotEqualTo(0));
-        //btnAssign.disableProperty().bind(lvJuryPresentation.getSelectionModel().selectedItemProperty().isNotNull());
-        //btnRemove.disableProperty().bind(lvPresentation.getSelectionModel().selectedItemProperty().isNotNull());
+        lvPresentation.disableProperty().bind(cbPromotor.getSelectionModel().selectedItemProperty().isNull());
+        btnAssign.disableProperty().bind(lvJuryPresentation.getSelectionModel().selectedItemProperty().isNotNull());
+        btnRemove.disableProperty().bind(lvPresentation.getSelectionModel().selectedItemProperty().isNotNull());
         
         //combobox vullen
         cbPromotor.setItems(FXCollections.observableArrayList(userRepository.findAllPromotors()));
@@ -114,9 +112,8 @@ public class ViewAssignJuryController {
             {
                 if(pNew != null) {
                     //load this promotor his assigned students
-                    Student testStudent = new Student();
-                    testStudent.setFirstName("test");
-                    assignedPresentations.set(0, testStudent);
+                    assignedPresentations.setAll(userRepository.findAssignedStudentsJury(pNew));
+                     //assignedPresentations.setAll(userRepository.findStudentByPromotor(pNew));
                 }                
             }        
         });   

@@ -54,7 +54,9 @@ public class Presentation implements Serializable {
     @OneToOne
     @JoinColumn(name = "copromotor_id", referencedColumnName = "id")
     private Promotor coPromotor;
-
+    
+    @OneToOne
+    @JoinColumn(name = "juryLid_id", referencedColumnName = "id")
     private Promotor juryLid;
 
     //@ManyToMany(mappedBy = "researchDomains")
