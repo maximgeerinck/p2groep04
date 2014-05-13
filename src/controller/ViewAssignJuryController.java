@@ -1,10 +1,9 @@
 package controller;
 
+import entity.Presentation;
 import entity.Promotor;
 import entity.Student;
 import exceptions.InvalidJuryMemberException;
-import java.util.ArrayList;
-import java.util.Collection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -57,18 +56,22 @@ public class ViewAssignJuryController {
         Student selected = (Student)lvPresentation.getSelectionModel().getSelectedItem();
         Promotor jury = (Promotor)cbPromotor.getValue();
         
+        //Presentation presentatie = presentationRepository.findPresentationByStudent(selected);
         
-        if(selected.getPresentation().getPromotor().equals(jury) || selected.getPresentation().getCoPromotor().equals(jury))
+        //Promotor promotor = userRepository.findPromotorByStudent(selected);
+        /*
+        if(promotor.equals(jury))
         {
+            // || selected.getCoPromotor().equals(jury)
             throw new InvalidJuryMemberException("The selected promotor can't be a jurymember for this student.");
         }
-        
+        */
         if(selected != null) {
             lvPresentation.getSelectionModel().clearSelection();
             
             assignedPresentations.add(selected);
-            
-            planningController.attachJury(selected.getPresentation().getPromotor(), selected.getPresentation().getCoPromotor(), jury, selected.getPresentation());
+
+            planningController.attachJury(jury, presentationRepository.findPresentationByStudent(selected));
             
             nonAssignedPresentations.remove(selected);            
         }
@@ -78,15 +81,17 @@ public class ViewAssignJuryController {
     void removeHandle(ActionEvent event) 
     {
         Student selected = (Student)lvPresentation.getSelectionModel().getSelectedItem();
+        Promotor jury = (Promotor)cbPromotor.getValue();
         if(cbPromotor.getValue() == null || !(cbPromotor.getValue() instanceof Promotor)) {
             throw new IllegalArgumentException();
         }
         if(selected != null) {
+            
             lvPresentation.getSelectionModel().clearSelection();
             nonAssignedPresentations.add(selected);               
             assignedPresentations.remove(selected);  
             
-            selected.getPresentation().setJuryLid(null);
+            planningController.removeJury(jury, presentationRepository.findPresentationByStudent(selected));
         }
     }
 
@@ -113,7 +118,7 @@ public class ViewAssignJuryController {
                 if(pNew != null) {
                     //load this promotor his assigned students
                     assignedPresentations.setAll(userRepository.findAssignedStudentsJury(pNew));
-                     //assignedPresentations.setAll(userRepository.findStudentByPromotor(pNew));
+                     
                 }                
             }        
         });   

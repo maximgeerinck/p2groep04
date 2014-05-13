@@ -206,5 +206,27 @@ public class PlanningController {
         changePlanningVisibility(presentation.getPlanning(), true);
 
     }
+    
+    public void attachJury(Promotor jury, Presentation presentation) {
+        EntityManager em = planningRepository.getEm();
+        em.getTransaction().begin();
+        presentation.setJuryLid(jury);
+
+        em.getTransaction().commit();
+
+        //changePlanningVisibility(presentation.getPlanning(), true);
+
+    }
+    
+    public void removeJury(Promotor jury, Presentation presentation) {
+        EntityManager em = planningRepository.getEm();
+        em.getTransaction().begin();
+        presentation.setJuryLid(null);
+
+        em.getTransaction().commit();
+
+        //changePlanningVisibility(presentation.getPlanning(), true);
+
+    }
 
 }

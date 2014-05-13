@@ -8,11 +8,13 @@ package entity;
 
 import java.util.*;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -30,19 +32,18 @@ public class Student extends User
     @OneToMany(mappedBy = "student", targetEntity = GuestRequest.class)
     private List<GuestRequest> guestRequests;
     
-    @ManyToMany(mappedBy="students", cascade=CascadeType.ALL)
-    private List<Promotor> promotors;
+    @ManyToOne(cascade=CascadeType.ALL, optional = true)
+    @JoinColumn(name = "promotor_id", referencedColumnName = "id")
+    private Promotor promotor;
+    
+    @ManyToOne(cascade=CascadeType.ALL, optional = true)
+    @JoinColumn(name = "co_promotor_id", referencedColumnName = "id")
+    private Promotor coPromotor;
     
     @ManyToMany(mappedBy = "attendees")
     private List<Presentation> presentationsAttending;    
 
-    public List<Promotor> getPromotors() {
-        return this.promotors;
-    }
-
-    public void setPromotors(List<Promotor> promotors) {
-        this.promotors = promotors;
-    }
+    
 
     public List<GuestRequest> getGuestRequests() {
         return guestRequests;
@@ -78,6 +79,24 @@ public class Student extends User
         }
         return null;
     }
+
+    public Promotor getPromotor() {
+        return promotor;
+    }
+
+    public void setPromotor(Promotor promotor) {
+        this.promotor = promotor;
+    }
+
+    public Promotor getCoPromotor() {
+        return coPromotor;
+    }
+
+    public void setCoPromotor(Promotor coPromotor) {
+        this.coPromotor = coPromotor;
+    }
+    
+    
     
     public Student() {
     }

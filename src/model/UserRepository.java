@@ -44,9 +44,14 @@ public class UserRepository extends Repository
         return getEm().createQuery("SELECT s FROM Promotor p JOIN p.students s WHERE p.id = :promotor").setParameter("promotor", promotor.getId()).getResultList();
     }
     
+    public Promotor findPromotorByStudent(Student student) 
+    {
+        return (Promotor)getEm().createQuery("SELECT s FROM Promotor p JOIN p.students s WHERE s.id = :student").setParameter("student", student.getId()).getSingleResult();
+    }
+    
     public List<Student> findAllNonAssignedStudents() 
     {
-        return getEm().createQuery("SELECT s FROM Student s LEFT JOIN s.promotors p GROUP BY s HAVING COUNT(p) = 0").getResultList();
+        return getEm().createQuery("SELECT s FROM Student s LEFT JOIN s.promotor p GROUP BY s HAVING COUNT(p) = 0").getResultList();
     }
     
     public List<Student> findAllNonAssignedStudentsJury() 

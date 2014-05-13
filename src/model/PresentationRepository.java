@@ -48,6 +48,11 @@ public class PresentationRepository extends Repository
         List<Presentation> presentations =  getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p JOIN p.planning pl JOIN p.presentator u JOIN u.approvedSuggestion s WHERE pl.id = :planning AND s.researchDomain = :researchDomain").setParameter("planning", planning.getId()).setParameter("researchDomain", researchDomain).getResultList();
         return presentations;
     }
+    
+    public Presentation findPresentationByStudent(Student presentator){
+        Presentation presentation = (Presentation)getEm().createQuery("SELECT p FROM " + Presentation.class.getSimpleName() + " p WHERE p.presentator = :presentator").setParameter("presentator", presentator).getSingleResult();
+        return presentation;
+    }
 
     public void deletePresentation(Presentation presentation) {
         getEm().getTransaction().begin();

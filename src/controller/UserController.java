@@ -38,7 +38,7 @@ public class UserController {
         EntityManager em = userRepository.getEm();
         em.getTransaction().begin();
 
-        student.getPromotors().add(promotor);
+        student.setPromotor(promotor);
         promotor.getStudents().add(student);
         promotor.setAmountOfStudents(promotor.getAmountOfStudents() + 1);
  
@@ -55,7 +55,7 @@ public class UserController {
         EntityManager em = userRepository.getEm();
         em.getTransaction().begin();
 
-        student.getPromotors().remove(promotor);
+        student.setPromotor(null);
         promotor.getStudents().remove(student);
         promotor.setAmountOfStudents(promotor.getAmountOfStudents() - 1);
         
