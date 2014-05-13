@@ -3,8 +3,12 @@ package controller;
 import entity.GuestRequest;
 import entity.Presentation;
 import entity.Student;
+import helpers.MailHelper;
+import helpers.TemplateParser;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -90,12 +94,28 @@ public class ViewRegisterGuest {
     @FXML
     void registerHandle(ActionEvent event) 
     {
+        String grs = "<ul>";        
         guestRequestRepository.getEm().getTransaction().begin();
+        Student guest = null;
         for(GuestRequest gr : lvPresentations.getItems()) 
         {
+            if(guest == null) {
+                guest = gr.getStudent();
+            }
             gr.setApproved(gr.approvedProperty().get());
+            
+            if(gr.isApproved()) {
+                grs += "<li>" + gr.toString() + " tijdslot: " + gr.getPresentation().getTimeFrame() + "</li>";
+            }
         }
+        grs += "</ul>";
         guestRequestRepository.getEm().getTransaction().commit();
+        
+        
+        Map<String, String> m = new HashMap<>();
+        m.put("guestRequests", grs);
+        
+        MailHelper.sendEmail(guest.getEmail(), "Gasten werden geregistreerd", TemplateParser.parse("EmailRegisterGuest.html", m));
         
         org.controlsfx.control.action.Action response = Dialogs.create()
             .title("Gasten")
