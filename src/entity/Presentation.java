@@ -194,9 +194,16 @@ public class Presentation implements Serializable
          for(User u: users)
          {
             // u.sendMail();
-         }
-         
-             
+         }     
      }
+    
+    public String toString() 
+    {
+        if(presentator != null) {
+            return presentator.getActiveSuggestion().getSubject();
+        }
+        
+        return this.date + timeFrame.toString();
+    }
 
 }

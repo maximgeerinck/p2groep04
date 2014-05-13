@@ -48,12 +48,12 @@ public class ViewRegisterGuest {
     public void loadControls() 
     {
         //fill hashmap
-        final ObservableMap<Student, List<Presentation>> studentsMap = FXCollections.observableHashMap();
+        final ObservableMap<Student, ObservableList<Presentation>> studentsMap = FXCollections.observableHashMap();
         
         for(GuestRequest g : guestRequestRepository.findAllGuests())
         {
             if(!studentsMap.containsKey(g.getStudent())) {
-                studentsMap.put(g.getStudent(), new ArrayList<Presentation>());
+                studentsMap.put(g.getStudent(), FXCollections.observableList(new ArrayList<Presentation>()));
             }
             
             studentsMap.get(g.getStudent()).add(g.getPresentation());
@@ -69,7 +69,7 @@ public class ViewRegisterGuest {
             @Override
             public void changed(ObservableValue<? extends Student> ov, Student t, Student t1) 
             {
-                lvPresentations.setItems((ObservableList<Presentation>) studentsMap.get(t1));
+                lvPresentations.setItems(studentsMap.get(t1));
             }
         });
         
