@@ -1,16 +1,11 @@
 package controller;
 
-import entity.Campus;
 import entity.GuestRequest;
-import entity.Location;
 import entity.Presentation;
-import entity.Promotor;
 import entity.Student;
-import exceptions.CapacityReachedException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,10 +14,13 @@ import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.util.Callback;
 import model.GuestRequestRepository;
 import model.UserRepository;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  * 
@@ -34,44 +32,77 @@ public class ViewRegisterGuest {
     private ListView<Student> lvGuests;
 
     @FXML
-    private ListView<Presentation> lvPresentations;
+    private ListView<GuestRequest> lvPresentations;
 
     @FXML
-    private ComboBox<Promotor> cbPromotor;
+    private Button btnRegister;
     
-    private final UserRepository userRepository = new UserRepository();
     private final GuestRequestRepository guestRequestRepository = new GuestRequestRepository();
     
     private ObservableList<Student> guests = FXCollections.observableArrayList();
-    private ObservableList<Student> presentations = FXCollections.observableArrayList();
-
+    
     public void loadControls() 
     {
         //fill hashmap
-        final ObservableMap<Student, ObservableList<Presentation>> studentsMap = FXCollections.observableHashMap();
+        final ObservableMap<Student, ObservableList<GuestRequest>> studentsMap = FXCollections.observableHashMap();
         
         for(GuestRequest g : guestRequestRepository.findAllGuests())
         {
             if(!studentsMap.containsKey(g.getStudent())) {
-                studentsMap.put(g.getStudent(), FXCollections.observableList(new ArrayList<Presentation>()));
+                studentsMap.put(g.getStudent(), FXCollections.observableList(new ArrayList<GuestRequest>()));
             }
             
-            studentsMap.get(g.getStudent()).add(g.getPresentation());
+            System.out.println(g.getPresentation());
+            
+            studentsMap.get(g.getStudent()).add(g);
         }
         
         guests = FXCollections.observableArrayList(studentsMap.keySet());
 
         lvGuests.setItems(guests);
         
-        
+        // add checkbox to listview
+        Callback<GuestRequest, ObservableValue<Boolean>> getProperty = new Callback<GuestRequest, ObservableValue<Boolean>>() {
+            @Override
+            public BooleanProperty call(GuestRequest layer) {
+
+                return layer.approvedProperty();
+
+            }
+        };
+        Callback<ListView<GuestRequest>, ListCell<GuestRequest>> forListView = CheckBoxListCell.forListView(getProperty);
+        lvPresentations.setCellFactory(forListView);
+                
         lvGuests.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Student>() {
 
             @Override
             public void changed(ObservableValue<? extends Student> ov, Student t, Student t1) 
             {
                 lvPresentations.setItems(studentsMap.get(t1));
+                
+                List<GuestRequest> grs = new ArrayList<>();                
+                
             }
         });
-        
+  
     }  
+    
+    @FXML
+    void registerHandle(ActionEvent event) 
+    {
+        guestRequestRepository.getEm().getTransaction().begin();
+        for(GuestRequest gr : lvPresentations.getItems()) 
+        {
+            gr.setApproved(gr.approvedProperty().get());
+        }
+        guestRequestRepository.getEm().getTransaction().commit();
+        
+        org.controlsfx.control.action.Action response = Dialogs.create()
+            .title("Gasten")
+            .masthead(null)
+            .message("De wijzigingen werden succesvol opgeslagen.")
+            .lightweight()
+            .showWarning();
+    }
+
 }

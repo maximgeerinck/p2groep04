@@ -2,12 +2,12 @@ package entity;
 
 import java.io.*;
 import java.util.*;
+import javafx.beans.property.SimpleBooleanProperty;
 import javax.persistence.*;
 
-
 @Entity
-public class Presentation implements Serializable 
-{
+public class Presentation implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,21 +22,23 @@ public class Presentation implements Serializable
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "presentation_attendees",
-            joinColumns = {@JoinColumn(name = "presentation_id")},
-            inverseJoinColumns = {@JoinColumn(name = "student_id")})
+            joinColumns = {
+                @JoinColumn(name = "presentation_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "student_id")})
     private Set<Student> attendees = new HashSet<>();
-    
+
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
+
     @OneToMany(mappedBy = "presentation", targetEntity = GuestRequest.class, cascade = CascadeType.ALL)
     private List<GuestRequest> guestRequests;
-    
+
     @OneToOne
     @JoinColumn(name = "timeframe_id", referencedColumnName = "id")
     private TimeFrame timeFrame;
-    
+
     @ManyToOne
     @JoinColumn(name = "planning_id", referencedColumnName = "id")
     private Planning planning;
@@ -48,16 +50,15 @@ public class Presentation implements Serializable
     @OneToOne
     @JoinColumn(name = "promotor_id", referencedColumnName = "id")
     private Promotor promotor;
-    
+
     @OneToOne
     @JoinColumn(name = "copromotor_id", referencedColumnName = "id")
     private Promotor coPromotor;
-    
+
     private Promotor juryLid;
-    
+
     //@ManyToMany(mappedBy = "researchDomains")
     //private List<Presentation> presentations;
-
     public long getId() {
         return this.id;
     }
@@ -65,7 +66,7 @@ public class Presentation implements Serializable
     public void setId(long id) {
         this.id = id;
     }
-    
+
     public boolean isEditable() {
         return this.editable;
     }
@@ -131,6 +132,7 @@ public class Presentation implements Serializable
     }
 
     public Presentation() {
+
     }
 
     /**
@@ -155,7 +157,7 @@ public class Presentation implements Serializable
 
     public void setCoPromotor(Promotor coPromotor) {
         this.coPromotor = coPromotor;
-    }    
+    }
 
     public Promotor getJuryLid() {
         return juryLid;
@@ -164,9 +166,7 @@ public class Presentation implements Serializable
     public void setJuryLid(Promotor juryLid) {
         this.juryLid = juryLid;
     }
-    
-    
-    
+
     /**
      *
      * @param timeFrame
@@ -176,34 +176,31 @@ public class Presentation implements Serializable
         setTimeFrame(timeFrame);
         setLocation(location);
     }
-    public void notifyStakeHolders(Planning planning){
-       
-         List<Presentation> presentations = new ArrayList<>();
-         List<User> users = new ArrayList<>();
-         
-         presentations.addAll(planning.getPresentations());
-         
-         for(Presentation p: presentations)
-         {
-            
+
+    public void notifyStakeHolders(Planning planning) {
+
+        List<Presentation> presentations = new ArrayList<>();
+        List<User> users = new ArrayList<>();
+
+        presentations.addAll(planning.getPresentations());
+
+        for (Presentation p : presentations) {
+
             users.add(p.getPresentator());
-            users.addAll(p.getAttendees()); 
-            
-         }
-         
-         for(User u: users)
-         {
-            // u.sendMail();
-         }     
-     }
-    
-    public String toString() 
-    {
-        if(presentator != null) {
-            return presentator.getActiveSuggestion().getSubject();
+            users.addAll(p.getAttendees());
+
         }
-        
-        return this.date + timeFrame.toString();
+
+        for (User u : users) {
+            // u.sendMail();
+        }
     }
 
+    public String toString() {
+        if (presentator != null) {
+            return presentator.getActiveSuggestion().getSubject();
+        }
+
+        return this.date + timeFrame.toString();
+    }
 }

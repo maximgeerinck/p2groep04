@@ -1,30 +1,34 @@
 package entity;
 
 import java.io.Serializable;
+import javafx.beans.property.SimpleBooleanProperty;
 import javax.persistence.*;
 
 /**
  * @author Maxim
  */
 @Entity
-public class GuestRequest implements Serializable 
-{    
+public class GuestRequest implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
-    
+
     @ManyToOne
     @JoinColumn(name = "presentation_id")
     private Presentation presentation;
-    
+
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
-    
-    @Column(name="approved")
+   
+    @Column(name = "approved")
     private boolean approved;
     
+    @Transient
+    private SimpleBooleanProperty approvedProperty;
+
     public Student getStudent() {
         return student;
     }
@@ -34,21 +38,21 @@ public class GuestRequest implements Serializable
     }
     
     public boolean isApproved() {
-            return this.approved;
+        return this.approved;
     }
 
     public void setApproved(boolean approved) {
-            this.approved = approved;
+        this.approved = approved;
     }
 
     public int getId() {
-            return this.id;
+        return this.id;
     }
 
     public void setId(int id) {
-            this.id = id;
+        this.id = id;
     }
-    
+
     public Presentation getPresentation() {
         return presentation;
     }
@@ -56,7 +60,17 @@ public class GuestRequest implements Serializable
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
     }
+
+    public GuestRequest() {
+        this.approvedProperty = new SimpleBooleanProperty(false);
+    }
+
+    public SimpleBooleanProperty approvedProperty() {
+        return approvedProperty;
+    }
     
-    public GuestRequest() {}
+    public String toString() {
+        return this.presentation.toString();
+    }
 
 }
