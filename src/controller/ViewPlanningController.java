@@ -208,7 +208,7 @@ public class ViewPlanningController {
             org.controlsfx.control.action.Action response = Dialogs.create()
                     .title("Presentations")
                     .masthead(null)
-                    .message("There is a presentation planned on that time and place.")
+                    .message("Er is al een presentatie gepland op dat tijdstip en die plaats.")
                     .lightweight()
                     .showWarning();
         } catch (PersonHasPresentationException ex) {
@@ -216,7 +216,7 @@ public class ViewPlanningController {
             org.controlsfx.control.action.Action response = Dialogs.create()
                     .title("Presentations")
                     .masthead(null)
-                    .message("This person already has a presentation scheduled.")
+                    .message("Deze student heeft al een presentatie.")
                     .lightweight()
                     .showWarning();
         }

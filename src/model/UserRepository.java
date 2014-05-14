@@ -70,6 +70,7 @@ public class UserRepository extends Repository
     {
         getEm().getTransaction().begin();
         promotor.getStudents().add(student);
+        student.setPromotor(promotor);
         getEm().getTransaction().commit();    
     }
     
@@ -77,6 +78,7 @@ public class UserRepository extends Repository
     {
         getEm().getTransaction().begin();
         promotor.getStudents().remove(student);
+        student.setPromotor(null);
         getEm().getTransaction().commit();               
     } 
 
