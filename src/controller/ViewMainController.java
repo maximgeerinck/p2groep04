@@ -44,6 +44,9 @@ public class ViewMainController {
     
     @FXML
     private Button btnAssignJury;
+    
+    @FXML
+    private Button btnAssignCoPromotor;
      
     @FXML
     private GridPane gpPlannings;
@@ -76,6 +79,28 @@ public class ViewMainController {
         Scene scene = new Scene(root, 600, 400);       
 
         newStage.setTitle("Promotor toekennen");
+        newStage.setScene(scene);
+
+        newStage.show();
+    }
+    
+    @FXML
+    void assignCoPromotorHandle(ActionEvent event) throws IOException 
+    {
+        final Stage newStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/ViewAssignCoPromotor.fxml"));
+        loader.load();
+
+        ViewAssignCoPromotorController controller = loader.getController();
+        if(controller != null) 
+        {
+            controller.loadControls();  
+        }  
+                        
+        BorderPane root = loader.getRoot();
+        Scene scene = new Scene(root, 600, 400);       
+
+        newStage.setTitle("CoPromotor toekennen");
         newStage.setScene(scene);
 
         newStage.show();

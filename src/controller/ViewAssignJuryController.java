@@ -73,7 +73,7 @@ public class ViewAssignJuryController {
         {
             // || selected.getCoPromotor().equals(jury)
             org.controlsfx.control.action.Action response = Dialogs.create()
-                    .title("Assign Jury")
+                    .title("Jury toekennen")
                     .masthead(null)
                     .message("Dit jurylid is de promotor of copromotor van de student, kies een ander jurylid.")
                     .lightweight()
@@ -87,7 +87,7 @@ public class ViewAssignJuryController {
             if(p.getDate().equals(selected.getPresentation().getDate()) && p.getTimeFrame().equals(selected.getPresentation().getTimeFrame()))
             {
                 org.controlsfx.control.action.Action response = Dialogs.create()
-                    .title("Assign Jury")
+                    .title("Jury toekennen")
                     .masthead(null)
                     .message("Dit jurylid heeft al een presentatie op dat moment.")
                     .lightweight()

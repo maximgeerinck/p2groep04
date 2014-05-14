@@ -45,7 +45,9 @@ public class Promotor extends User
     public void setStudents(List<Student> students) {
         this.students = students;
     }
-
+    
+    
+    
     public Promotor() {
 
     }
