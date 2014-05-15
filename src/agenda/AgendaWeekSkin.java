@@ -99,6 +99,9 @@ import model.UserRepository;
  */
 public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSkin {
 
+    private static final boolean SHOW_WEEKEND = false;
+    private static final int WEEK_DAYS = SHOW_WEEKEND ? 7 : 5;
+    
     private final PresentationRepository presentationRepository = new PresentationRepository();
     private final TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
     private final UserRepository userRepository = new UserRepository();
@@ -196,7 +199,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
 
         // assign it to each day pane
         Calendar lEndCalendar = null;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < WEEK_DAYS; i++) {
             // set the calendar
             DayPane lDayPane = weekPane.dayPanes.get(i);
             lDayPane.calendarObjectProperty.set((Calendar) lCalendar.clone());
@@ -332,7 +335,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
          */
         public WeekHeaderPane() {
             // 7 days per week
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < WEEK_DAYS; i++) {
                 DayHeaderPane lDayHeader = new DayHeaderPane(weekPane.dayPanes.get(i)); // associate with a day, so we can use its administration. This needs only be done once
                 lDayHeader.layoutXProperty().bind(weekPane.dayPanes.get(i).layoutXProperty());
                 lDayHeader.layoutYProperty().set(0);
@@ -519,7 +522,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
             }
 
             // 7 days per week
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < WEEK_DAYS; i++) {
                 DayPane lDay = new DayPane();
                 lDay.layoutXProperty().bind(dayWidthProperty.multiply(i).add(dayFirstColumnXProperty));
                 lDay.layoutYProperty().set(0.0);
@@ -1876,7 +1879,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
         // day columns
         dayFirstColumnXProperty.set(timeWidthProperty.get());
         if (weekScrollPane.viewportBoundsProperty().get() != null) {
-            dayWidthProperty.set((weekScrollPane.viewportBoundsProperty().get().getWidth() - timeWidthProperty.get()) / 7); // 7 days per week
+            dayWidthProperty.set((weekScrollPane.viewportBoundsProperty().get().getWidth() - timeWidthProperty.get()) / WEEK_DAYS); // 7 days per week
         }
         dayContentWidthProperty.set(dayWidthProperty.get() - 10); // the 10 is a margin at the right so that there is always room to start a new appointment
 
@@ -1919,7 +1922,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
         if (lFirstDayOfWeek <= lCurrentDayOfWeek) {
             lDelta = -lCurrentDayOfWeek + lFirstDayOfWeek;
         } else {
-            lDelta = -lCurrentDayOfWeek - (7 - lFirstDayOfWeek);
+            lDelta = -lCurrentDayOfWeek - (WEEK_DAYS - lFirstDayOfWeek);
         }
         c = ((Calendar) c.clone());
         c.add(Calendar.DATE, lDelta);
