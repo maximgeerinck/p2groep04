@@ -101,6 +101,8 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
 
     private static final boolean SHOW_WEEKEND = false;
     private static final int WEEK_DAYS = SHOW_WEEKEND ? 7 : 5;
+    private static final int START_HOUR = 0;
+    private static final int END_HOUR = 24;
     
     private final PresentationRepository presentationRepository = new PresentationRepository();
     private final TimeFrameRepository timeFrameRepository = new TimeFrameRepository();
@@ -488,13 +490,13 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
             getStyleClass().add("Week");
 
             // draw hours
-            for (int lHour = 0; lHour < 24; lHour++) {
+            for (int lHour = START_HOUR; lHour < END_HOUR; lHour++) {
                 // hour line
                 {
                     Line l = new Line(0, 10, 100, 10);
                     l.getStyleClass().add("HourLine");
                     l.startXProperty().set(0.0);
-                    l.startYProperty().bind(hourHeighProperty.multiply(lHour));
+                    l.startYProperty().bind(hourHeighProperty.multiply(lHour - START_HOUR));
                     l.endXProperty().bind(widthProperty());
                     l.endYProperty().bind(l.startYProperty());
                     getChildren().add(l);
@@ -505,7 +507,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
                     l.getStyleClass().add("HalfHourLine");
                     l.startXProperty().bind(timeWidthProperty);
                     l.endXProperty().bind(widthProperty());
-                    l.startYProperty().bind(hourHeighProperty.multiply(lHour + 0.5));
+                    l.startYProperty().bind(hourHeighProperty.multiply(lHour + 0.5 - START_HOUR));
                     l.endYProperty().bind(l.startYProperty());
                     getChildren().add(l);
                 }
@@ -513,7 +515,7 @@ public class AgendaWeekSkin extends SkinBase<Agenda> implements Agenda.AgendaSki
                 {
                     Text t = new Text(lHour + ":00");
                     t.xProperty().bind(timeWidthProperty.subtract(t.getBoundsInParent().getWidth()).subtract(timeColumnWhitespace / 2));
-                    t.yProperty().bind(hourHeighProperty.multiply(lHour));
+                    t.yProperty().bind(hourHeighProperty.multiply(lHour - START_HOUR));
                     t.setTranslateY(t.getBoundsInParent().getHeight()); // move it under the line
                     t.getStyleClass().add("HourLabel");
                     t.setFontSmoothingType(FontSmoothingType.LCD);
